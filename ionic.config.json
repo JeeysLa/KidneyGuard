@@ -1,0 +1,7 @@
+{
+  "name": "KidneyGuard",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
