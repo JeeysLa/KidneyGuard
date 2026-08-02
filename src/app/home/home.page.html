@@ -1,91 +1,274 @@
-<ion-header [translucent]="true">
+<ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-title>{{ languageService.t('appTitle') }}</ion-title>
     <ion-buttons slot="end">
-      <ion-button fill="clear">
+      <ion-button fill="clear" (click)="onDailyReminders()">
         <ion-icon slot="icon-only" name="notifications-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="home-page">
+<ion-content class="home-page">
+
   <div class="hero-card">
     <div class="hero-content">
       <p class="eyebrow">{{ languageService.t('heroInsightLabel') }}</p>
+
       <h1>{{ languageService.t('dashboardTitle') }}</h1>
+
       <p class="subtitle">
+        {{ languageService.t('dashboardSubtitle') }}
+      </p>
+
+      <div class="hero-actions">
+        <ion-button
+          expand="block"
+          color="light"
+          fill="solid"
+          (click)="onQuickActions()">
+
+          {{ languageService.t('quickActions') }}
+
+        </ion-button>
+
+        <ion-button
+          expand="block"
+          color="primary"
+          fill="outline"
+          (click)="onDailyReminders()">
+
+          {{ languageService.t('dailyReminders') }}
+
+        </ion-button>
+      </div>
+    </div>
+
+    <div class="hero-summary">
+      <div>
+        <p class="summary-label">
+          {{ languageService.t('dashboardToday') }}
+        </p>
+
+        <h2>
+          {{ languageService.t('dashboardScore') }}
+        </h2>
+      </div>
+
+      <p class="hero-note">
         {{ languageService.t('dashboardSummary') }}
       </p>
-      <div class="hero-actions">
-        <ion-button color="primary" (click)="onQuickActions()">{{ languageService.t('quickActions') }}</ion-button>
-        <ion-button fill="clear" color="medium" (click)="onDailyReminders()">{{ languageService.t('dailyReminders') }}</ion-button>
-      </div>
     </div>
   </div>
 
-  <ion-card class="summary-card">
+  <ion-card class="screening-card">
     <ion-card-content>
-      <div class="summary-header">
+
+      <div class="section-header screening-header">
         <div>
-          <p class="summary-label">{{ languageService.t('dashboardToday') }}</p>
-          <h2>{{ languageService.t('dashboardRisk') }}</h2>
+          <p class="eyebrow">KidneyGuard AI</p>
+          <h3>Kidney health screening</h3>
         </div>
-        <ion-chip color="success">{{ languageService.t('dashboardScore') }}</ion-chip>
       </div>
 
-      <div class="metrics">
-        <div class="metric">
-          <span class="metric-value">2.1L</span>
-          <span class="metric-label">{{ languageService.t('dashboardHydration') }}</span>
+      <ion-item lines="none" class="form-item">
+        <ion-label position="stacked">
+          Daily water intake
+        </ion-label>
+
+        <div class="range-row">
+          <ion-range
+            min="0"
+            max="5"
+            step="0.1"
+            snaps
+            pin
+            [(ngModel)]="waterIntake">
+          </ion-range>
+
+          <strong>{{ waterIntake.toFixed(1) }} L</strong>
         </div>
-        <div class="metric">
-          <span class="metric-value">78 bpm</span>
-          <span class="metric-label">{{ languageService.t('dashboardHeartRate') }}</span>
-        </div>
-        <div class="metric">
-          <span class="metric-value">6.8</span>
-          <span class="metric-label">{{ languageService.t('dashboardSleep') }}</span>
-        </div>
-      </div>
+      </ion-item>
+
+      <ion-item lines="none" class="form-item">
+        <ion-label position="stacked">
+          Exercise frequency
+        </ion-label>
+
+        <ion-segment [(ngModel)]="exerciseFrequency">
+          <ion-segment-button value="0">0 kali</ion-segment-button>
+          <ion-segment-button value="1-2">1-2 kali</ion-segment-button>
+          <ion-segment-button value="3-4">3-4 kali</ion-segment-button>
+          <ion-segment-button value="5+">5+ kali</ion-segment-button>
+        </ion-segment>
+      </ion-item>
+
+      <ion-item lines="none" class="form-item toggle-item">
+        <ion-label>Hypertension history</ion-label>
+        <ion-toggle slot="end" [(ngModel)]="hypertension"></ion-toggle>
+      </ion-item>
+
+      <ion-item lines="none" class="form-item toggle-item">
+        <ion-label>Diabetes history</ion-label>
+        <ion-toggle slot="end" [(ngModel)]="diabetes"></ion-toggle>
+      </ion-item>
+
+      <ion-button
+        expand="block"
+        color="primary"
+        class="submit-btn"
+        (click)="calculateRisk()">
+
+        Calculate risk
+
+      </ion-button>
+
+      <ion-card *ngIf="showRiskResult" class="result-card">
+        <ion-card-content>
+
+          <p class="result-label">
+            Estimated risk
+          </p>
+
+          <h2>{{ riskPercentage }}%</h2>
+
+          <p>{{ riskMessage }}</p>
+
+        </ion-card-content>
+      </ion-card>
+
     </ion-card-content>
   </ion-card>
 
-  <section class="section">
+  <ion-grid class="metric-grid">
+    <ion-row>
+
+      <ion-col
+        size="12"
+        size-sm="4"
+        *ngFor="let metric of metrics">
+
+        <ion-card
+          class="metric-card"
+          button
+          (click)="performMetric(metric)">
+
+          <ion-card-content>
+
+            <div class="metric-icon">
+              <ion-icon [name]="metric.icon"></ion-icon>
+            </div>
+
+            <div>
+              <p class="metric-value">{{ metric.value }}</p>
+
+              <p class="metric-label">
+                {{ languageService.t(metric.labelKey) }}
+              </p>
+            </div>
+
+          </ion-card-content>
+
+        </ion-card>
+
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+
+  <section class="section actions-section">
+
     <div class="section-header">
-      <h3>{{ languageService.t('quickActions') }}</h3>
-      <span>{{ languageService.t('dailyReminders') }}</span>
+      <div>
+        <h3>{{ languageService.t('quickActions') }}</h3>
+        <p>{{ languageService.t('dailyReminders') }}</p>
+      </div>
     </div>
 
-    <ion-list lines="none">
-      <ion-item button *ngFor="let action of actions" class="action-item" (click)="performAction(action)">
-        <ion-icon slot="start" [name]="action.icon" [color]="action.color"></ion-icon>
-        <ion-label>
-          <h4>{{ languageService.t(action.titleKey) }}</h4>
-          <p>{{ languageService.t(action.descriptionKey) }}</p>
-        </ion-label>
-        <ion-badge slot="end" [color]="action.badgeColor">{{ action.badge }}</ion-badge>
-      </ion-item>
-    </ion-list>
+    <ion-grid>
+
+      <ion-row>
+
+        <ion-col
+          size="12"
+          size-md="4"
+          *ngFor="let action of actions">
+
+          <ion-card
+            class="action-card"
+            button
+            (click)="performAction(action)">
+
+            <ion-card-content>
+
+              <div class="action-top">
+                <ion-icon
+                  [name]="action.icon"
+                  [color]="action.color">
+                </ion-icon>
+
+                <ion-badge
+                  [color]="action.badgeColor">
+                  {{ action.badge }}
+                </ion-badge>
+              </div>
+
+              <h4>{{ languageService.t(action.titleKey) }}</h4>
+
+              <p>
+                {{ languageService.t(action.descriptionKey) }}
+              </p>
+
+            </ion-card-content>
+
+          </ion-card>
+
+        </ion-col>
+
+      </ion-row>
+
+    </ion-grid>
+
   </section>
 
   <section class="section">
+
     <div class="section-header">
       <h3>{{ languageService.t('insightsTitle') }}</h3>
     </div>
 
     <ion-grid>
+
       <ion-row>
-        <ion-col size="6" *ngFor="let insight of insights">
+
+        <ion-col
+          size="12"
+          size-sm="6"
+          *ngFor="let insight of insights">
+
           <ion-card class="insight-card">
+
             <ion-card-content>
-              <ion-icon [name]="insight.icon" color="primary"></ion-icon>
+
+              <ion-icon
+                [name]="insight.icon"
+                color="primary">
+              </ion-icon>
+
               <h4>{{ languageService.t(insight.titleKey) }}</h4>
+
               <p>{{ languageService.t(insight.textKey) }}</p>
+
             </ion-card-content>
+
           </ion-card>
+
         </ion-col>
+
       </ion-row>
+
     </ion-grid>
+
   </section>
+
 </ion-content>

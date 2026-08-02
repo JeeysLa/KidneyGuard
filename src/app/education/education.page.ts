@@ -20,6 +20,7 @@ import { LanguageService } from '../core/language.service';
 
 @Component({
   selector: 'app-education',
+  standalone: true,
   templateUrl: 'education.page.html',
   styleUrls: ['education.page.scss'],
   imports: [CommonModule, IonHeader, IonToolbar, IonTitle, IonButton, IonButtons, IonIcon, IonContent, IonCard, IonCardContent, IonList, IonItem, IonLabel],

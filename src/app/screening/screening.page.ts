@@ -10,22 +10,23 @@ import {
   IonContent,
   IonHeader,
   IonIcon,
-  IonInput,
   IonItem,
   IonLabel,
-  IonList,
-  IonSelect,
-  IonSelectOption,
-  IonTitle,
+  IonRange,
+  IonSegment,
+  IonSegmentButton,
+  IonSpinner,
   IonToggle,
+  IonTitle,
   IonToolbar,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { globeOutline, pulseOutline } from 'ionicons/icons';
+import { globeOutline } from 'ionicons/icons';
 import { LanguageService } from '../core/language.service';
 
 @Component({
   selector: 'app-screening',
+  standalone: true,
   templateUrl: 'screening.page.html',
   styleUrls: ['screening.page.scss'],
   imports: [
@@ -40,29 +41,30 @@ import { LanguageService } from '../core/language.service';
     IonContent,
     IonCard,
     IonCardContent,
-    IonList,
     IonItem,
     IonLabel,
-    IonInput,
-    IonBadge,
+    IonRange,
+    IonSegment,
+    IonSegmentButton,
+    IonSpinner,
     IonToggle,
+    IonBadge,
   ],
 })
 export class ScreeningPage implements OnDestroy {
-  age = 35;
-  diabetes = false;
+  water = 2.0;
+  activity: '0' | '1-2' | '3-4' | '5+' = '1-2';
   hypertension = false;
-  familyHistory = false;
-  smoking = false;
-  activity = 3;
-  water = 2.5;
-  riskLevel: 'low' | 'moderate' | 'high' = 'low';
-  riskSummary = '';
-  recommendations: string[] = [];
+  diabetes = false;
+  isAnalyzing = false;
+  analysisReady = false;
+  riskPercent = 0;
+  riskLabel: 'Low' | 'Moderate' | 'High' = 'Low';
+  riskColor = '#10dc60';
 
   private readonly languageSubscription = this.languageService.currentLanguage$.subscribe(() => {
     this.changeDetectorRef.detectChanges();
-    this.refreshAssessment();
+    this.updateRisk();
   });
 
   constructor(
@@ -71,9 +73,8 @@ export class ScreeningPage implements OnDestroy {
   ) {
     addIcons({
       globeOutline,
-      pulseOutline,
     });
-    this.refreshAssessment();
+    this.updateRisk();
   }
 
   ngOnDestroy(): void {
@@ -84,28 +85,47 @@ export class ScreeningPage implements OnDestroy {
     this.languageService.toggleLanguage();
   }
 
-  analyzeRisk(): void {
-    this.refreshAssessment();
-  }
+  updateRisk(): void {
+    let score = 0;
+    if (this.hypertension) score += 30;
+    if (this.diabetes) score += 30;
+    if (this.water < 2) score += 20;
+    if (this.activity === '0') score += 15;
 
-  private refreshAssessment(): void {
-    const score = Number(this.activity) < 3 ? 1 : 0;
-    const hydrationRisk = Number(this.water) < 2 ? 1 : 0;
-    const chronicRisk = Number(this.age) > 50 || this.diabetes || this.hypertension || this.familyHistory || this.smoking ? 1 : 0;
-
-    if (this.diabetes && this.hypertension) {
-      this.riskLevel = 'high';
-    } else if (chronicRisk + score + hydrationRisk >= 2) {
-      this.riskLevel = 'moderate';
+    this.riskPercent = Math.min(100, score);
+    if (this.riskPercent > 60) {
+      this.riskLabel = 'High';
+      this.riskColor = '#ef445a';
+    } else if (this.riskPercent >= 30) {
+      this.riskLabel = 'Moderate';
+      this.riskColor = '#ffc409';
     } else {
-      this.riskLevel = 'low';
+      this.riskLabel = 'Low';
+      this.riskColor = '#10dc60';
     }
-
-    this.riskSummary = this.languageService.t(`risk${this.capitalize(this.riskLevel)}Text`);
-    this.recommendations = this.languageService.tArray(`recommendations${this.capitalize(this.riskLevel)}`);
   }
 
-  private capitalize(value: string): string {
-    return value.charAt(0).toUpperCase() + value.slice(1);
+  getRiskLabelText(): string {
+    return this.languageService.t(`screening${this.riskLabel}`);
+  }
+
+  analyzeRisk(): void {
+    this.isAnalyzing = true;
+    this.analysisReady = false;
+    this.updateRisk();
+
+    setTimeout(() => {
+      this.isAnalyzing = false;
+      this.analysisReady = true;
+      this.changeDetectorRef.detectChanges();
+    }, 1000);
+  }
+
+  get gaugeCircumference(): number {
+    return 2 * Math.PI * 52;
+  }
+
+  get gaugeOffset(): number {
+    return this.gaugeCircumference - (this.gaugeCircumference * this.riskPercent) / 100;
   }
 }

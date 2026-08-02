@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
     <ion-title>{{ languageService.t('screeningTitle') }}</ion-title>
     <ion-buttons slot="end">
@@ -12,69 +12,111 @@
 <ion-content [fullscreen]="true" class="screening-page">
   <div class="hero-card">
     <p class="eyebrow">{{ languageService.t('screeningTitle') }}</p>
-    <h1>{{ languageService.t('dashboardTitle') }}</h1>
-    <p class="subtitle">{{ languageService.t('screeningSubtitle') }}</p>
+    <h1>{{ languageService.t('screeningSubtitle') }}</h1>
+    <p class="subtitle">{{ languageService.t('screeningIntro') }}</p>
   </div>
 
-  <ion-card>
+  <ion-card class="form-card">
     <ion-card-content>
-      <ion-list lines="full">
-        <ion-item>
-          <ion-label position="stacked">{{ languageService.t('screeningAge') }}</ion-label>
-          <ion-input type="number" [(ngModel)]="age"></ion-input>
-        </ion-item>
+      <div class="field-block">
+        <div class="field-label">
+          <span>{{ languageService.t('screeningWater') }}</span>
+          <strong>{{ water.toFixed(1) }} L</strong>
+        </div>
+        <ion-range
+          min="0"
+          max="5"
+          step="0.1"
+          snaps
+          pin
+          color="primary"
+          [(ngModel)]="water"
+          (ionChange)="updateRisk()"
+        ></ion-range>
+      </div>
 
-        <ion-item>
-          <ion-label>{{ languageService.t('screeningDiabetes') }}</ion-label>
-          <ion-toggle slot="end" [(ngModel)]="diabetes"></ion-toggle>
-        </ion-item>
+      <div class="field-block">
+        <div class="field-label">
+          <span>{{ languageService.t('screeningActivity') }}</span>
+        </div>
+        <ion-segment [(ngModel)]="activity" (ionChange)="updateRisk()" scrollable>
+          <ion-segment-button value="0">0 kali</ion-segment-button>
+          <ion-segment-button value="1-2">1-2 kali</ion-segment-button>
+          <ion-segment-button value="3-4">3-4 kali</ion-segment-button>
+          <ion-segment-button value="5+">5+ kali</ion-segment-button>
+        </ion-segment>
+      </div>
 
-        <ion-item>
+      <div class="toggle-block">
+        <ion-item lines="none">
           <ion-label>{{ languageService.t('screeningHypertension') }}</ion-label>
-          <ion-toggle slot="end" [(ngModel)]="hypertension"></ion-toggle>
+          <ion-toggle slot="end" [(ngModel)]="hypertension" (ionChange)="updateRisk()"></ion-toggle>
         </ion-item>
 
-        <ion-item>
-          <ion-label>{{ languageService.t('screeningFamily') }}</ion-label>
-          <ion-toggle slot="end" [(ngModel)]="familyHistory"></ion-toggle>
+        <ion-item lines="none">
+          <ion-label>{{ languageService.t('screeningDiabetes') }}</ion-label>
+          <ion-toggle slot="end" [(ngModel)]="diabetes" (ionChange)="updateRisk()"></ion-toggle>
         </ion-item>
+      </div>
 
-        <ion-item>
-          <ion-label>{{ languageService.t('screeningSmoking') }}</ion-label>
-          <ion-toggle slot="end" [(ngModel)]="smoking"></ion-toggle>
-        </ion-item>
-
-        <ion-item>
-          <ion-label position="stacked">{{ languageService.t('screeningActivity') }}</ion-label>
-          <ion-input type="number" [(ngModel)]="activity"></ion-input>
-        </ion-item>
-
-        <ion-item>
-          <ion-label position="stacked">{{ languageService.t('screeningWater') }}</ion-label>
-          <ion-input type="number" [(ngModel)]="water"></ion-input>
-        </ion-item>
-      </ion-list>
-
-      <ion-button expand="block" class="action-button" (click)="analyzeRisk()">
-        {{ languageService.t('screeningAnalyze') }}
+      <ion-button
+        expand="block"
+        fill="solid"
+        color="primary"
+        size="large"
+        [disabled]="isAnalyzing"
+        (click)="analyzeRisk()"
+      >
+        <ion-spinner *ngIf="isAnalyzing" name="crescent"></ion-spinner>
+        <span *ngIf="!isAnalyzing">{{ languageService.t('screeningAnalyze') }}</span>
+        <span *ngIf="isAnalyzing">{{ languageService.t('screeningAnalyzing') }}</span>
       </ion-button>
     </ion-card-content>
   </ion-card>
 
-  <ion-card class="result-card">
+  <ion-card class="result-card" [class.hidden]="!analysisReady && !isAnalyzing">
     <ion-card-content>
       <div class="result-header">
-        <p class="eyebrow">{{ languageService.t('screeningResult') }}</p>
-        <ion-badge [color]="riskLevel === 'high' ? 'danger' : riskLevel === 'moderate' ? 'warning' : 'success'">
-          {{ languageService.t('screening' + (riskLevel.charAt(0).toUpperCase() + riskLevel.slice(1))) }}
-        </ion-badge>
+        <div>
+          <p class="eyebrow">{{ languageService.t('screeningResult') }}</p>
+          <h2>{{ riskPercent }}%</h2>
+        </div>
+        <ion-badge [style.background]="riskColor" class="risk-badge">{{ getRiskLabelText() }}</ion-badge>
       </div>
-      <p class="result-summary">{{ riskSummary }}</p>
-      <h3>{{ languageService.t('screeningRecommendation') }}</h3>
-      <ul>
-        <li *ngFor="let recommendation of recommendations">{{ recommendation }}</li>
-      </ul>
-      <p class="disclaimer">{{ languageService.t('screeningDisclaimer') }}</p>
+
+      <div class="gauge-panel">
+        <div class="gauge-wrapper">
+          <svg viewBox="0 0 120 120" class="gauge-svg">
+            <circle class="gauge-ring" cx="60" cy="60" r="52"></circle>
+            <circle
+              class="gauge-fill"
+              cx="60"
+              cy="60"
+              r="52"
+              [attr.stroke]="riskColor"
+              [attr.stroke-dasharray]="gaugeCircumference"
+              [attr.stroke-dashoffset]="gaugeOffset"
+            ></circle>
+          </svg>
+          <div class="gauge-value">
+            <strong>{{ riskPercent }}%</strong>
+            <small>{{ getRiskLabelText() }}</small>
+          </div>
+        </div>
+      </div>
+
+      <p class="result-summary">
+        {{ languageService.t('screeningResultSummary') }}
+      </p>
+
+      <div class="recommendation-block">
+        <h3>{{ languageService.t('screeningRecommendation') }}</h3>
+        <ul>
+          <li *ngIf="riskPercent < 30">{{ languageService.t('screeningRecommendationLow') }}</li>
+          <li *ngIf="riskPercent >= 30 && riskPercent <= 60">{{ languageService.t('screeningRecommendationModerate') }}</li>
+          <li *ngIf="riskPercent > 60">{{ languageService.t('screeningRecommendationHigh') }}</li>
+        </ul>
+      </div>
     </ion-card-content>
   </ion-card>
 </ion-content>

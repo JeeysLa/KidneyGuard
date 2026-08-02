@@ -4,6 +4,7 @@ import { IonButton, IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/a
 
 @Component({
   selector: 'app-onboarding',
+  standalone: true,
   templateUrl: 'onboarding.page.html',
   styleUrls: ['onboarding.page.scss'],
   imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonButton],

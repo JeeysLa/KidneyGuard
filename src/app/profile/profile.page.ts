@@ -23,6 +23,7 @@ import { LanguageService } from '../core/language.service';
 
 @Component({
   selector: 'app-profile',
+  standalone: true,
   templateUrl: 'profile.page.html',
   styleUrls: ['profile.page.scss'],
   imports: [CommonModule, FormsModule, IonHeader, IonToolbar, IonTitle, IonButton, IonButtons, IonIcon, IonContent, IonCard, IonCardContent, IonList, IonItem, IonLabel, IonAvatar, IonToggle],

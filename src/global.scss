@@ -35,3 +35,24 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+
+/* Standar Ionic Reset */
+html, body, ion-app {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Fix for interaction and layout issues */
+ion-router-outlet {
+  height: 100%;
+  width: 100%;
+  display: block;
+  position: relative;
+}
+
+ion-content {
+  --height: 100%;
+  pointer-events: auto !important;
+}

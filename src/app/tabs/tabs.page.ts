@@ -1,5 +1,12 @@
 import { Component } from '@angular/core';
-import { IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs } from '@ionic/angular/standalone';
+import {
+  IonIcon,
+  IonLabel,
+  IonRouterOutlet,
+  IonTabBar,
+  IonTabButton,
+  IonTabs,
+} from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import {
   bookOutline,
@@ -11,11 +18,20 @@ import { LanguageService } from '../core/language.service';
 
 @Component({
   selector: 'app-tabs',
-  templateUrl: 'tabs.page.html',
-  styleUrls: ['tabs.page.scss'],
-  imports: [IonTabs, IonRouterOutlet, IonTabBar, IonTabButton, IonLabel, IonIcon],
+  standalone: true,
+  templateUrl: './tabs.page.html',
+  styleUrls: ['./tabs.page.scss'],
+  imports: [
+    IonTabs,
+    IonRouterOutlet,
+    IonTabBar,
+    IonTabButton,
+    IonLabel,
+    IonIcon,
+  ],
 })
 export class TabsPage {
+
   constructor(public readonly languageService: LanguageService) {
     addIcons({
       bookOutline,
@@ -24,4 +40,9 @@ export class TabsPage {
       pulseOutline,
     });
   }
+
+  testClick(): void {
+    alert('Tabs berhasil diklik!');
+  }
+
 }

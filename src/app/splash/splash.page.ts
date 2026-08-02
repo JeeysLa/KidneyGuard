@@ -5,6 +5,7 @@ import { LanguageService } from '../core/language.service';
 
 @Component({
   selector: 'app-splash',
+  standalone: true,
   templateUrl: 'splash.page.html',
   styleUrls: ['splash.page.scss'],
   imports: [IonContent, IonSpinner],
