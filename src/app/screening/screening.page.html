@@ -1,0 +1,80 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>{{ languageService.t('screeningTitle') }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="toggleLanguage()">
+        <ion-icon slot="icon-only" name="globe-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="screening-page">
+  <div class="hero-card">
+    <p class="eyebrow">{{ languageService.t('screeningTitle') }}</p>
+    <h1>{{ languageService.t('dashboardTitle') }}</h1>
+    <p class="subtitle">{{ languageService.t('screeningSubtitle') }}</p>
+  </div>
+
+  <ion-card>
+    <ion-card-content>
+      <ion-list lines="full">
+        <ion-item>
+          <ion-label position="stacked">{{ languageService.t('screeningAge') }}</ion-label>
+          <ion-input type="number" [(ngModel)]="age"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>{{ languageService.t('screeningDiabetes') }}</ion-label>
+          <ion-toggle slot="end" [(ngModel)]="diabetes"></ion-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>{{ languageService.t('screeningHypertension') }}</ion-label>
+          <ion-toggle slot="end" [(ngModel)]="hypertension"></ion-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>{{ languageService.t('screeningFamily') }}</ion-label>
+          <ion-toggle slot="end" [(ngModel)]="familyHistory"></ion-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>{{ languageService.t('screeningSmoking') }}</ion-label>
+          <ion-toggle slot="end" [(ngModel)]="smoking"></ion-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">{{ languageService.t('screeningActivity') }}</ion-label>
+          <ion-input type="number" [(ngModel)]="activity"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">{{ languageService.t('screeningWater') }}</ion-label>
+          <ion-input type="number" [(ngModel)]="water"></ion-input>
+        </ion-item>
+      </ion-list>
+
+      <ion-button expand="block" class="action-button" (click)="analyzeRisk()">
+        {{ languageService.t('screeningAnalyze') }}
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="result-card">
+    <ion-card-content>
+      <div class="result-header">
+        <p class="eyebrow">{{ languageService.t('screeningResult') }}</p>
+        <ion-badge [color]="riskLevel === 'high' ? 'danger' : riskLevel === 'moderate' ? 'warning' : 'success'">
+          {{ languageService.t('screening' + (riskLevel.charAt(0).toUpperCase() + riskLevel.slice(1))) }}
+        </ion-badge>
+      </div>
+      <p class="result-summary">{{ riskSummary }}</p>
+      <h3>{{ languageService.t('screeningRecommendation') }}</h3>
+      <ul>
+        <li *ngFor="let recommendation of recommendations">{{ recommendation }}</li>
+      </ul>
+      <p class="disclaimer">{{ languageService.t('screeningDisclaimer') }}</p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

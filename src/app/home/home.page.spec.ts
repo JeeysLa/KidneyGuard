@@ -15,4 +15,10 @@ describe('HomePage', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should render the KidneyGuard AI overview', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.textContent).toContain('KidneyGuard AI');
+    expect(compiled.textContent).toContain('AI health insights');
+  });
 });

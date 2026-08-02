@@ -1,0 +1,42 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>{{ languageService.t('educationTitle') }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="toggleLanguage()">
+        <ion-icon slot="icon-only" name="globe-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="education-page">
+  <div class="hero-card">
+    <p class="eyebrow">{{ languageService.t('educationTitle') }}</p>
+    <h1>{{ languageService.t('dashboardTitle') }}</h1>
+    <p class="subtitle">{{ languageService.t('educationSubtitle') }}</p>
+  </div>
+
+  <section class="section">
+    <h3>{{ languageService.t('educationTitle') }}</h3>
+    <ion-card button *ngFor="let article of articles" (click)="openArticle(article)">
+      <ion-card-content>
+        <ion-icon name="book-outline" color="primary"></ion-icon>
+        <h4>{{ languageService.t(article.titleKey) }}</h4>
+        <p>{{ languageService.t(article.textKey) }}</p>
+      </ion-card-content>
+    </ion-card>
+  </section>
+
+  <section class="section">
+    <h3>{{ languageService.t('faqTitle') }}</h3>
+    <ion-list lines="full">
+      <ion-item *ngFor="let item of faqItems">
+        <ion-icon slot="start" name="help-circle-outline" color="secondary"></ion-icon>
+        <ion-label>
+          <h4>{{ languageService.t(item.titleKey) }}</h4>
+          <p>{{ languageService.t(item.textKey) }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </section>
+</ion-content>

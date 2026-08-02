@@ -1,0 +1,50 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>{{ languageService.t('profileTitle') }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="toggleLanguage()">
+        <ion-icon slot="icon-only" name="globe-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="profile-page">
+  <div class="hero-card">
+    <ion-avatar>
+      <img src="https://ionicframework.com/docs/img/demos/avatar.svg" alt="Profile" />
+    </ion-avatar>
+    <div>
+      <h1>{{ languageService.t('profileName') }}</h1>
+      <p>{{ languageService.t('profileAge') }}</p>
+    </div>
+  </div>
+
+  <ion-card>
+    <ion-card-content>
+      <h3>{{ languageService.t('profileHistory') }}</h3>
+      <p>{{ languageService.t('profileHistoryValue') }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <section class="section">
+    <h3>{{ languageService.t('profileSettings') }}</h3>
+    <ion-list lines="full">
+      <ion-item>
+        <ion-icon slot="start" name="person-circle-outline" color="primary"></ion-icon>
+        <ion-label>{{ languageService.t('profileNotifications') }}</ion-label>
+        <ion-toggle slot="end" [(ngModel)]="reminderEnabled"></ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-icon slot="start" name="settings-outline" color="secondary"></ion-icon>
+        <ion-label>{{ languageService.t('profileReports') }}</ion-label>
+        <ion-toggle slot="end" [(ngModel)]="reportEnabled"></ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-icon slot="start" name="globe-outline" color="tertiary"></ion-icon>
+        <ion-label>{{ languageService.t('profileLanguage') }}</ion-label>
+        <ion-button fill="clear" slot="end" (click)="toggleLanguage()">{{ languageService.t('saved') }}</ion-button>
+      </ion-item>
+    </ion-list>
+  </section>
+</ion-content>

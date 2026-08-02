@@ -1,0 +1,25 @@
+<ion-tabs>
+  <ion-router-outlet></ion-router-outlet>
+
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="dashboard">
+      <ion-icon name="home-outline"></ion-icon>
+      <ion-label>{{ languageService.t('tabDashboard') }}</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="screening">
+      <ion-icon name="pulse-outline"></ion-icon>
+      <ion-label>{{ languageService.t('tabScreening') }}</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="education">
+      <ion-icon name="book-outline"></ion-icon>
+      <ion-label>{{ languageService.t('tabEducation') }}</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="profile">
+      <ion-icon name="person-circle-outline"></ion-icon>
+      <ion-label>{{ languageService.t('tabProfile') }}</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

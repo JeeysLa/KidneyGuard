@@ -1,0 +1,70 @@
+:host {
+  display: block;
+}
+
+.screening-page {
+  --background: #f5f9ff;
+}
+
+.hero-card {
+  margin: 1rem;
+  padding: 1.2rem;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #0f5fff 0%, #35b7ff 100%);
+  color: #fff;
+}
+
+.eyebrow {
+  margin: 0 0 0.35rem;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  opacity: 0.8;
+}
+
+.hero-card h1 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.subtitle {
+  margin: 0.4rem 0 0;
+  line-height: 1.5;
+  opacity: 0.9;
+}
+
+ion-card {
+  margin: 0 1rem 1rem;
+  border-radius: 18px;
+}
+
+.action-button {
+  margin-top: 1rem;
+}
+
+.result-card {
+  background: #fff;
+}
+
+.result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.result-summary {
+  margin: 0.5rem 0 0.8rem;
+  color: var(--ion-color-medium);
+}
+
+ul {
+  padding-left: 1.1rem;
+  color: var(--ion-color-dark);
+}
+
+.disclaimer {
+  margin-top: 0.8rem;
+  font-size: 0.82rem;
+  color: var(--ion-color-medium);
+}
