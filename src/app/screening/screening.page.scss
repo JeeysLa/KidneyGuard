@@ -1,0 +1,88 @@
+ion-content {
+  --background: #f4f8fc;
+}
+
+ion-toolbar {
+  --background: #ffffff;
+}
+
+.header-section {
+  padding: 24px 20px 10px;
+}
+
+.header-section h2 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: #183b56;
+}
+
+.header-section p {
+  margin-top: 10px;
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+ion-card {
+  margin: 16px;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, .08);
+}
+
+ion-card-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #183b56;
+}
+
+ion-item {
+  --background: transparent;
+  --padding-start: 0;
+  margin-top: 8px;
+}
+
+ion-input {
+  margin-top: 6px;
+}
+
+ion-toggle {
+  --handle-background: white;
+  --track-background: #d1d5db;
+  --track-background-checked: #2f80ed;
+}
+
+.button-wrapper {
+  padding: 0 16px;
+  margin-top: 24px;
+}
+
+.button-wrapper ion-button {
+  --background: #2f80ed;
+  --border-radius: 16px;
+  height: 56px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.result-card {
+  margin-top: 24px;
+  margin-bottom: 40px;
+  background: linear-gradient(135deg, #2f80ed, #56ccf2);
+  color: white;
+}
+
+.result-card ion-chip {
+  --background: white;
+  --color: #2f80ed;
+}
+
+.result-card h1 {
+  font-size: 56px;
+  font-weight: 700;
+  margin: 18px 0 8px;
+}
+
+.result-card p {
+  color: rgba(255,255,255,.9);
+  line-height: 1.6;
+}

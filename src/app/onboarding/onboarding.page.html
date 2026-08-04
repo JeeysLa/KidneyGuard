@@ -1,0 +1,102 @@
+<ion-content [fullscreen]="true" class="onboarding-content">
+
+  <swiper-container
+    #swiper
+    class="onboarding-swiper"
+    [pagination]="true"
+    [allowTouchMove]="true"
+    [spaceBetween]="30">
+
+    <!-- Slide 1 -->
+    <swiper-slide>
+
+      <div class="slide">
+
+        <div class="image-container">
+          <ion-icon
+            name="medical-outline"
+            class="main-icon">
+          </ion-icon>
+        </div>
+
+        <h1>Welcome to KidneyGuard AI</h1>
+
+        <p>
+          Detect your kidney health risk early and
+          build healthier habits before problems occur.
+        </p>
+
+      </div>
+
+    </swiper-slide>
+
+    <!-- Slide 2 -->
+    <swiper-slide>
+
+      <div class="slide">
+
+        <div class="image-container">
+          <ion-icon
+            name="water-outline"
+            class="main-icon">
+          </ion-icon>
+        </div>
+
+        <h1>Track Healthy Lifestyle</h1>
+
+        <p>
+          Monitor your daily water intake,
+          physical activity,
+          and healthy routines with ease.
+        </p>
+
+      </div>
+
+    </swiper-slide>
+
+    <!-- Slide 3 -->
+    <swiper-slide>
+
+      <div class="slide">
+
+        <div class="image-container">
+          <ion-icon
+            name="shield-checkmark-outline"
+            class="main-icon">
+          </ion-icon>
+        </div>
+
+        <h1>Ready to Start?</h1>
+
+        <p>
+          Complete your health screening
+          and receive personalized recommendations
+          to keep your kidneys healthy.
+        </p>
+
+        <ion-button
+          expand="block"
+          size="large"
+          class="start-btn"
+          (click)="startApp()">
+
+          Get Started
+
+        </ion-button>
+
+      </div>
+
+    </swiper-slide>
+
+  </swiper-container>
+
+  <ion-button
+    fill="clear"
+    class="skip-btn"
+    (click)="startApp()">
+
+    Skip
+
+  </ion-button>
+
+</ion-content>

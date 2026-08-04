@@ -1,0 +1,48 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Education</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear">
+        <ion-icon slot="icon-only" name="search-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="education-header">
+    <p class="eyebrow">Knowledge Hub</p>
+    <h2>Stay informed about kidney care.</h2>
+    <p>Simple guides and healthy habits that support your daily routine.</p>
+  </div>
+
+  <ion-card class="featured-card">
+    <ion-card-content>
+      <ion-badge color="light" style="font-weight: 700;">FEATURED</ion-badge>
+      <h3>Why hydration matters for kidney health</h3>
+      <p>Balanced water intake helps support your body’s natural filtration process.</p>
+      <ion-button fill="clear" color="light" style="padding: 0; margin-top: 0.5rem; font-weight: 700;">
+        Read Now <ion-icon slot="end" name="arrow-forward"></ion-icon>
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <div class="section-title">
+    <h3>Recommended Readings</h3>
+  </div>
+
+  <div class="article-list">
+    <ion-card button *ngFor="let article of articles" class="article-item ion-no-margin">
+      <ion-card-content>
+        <div class="article-top" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+          <ion-icon [name]="article.icon" [color]="article.accent" style="font-size: 1.5rem;"></ion-icon>
+          <ion-badge [color]="article.accent" mode="ios">{{ article.category }}</ion-badge>
+        </div>
+        <h4>{{ article.title }}</h4>
+        <p>{{ article.description }}</p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div style="height: 2rem;"></div>
+</ion-content>

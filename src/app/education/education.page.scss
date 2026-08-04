@@ -1,0 +1,107 @@
+:host {
+  display: block;
+}
+
+.education-header {
+  padding: 2rem 1.5rem 1rem;
+}
+
+.education-header h2 {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--ion-color-dark);
+}
+
+.education-header p {
+  margin: 0.5rem 0 0;
+  font-size: 1rem;
+  color: var(--ion-color-medium);
+  line-height: 1.5;
+}
+
+.featured-card {
+  margin: 1rem 1.25rem;
+  border-radius: 28px;
+  background: linear-gradient(135deg, var(--ion-color-tertiary) 0%, #7d8bff 100%);
+  color: #fff;
+  box-shadow: 0 15px 35px rgba(82, 96, 255, 0.2);
+  border: none;
+}
+
+.featured-card ion-card-content {
+  padding: 1.5rem;
+}
+
+.featured-card h3 {
+  margin: 0.5rem 0;
+  font-size: 1.4rem;
+  font-weight: 800;
+  line-height: 1.3;
+  color: #fff;
+}
+
+.featured-card p {
+  margin: 0;
+  font-size: 0.95rem;
+  opacity: 0.9;
+  line-height: 1.5;
+  color: #fff;
+}
+
+.section-title {
+  padding: 1.5rem 1.5rem 0.75rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ion-color-dark);
+}
+
+.article-list {
+  padding: 0 1.25rem;
+}
+
+.article-item {
+  margin-bottom: 1rem;
+  border-radius: 24px;
+  background: #fff;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05);
+  border: 1px solid rgba(15, 23, 42, 0.02);
+}
+
+.article-item ion-card-content {
+  padding: 1.25rem;
+}
+
+.article-item h4 {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--ion-color-dark);
+}
+
+.article-item p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--ion-color-medium);
+  line-height: 1.5;
+}
+
+.faq-list {
+  margin: 0 1.25rem 2rem;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05);
+}
+
+ion-item h4 {
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+ion-item p {
+  font-size: 0.9rem;
+  color: var(--ion-color-medium);
+  white-space: normal;
+}

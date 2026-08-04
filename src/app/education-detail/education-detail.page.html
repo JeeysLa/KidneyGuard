@@ -1,0 +1,28 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Article Detail</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="header-section">
+    <ion-badge color="primary">{{ article.category }}</ion-badge>
+    <h2>{{ article.title }}</h2>
+    <p>{{ article.summary }}</p>
+  </div>
+
+  <ion-card class="detail-card">
+    <ion-card-content>
+      <div class="icon-wrap">
+        <ion-icon name="water-outline"></ion-icon>
+      </div>
+      <h3>Helpful Tips</h3>
+      <ul>
+        <li *ngFor="let tip of article.tips">{{ tip }}</li>
+      </ul>
+      <ion-button expand="block" routerLink="/tabs/education">
+        Back to Education
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

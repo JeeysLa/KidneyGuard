@@ -1,0 +1,39 @@
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+
+import {
+  IonContent,
+  IonButton,
+  IonIcon
+} from '@ionic/angular/standalone';
+
+@Component({
+  selector: 'app-onboarding',
+  templateUrl: './onboarding.page.html',
+  styleUrls: ['./onboarding.page.scss'],
+  standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    CommonModule,
+    IonContent,
+    IonButton,
+    IonIcon
+  ]
+})
+export class OnboardingPage {
+
+  constructor(
+    private router: Router
+  ) {}
+
+  startApp() {
+    localStorage.setItem('onboardingCompleted', 'true');
+
+    this.router.navigateByUrl('/home', {
+      replaceUrl: true
+    });
+
+  }
+
+}

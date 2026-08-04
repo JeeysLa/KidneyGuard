@@ -1,0 +1,181 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Kidney Screening</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <div class="header-section">
+
+    <h2>Kidney Health Screening</h2>
+
+    <p>
+      Complete this screening to estimate your kidney disease risk.
+      This is not a medical diagnosis.
+    </p>
+
+  </div>
+
+  <!-- Personal Information -->
+
+  <ion-card>
+
+    <ion-card-header>
+      <ion-card-title>Personal Information</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+
+      <ion-item>
+        <ion-label position="stacked">Age</ion-label>
+        <ion-input
+          type="number"
+          placeholder="Enter your age">
+        </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Weight (kg)</ion-label>
+        <ion-input
+          type="number"
+          placeholder="Enter your weight">
+        </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Height (cm)</ion-label>
+        <ion-input
+          type="number"
+          placeholder="Enter your height">
+        </ion-input>
+      </ion-item>
+
+    </ion-card-content>
+
+  </ion-card>
+
+  <!-- Medical History -->
+
+  <ion-card>
+
+    <ion-card-header>
+      <ion-card-title>Medical History</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+
+      <ion-item>
+
+        <ion-label>Diabetes</ion-label>
+
+        <ion-toggle></ion-toggle>
+
+      </ion-item>
+
+      <ion-item>
+
+        <ion-label>Hypertension</ion-label>
+
+        <ion-toggle></ion-toggle>
+
+      </ion-item>
+
+      <ion-item>
+
+        <ion-label>Family History of CKD</ion-label>
+
+        <ion-toggle></ion-toggle>
+
+      </ion-item>
+
+      <ion-item>
+
+        <ion-label>Smoking</ion-label>
+
+        <ion-toggle></ion-toggle>
+
+      </ion-item>
+
+    </ion-card-content>
+
+  </ion-card>
+
+  <!-- Lifestyle -->
+
+  <ion-card>
+
+    <ion-card-header>
+      <ion-card-title>Lifestyle</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+
+      <ion-item>
+
+        <ion-label position="stacked">
+          Daily Water Intake (ml)
+        </ion-label>
+
+        <ion-input
+          type="number"
+          placeholder="Example: 2000">
+        </ion-input>
+
+      </ion-item>
+
+      <ion-item>
+
+        <ion-label position="stacked">
+          Exercise (minutes/day)
+        </ion-label>
+
+        <ion-input
+          type="number"
+          placeholder="Example: 30">
+        </ion-input>
+
+      </ion-item>
+
+    </ion-card-content>
+
+  </ion-card>
+
+  <!-- Button -->
+
+  <div class="button-wrapper">
+
+    <ion-button
+      expand="block"
+      size="large">
+
+      Predict Risk
+
+    </ion-button>
+
+  </div>
+
+  <!-- Result -->
+
+  <ion-card class="result-card">
+
+    <ion-card-content>
+
+      <ion-chip color="success">
+
+        Low Risk
+
+      </ion-chip>
+
+      <h1>18%</h1>
+
+      <p>
+        Based on your lifestyle and health information,
+        your kidney disease risk is currently low.
+      </p>
+
+    </ion-card-content>
+
+  </ion-card>
+
+</ion-content>

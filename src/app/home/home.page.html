@@ -1,0 +1,144 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>KidneyGuard AI</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear">
+        <ion-icon slot="icon-only" name="notifications-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="header-section">
+    <p class="greeting">Good Morning 👋</p>
+    <h2>Let's keep your kidneys healthy.</h2>
+    <p>Your health journey starts today.</p>
+  </div>
+
+  <ion-card class="risk-card">
+    <ion-card-content>
+      <ion-chip>
+        <ion-icon name="shield-checkmark-outline"></ion-icon>
+        <ion-label>LOW RISK</ion-label>
+      </ion-chip>
+
+      <h1>18%</h1>
+      <p>Last Screening Result</p>
+
+      <ion-row>
+        <ion-col size="6">
+          <small>Status</small>
+          <strong>Healthy</strong>
+        </ion-col>
+        <ion-col size="6" class="ion-text-end">
+          <small>Trend</small>
+          <strong>Stable</strong>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+  <div class="section-title">
+    <h3>Quick Actions</h3>
+  </div>
+
+  <ion-grid class="ion-no-padding" style="margin: 0 0.75rem;">
+    <ion-row>
+      <ion-col size="6">
+        <ion-card button routerLink="/screening" class="action-card ion-no-margin">
+          <ion-card-content>
+            <ion-icon name="pulse-outline"></ion-icon>
+            <h4>Screening</h4>
+            <p>Risk assessment</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6">
+        <ion-card button class="action-card ion-no-margin">
+          <ion-card-content>
+            <ion-icon name="water-outline"></ion-icon>
+            <h4>Tracker</h4>
+            <p>Hydration logs</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6" style="margin-top: 0.5rem;">
+        <ion-card button routerLink="/education" class="action-card ion-no-margin">
+          <ion-card-content>
+            <ion-icon name="book-outline"></ion-icon>
+            <h4>Education</h4>
+            <p>Kidney health</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6" style="margin-top: 0.5rem;">
+        <ion-card button routerLink="/profile" class="action-card ion-no-margin">
+          <ion-card-content>
+            <ion-icon name="person-circle-outline"></ion-icon>
+            <h4>Profile</h4>
+            <p>Your records</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div class="section-title">
+    <h3>Hydration Progress</h3>
+  </div>
+
+  <ion-card class="progress-card">
+    <ion-card-content>
+      <div class="progress-header">
+        <ion-label>Today's Intake</ion-label>
+        <strong>1500 / 2000 ml</strong>
+      </div>
+      <ion-progress-bar value="0.75"></ion-progress-bar>
+    </ion-card-content>
+  </ion-card>
+
+  <div class="section-title">
+    <h3>Daily Checklist</h3>
+  </div>
+
+  <ion-list class="reminder-list ion-no-padding">
+    <ion-item lines="full">
+      <ion-icon slot="start" color="primary" name="water-outline"></ion-icon>
+      <ion-label>Drink 2L Water</ion-label>
+      <ion-checkbox slot="end"></ion-checkbox>
+    </ion-item>
+    <ion-item lines="full">
+      <ion-icon slot="start" color="success" name="walk-outline"></ion-icon>
+      <ion-label>Walk 30 Minutes</ion-label>
+      <ion-checkbox slot="end"></ion-checkbox>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-icon slot="start" color="warning" name="nutrition-outline"></ion-icon>
+      <ion-label>Check Salt Intake</ion-label>
+      <ion-checkbox slot="end"></ion-checkbox>
+    </ion-item>
+  </ion-list>
+
+  <div class="section-title">
+    <h3>Kidney Insights</h3>
+  </div>
+
+  <ion-card button class="article-card">
+    <ion-card-content>
+      <ion-badge color="primary">HEALTH</ion-badge>
+      <h3>Early Symptoms of Chronic Kidney Disease</h3>
+      <p>Learn the early signs before CKD becomes severe.</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card button class="article-card">
+    <ion-card-content>
+      <ion-badge color="success">LIFESTYLE</ion-badge>
+      <h3>Foods That Help Protect Your Kidneys</h3>
+      <p>Discover healthy foods to maintain kidney function.</p>
+    </ion-card-content>
+  </ion-card>
+
+  <div style="height: 2rem;"></div>
+</ion-content>

@@ -1,0 +1,29 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+ion-tabs {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+ion-router-outlet {
+  flex: 1;
+  height: 100%;
+  position: relative;
+  pointer-events: auto !important;
+}
+
+ion-tab-bar {
+  --background: #ffffff;
+  --color: var(--ion-color-medium);
+  --color-selected: var(--ion-color-primary);
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
+  flex-shrink: 0;
+}
+
+ion-tab-button {
+  --padding-bottom: 0.4rem;
+}
