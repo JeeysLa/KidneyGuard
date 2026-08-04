@@ -27,29 +27,32 @@
 
     <ion-card-content>
 
-      <ion-item>
-        <ion-label position="stacked">Age</ion-label>
-        <ion-input
-          type="number"
-          placeholder="Enter your age">
-        </ion-input>
-      </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Age</ion-label>
+          <ion-input
+            type="number"
+            placeholder="Enter your age"
+            [(ngModel)]="age">
+          </ion-input>
+        </ion-item>
 
-      <ion-item>
-        <ion-label position="stacked">Weight (kg)</ion-label>
-        <ion-input
-          type="number"
-          placeholder="Enter your weight">
-        </ion-input>
-      </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Weight (kg)</ion-label>
+          <ion-input
+            type="number"
+            placeholder="Enter your weight"
+            [(ngModel)]="weight">
+          </ion-input>
+        </ion-item>
 
-      <ion-item>
-        <ion-label position="stacked">Height (cm)</ion-label>
-        <ion-input
-          type="number"
-          placeholder="Enter your height">
-        </ion-input>
-      </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Height (cm)</ion-label>
+          <ion-input
+            type="number"
+            placeholder="Enter your height"
+            [(ngModel)]="height">
+          </ion-input>
+        </ion-item>
 
     </ion-card-content>
 
@@ -66,35 +69,23 @@
     <ion-card-content>
 
       <ion-item>
-
         <ion-label>Diabetes</ion-label>
-
-        <ion-toggle></ion-toggle>
-
+        <ion-toggle [(ngModel)]="diabetes"></ion-toggle>
       </ion-item>
 
       <ion-item>
-
         <ion-label>Hypertension</ion-label>
-
-        <ion-toggle></ion-toggle>
-
+        <ion-toggle [(ngModel)]="hypertension"></ion-toggle>
       </ion-item>
 
       <ion-item>
-
         <ion-label>Family History of CKD</ion-label>
-
-        <ion-toggle></ion-toggle>
-
+        <ion-toggle [(ngModel)]="familyHistory"></ion-toggle>
       </ion-item>
 
       <ion-item>
-
         <ion-label>Smoking</ion-label>
-
-        <ion-toggle></ion-toggle>
-
+        <ion-toggle [(ngModel)]="smoking"></ion-toggle>
       </ion-item>
 
     </ion-card-content>
@@ -112,29 +103,25 @@
     <ion-card-content>
 
       <ion-item>
-
         <ion-label position="stacked">
           Daily Water Intake (ml)
         </ion-label>
-
         <ion-input
           type="number"
-          placeholder="Example: 2000">
+          placeholder="Example: 2000"
+          [(ngModel)]="waterIntake">
         </ion-input>
-
       </ion-item>
 
       <ion-item>
-
         <ion-label position="stacked">
           Exercise (minutes/day)
         </ion-label>
-
         <ion-input
           type="number"
-          placeholder="Example: 30">
+          placeholder="Example: 30"
+          [(ngModel)]="exercise">
         </ion-input>
-
       </ion-item>
 
     </ion-card-content>
@@ -147,31 +134,31 @@
 
     <ion-button
       expand="block"
-      size="large">
-
+      size="large"
+      (click)="predictRisk()">
       Predict Risk
-
     </ion-button>
 
   </div>
 
   <!-- Result -->
 
+  <p *ngIf="validationMessage" style="margin: 0 1.25rem 0.75rem; color: var(--ion-color-danger); font-weight: 600;">
+    {{ validationMessage }}
+  </p>
+
   <ion-card class="result-card">
 
     <ion-card-content>
 
-      <ion-chip color="success">
-
-        Low Risk
-
+      <ion-chip [color]="risk < 30 ? 'success' : risk < 60 ? 'warning' : 'danger'">
+        {{ riskStatus }}
       </ion-chip>
 
-      <h1>18%</h1>
+      <h1>{{ risk }}%</h1>
 
       <p>
-        Based on your lifestyle and health information,
-        your kidney disease risk is currently low.
+        Based on your inputs, your estimated kidney disease risk is {{ riskStatus.toLowerCase() }}.
       </p>
 
     </ion-card-content>
