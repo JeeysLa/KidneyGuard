@@ -3,8 +3,8 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'onboarding',
-    pathMatch: 'full',
+    loadComponent: () =>
+      import('./entry/entry.page').then((m) => m.EntryPage),
   },
 
   {

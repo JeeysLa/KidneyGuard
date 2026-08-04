@@ -22,16 +22,8 @@ export class AppComponent implements OnInit {
         this.showBottomNav = this.shouldShowBottomNav(event.urlAfterRedirects);
       });
 
-    const completed = this.hasCompletedOnboarding();
-    const currentUrl = this.router.url;
-
-    if (!completed && currentUrl === '/') {
-      this.router.navigateByUrl('/onboarding', { replaceUrl: true });
-    } else if (completed && currentUrl === '/') {
-      this.router.navigateByUrl('/home', { replaceUrl: true });
-    } else {
-      this.showBottomNav = this.shouldShowBottomNav(currentUrl);
-    }
+    // Initialize bottom nav visibility based on current URL
+    this.showBottomNav = this.shouldShowBottomNav(this.router.url);
   }
 
   private hasCompletedOnboarding(): boolean {

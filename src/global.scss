@@ -33,6 +33,16 @@ ion-app > ion-router-outlet {
   display: block;
 }
 
+/* Give page content room so the fixed bottom nav does not cover the last items */
+ion-content {
+  --padding-bottom: calc(84px + env(safe-area-inset-bottom));
+}
+
+.ion-page {
+  padding-bottom: calc(72px + env(safe-area-inset-bottom));
+  box-sizing: border-box;
+}
+
 /* Force active pages to be clickable and visible */
 .ion-page:not(.ion-page-hidden):not(.ion-page-invisible) {
   pointer-events: auto !important;

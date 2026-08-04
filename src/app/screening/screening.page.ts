@@ -63,10 +63,30 @@ export class ScreeningPage {
 
   risk = 18;
   riskStatus = 'Low Risk';
+  validationMessage = '';
 
   constructor() {}
 
+  private isValidPositiveNumber(value: number | null | undefined): boolean {
+    return typeof value === 'number' && Number.isFinite(value) && value > 0;
+  }
+
   predictRisk() {
+    this.validationMessage = '';
+
+    if (!this.isValidPositiveNumber(this.age)) {
+      this.validationMessage = 'Please enter a valid age.';
+      this.risk = 18;
+      this.riskStatus = 'Low Risk';
+      return;
+    }
+
+    if (!this.isValidPositiveNumber(this.weight) || !this.isValidPositiveNumber(this.height)) {
+      this.validationMessage = 'Please enter valid weight and height.';
+      this.risk = 18;
+      this.riskStatus = 'Low Risk';
+      return;
+    }
 
     // Dummy Prediction
     // Nanti diganti AI / Machine Learning

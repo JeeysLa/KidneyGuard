@@ -6,8 +6,10 @@ import { register } from 'swiper/element/bundle';
 
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
+import { registerIcons } from './app/icons';
 
 register();
+registerIcons();
 
 bootstrapApplication(AppComponent, {
   providers: [
