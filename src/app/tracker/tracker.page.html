@@ -1,191 +1,90 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title>Health Tracker</ion-title>
+    <ion-title>{{ ts.translate('trackerTitle') }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-
-  <!-- Header -->
-
+  <!-- Header Title -->
   <div class="header-section">
-
-    <h2>Daily Health Tracker</h2>
-
+    <h2>{{ ts.translate('trackerTitle') }}</h2>
     <p>
-      Monitor your daily healthy habits to maintain optimal kidney health.
+      {{ ts.activeLanguage === 'en' ? 'Monitor your daily healthy habits to maintain optimal kidney health.' : 'Pantau kebiasaan sehat harian Anda untuk menjaga kesehatan ginjal secara optimal.' }}
     </p>
-
   </div>
 
   <!-- Water Intake -->
-
-  <ion-card>
-
-    <ion-card-header>
-
-      <ion-card-title>
-        💧 Water Intake
-      </ion-card-title>
-
-    </ion-card-header>
-
+  <ion-card class="tracker-card">
     <ion-card-content>
-
-      <h1>{{ water }} ml</h1>
-
-      <p>Target: {{ waterTarget }} ml</p>
-
-      <ion-progress-bar
-        [value]="waterProgress">
-      </ion-progress-bar>
-
-      <ion-button
-        expand="block"
-        class="tracker-btn"
-        (click)="addWater()">
-
-        Add Water
-
+      <div class="card-header-box">
+        <h3>💧 {{ ts.translate('waterIntake') }}</h3>
+        <span class="target-lbl">{{ ts.translate('target') }}: {{ waterTarget }} ml</span>
+      </div>
+      <h1 class="metric-value">{{ water }} ml</h1>
+      <ion-progress-bar [value]="waterProgress" class="progress-bar"></ion-progress-bar>
+      <ion-button expand="block" class="tracker-btn" (click)="addWater()">
+        {{ ts.translate('logWater') }}
       </ion-button>
-
     </ion-card-content>
-
   </ion-card>
 
   <!-- Exercise -->
-
-  <ion-card>
-
-    <ion-card-header>
-
-      <ion-card-title>
-        🚶 Exercise
-      </ion-card-title>
-
-    </ion-card-header>
-
+  <ion-card class="tracker-card">
     <ion-card-content>
-
-      <h1>{{ exercise }} min</h1>
-
-      <p>Daily Target: {{ exerciseTarget }} minutes</p>
-
-      <ion-progress-bar
-        color="success"
-        [value]="exerciseProgress">
-      </ion-progress-bar>
-
-      <ion-button
-        expand="block"
-        color="success"
-        class="tracker-btn"
-        (click)="addExercise()">
-
-        Add Exercise
-
+      <div class="card-header-box">
+        <h3>🚶 {{ ts.translate('exercise') }}</h3>
+        <span class="target-lbl">{{ ts.activeLanguage === 'en' ? 'Daily Target' : 'Target Harian' }}: {{ exerciseTarget }} min</span>
+      </div>
+      <h1 class="metric-value">{{ exercise }} min</h1>
+      <ion-progress-bar color="success" [value]="exerciseProgress" class="progress-bar"></ion-progress-bar>
+      <ion-button expand="block" color="success" class="tracker-btn" (click)="addExercise()">
+        {{ ts.activeLanguage === 'en' ? 'Add Exercise' : 'Catat Olahraga' }}
       </ion-button>
-
     </ion-card-content>
-
   </ion-card>
 
   <!-- Sleep -->
-
-  <ion-card>
-
-    <ion-card-header>
-
-      <ion-card-title>
-        😴 Sleep
-      </ion-card-title>
-
-    </ion-card-header>
-
+  <ion-card class="tracker-card">
     <ion-card-content>
-
-      <h1>{{ sleep }} Hours</h1>
-
-      <p>Recommended: {{ sleepTarget }} Hours</p>
-
-      <ion-progress-bar
-        color="warning"
-        [value]="sleepProgress">
-      </ion-progress-bar>
-
-      <ion-button
-        expand="block"
-        color="warning"
-        class="tracker-btn"
-        (click)="updateSleep()">
-
-        Update Sleep
-
+      <div class="card-header-box">
+        <h3>😴 {{ ts.translate('sleep') }}</h3>
+        <span class="target-lbl">{{ ts.activeLanguage === 'en' ? 'Recommended' : 'Disarankan' }}: {{ sleepTarget }} Hours</span>
+      </div>
+      <h1 class="metric-value">{{ sleep }} Hours</h1>
+      <ion-progress-bar color="warning" [value]="sleepProgress" class="progress-bar"></ion-progress-bar>
+      <ion-button expand="block" color="warning" class="tracker-btn" (click)="updateSleep()">
+        {{ ts.activeLanguage === 'en' ? 'Update Sleep' : 'Catat Tidur' }}
       </ion-button>
-
     </ion-card-content>
-
   </ion-card>
 
   <!-- Blood Pressure -->
-
-  <ion-card>
-
-    <ion-card-header>
-
-      <ion-card-title>
-        ❤️ Blood Pressure
-      </ion-card-title>
-
-    </ion-card-header>
-
+  <ion-card class="tracker-card">
     <ion-card-content>
-
-      <h1>{{ systolic }} / {{ diastolic }}</h1>
-
-      <p>{{ bloodPressureText }}</p>
-
-      <ion-chip [color]="bloodPressureStatus === 'Healthy' ? 'success' : 'danger'">
-
-        {{ bloodPressureStatus }}
-
-      </ion-chip>
-
+      <div class="card-header-box">
+        <h3>❤️ {{ ts.translate('bloodPressure') }}</h3>
+        <ion-chip [color]="systolic < 130 && diastolic < 80 ? 'success' : 'danger'" class="bp-badge">
+          {{ bpStatusTranslated }}
+        </ion-chip>
+      </div>
+      <h1 class="metric-value">{{ systolic }} / {{ diastolic }} <small>mmHg</small></h1>
+      <p class="bp-status-text">{{ bpTextTranslated }}</p>
     </ion-card-content>
-
   </ion-card>
 
   <!-- Weight -->
-
-  <ion-card>
-
-    <ion-card-header>
-
-      <ion-card-title>
-        ⚖️ Body Weight
-      </ion-card-title>
-
-    </ion-card-header>
-
+  <ion-card class="tracker-card">
     <ion-card-content>
-
-      <h1>{{ weight }} kg</h1>
-
-      <p>Body Mass Index: {{ bmi }}</p>
-
-      <ion-button
-        expand="block"
-        fill="outline"
-        (click)="updateWeight()">
-
-        Update Weight
-
+      <div class="card-header-box">
+        <h3>⚖️ {{ ts.translate('bodyWeight') }}</h3>
+        <span class="target-lbl">BMI: {{ bmi }}</span>
+      </div>
+      <h1 class="metric-value">{{ weight }} kg</h1>
+      <ion-button expand="block" fill="outline" class="tracker-btn" (click)="updateWeight()">
+        {{ ts.activeLanguage === 'en' ? 'Update Weight' : 'Catat Berat' }}
       </ion-button>
-
     </ion-card-content>
-
   </ion-card>
 
-  <br><br>
-
+  <div style="height: 2rem;"></div>
 </ion-content>

@@ -1,144 +1,221 @@
-<ion-header class="ion-no-border">
+<ion-header class="ion-no-border home-header">
   <ion-toolbar>
-    <ion-title>KidneyGuard AI</ion-title>
+    <ion-title>{{ ts.translate('appName') }}</ion-title>
     <ion-buttons slot="end">
-      <ion-button fill="clear">
+      <ion-button fill="clear" routerLink="/notifications" class="notif-btn">
         <ion-icon slot="icon-only" name="notifications-outline"></ion-icon>
+        <ion-badge color="danger" class="badge-dot" *ngIf="unreadNotifications > 0">
+          {{ unreadNotifications }}
+        </ion-badge>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <div class="header-section">
-    <p class="greeting">Good Morning 👋</p>
-    <h2>Let's keep your kidneys healthy.</h2>
-    <p>Your health journey starts today.</p>
+<ion-content [fullscreen]="true" *ngIf="stats$ | async as stats">
+  
+  <!-- Welcome Greeting Banner -->
+  <div class="welcome-banner">
+    <p class="greeting-lbl">{{ greetingText }}</p>
+    <h2>{{ ts.translate('homeSubtitle') }}</h2>
+    <p class="summary-lbl">{{ ts.translate('homeSummary') }}</p>
   </div>
 
-  <ion-card class="risk-card">
-    <ion-card-content>
-      <ion-chip>
-        <ion-icon name="shield-checkmark-outline"></ion-icon>
-        <ion-label>LOW RISK</ion-label>
-      </ion-chip>
+  <div class="dashboard-body">
+    
+    <!-- Health Status / Screening Card -->
+    <ion-card class="summary-card">
+      <ion-card-content>
+        <!-- Case 1: Screening History Exists -->
+        <ng-container *ngIf="latestScreening; else emptyScreening">
+          <div class="summary-top">
+            <span class="chip-label">{{ ts.translate('latestScreening') }}</span>
+            <ion-chip [color]="riskColor" class="risk-indicator-chip">
+              <ion-icon name="shield-checkmark-outline"></ion-icon>
+              <ion-label>{{ ts.translate(stats.riskScore < 30 ? 'riskLow' : stats.riskScore < 60 ? 'riskMed' : 'riskHigh') }}</ion-label>
+            </ion-chip>
+          </div>
 
-      <h1>18%</h1>
-      <p>Last Screening Result</p>
+          <div class="risk-score-box">
+            <h1>{{ stats.riskScore }}%</h1>
+            <p>{{ ts.activeLanguage === 'en' ? 'Estimated Kidney Hazard' : 'Perkiraan Bahaya Ginjal' }}</p>
+          </div>
 
+          <ion-grid class="ion-no-padding stats-small-grid">
+            <ion-row>
+              <ion-col size="6">
+                <span class="lbl">{{ ts.activeLanguage === 'en' ? 'Status' : 'Kondisi' }}</span>
+                <span class="val">{{ ts.translate(stats.riskScore < 30 ? 'riskLow' : stats.riskScore < 60 ? 'riskMed' : 'riskHigh') }}</span>
+              </ion-col>
+              <ion-col size="6" class="ion-text-end">
+                <span class="lbl">BMI</span>
+                <span class="val">{{ activeBmi }} kg/m²</span>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ng-container>
+
+        <!-- Case 2: No Screening History -->
+        <ng-template #emptyScreening>
+          <div class="empty-screening-box ion-text-center">
+            <div class="screening-pulse-logo">
+              <ion-icon name="pulse-outline"></ion-icon>
+            </div>
+            <h4>{{ ts.activeLanguage === 'en' ? 'Check Your Kidney Risk' : 'Periksa Risiko Ginjal Anda' }}</h4>
+            <p>{{ ts.activeLanguage === 'en' ? 'Take our short screening survey to verify your health index using AI.' : 'Ikuti survei skrining singkat kami untuk memverifikasi indeks kesehatan Anda menggunakan AI.' }}</p>
+            <ion-button expand="block" routerLink="/screening" class="start-btn">
+              <ion-icon name="pulse-outline" slot="start"></ion-icon>
+              {{ ts.activeLanguage === 'en' ? 'Start Assessment' : 'Mulai Penilaian' }}
+            </ion-button>
+          </div>
+        </ng-template>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Quick Action Cards Grid -->
+    <div class="section-title">
+      <h3>{{ ts.translate('quickActions') }}</h3>
+    </div>
+    
+    <ion-grid class="ion-no-padding grid-actions-box">
       <ion-row>
         <ion-col size="6">
-          <small>Status</small>
-          <strong>Healthy</strong>
+          <ion-card button routerLink="/screening" class="action-card ion-no-margin">
+            <ion-card-content>
+              <div class="action-icon-wrap primary">
+                <ion-icon name="pulse-outline"></ion-icon>
+              </div>
+              <h4>{{ ts.activeLanguage === 'en' ? 'Risk Check' : 'Cek Risiko' }}</h4>
+              <p>{{ ts.activeLanguage === 'en' ? 'AI Screening' : 'Skrining AI' }}</p>
+            </ion-card-content>
+          </ion-card>
         </ion-col>
-        <ion-col size="6" class="ion-text-end">
-          <small>Trend</small>
-          <strong>Stable</strong>
+        <ion-col size="6">
+          <ion-card button class="action-card ion-no-margin" (click)="addWater()">
+            <ion-card-content>
+              <div class="action-icon-wrap success">
+                <ion-icon name="water-outline"></ion-icon>
+              </div>
+              <h4>{{ ts.translate('logWater') }}</h4>
+              <p>+250ml</p>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6" style="margin-top: 0.75rem;">
+          <ion-card button routerLink="/education" class="action-card ion-no-margin">
+            <ion-card-content>
+              <div class="action-icon-wrap secondary">
+                <ion-icon name="book-outline"></ion-icon>
+              </div>
+              <h4>{{ ts.translate('educationTitle') }}</h4>
+              <p>{{ ts.activeLanguage === 'en' ? 'Guides' : 'Panduan' }}</p>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6" style="margin-top: 0.75rem;">
+          <ion-card button routerLink="/profile" class="action-card ion-no-margin">
+            <ion-card-content>
+              <div class="action-icon-wrap warning">
+                <ion-icon name="person-outline"></ion-icon>
+              </div>
+              <h4>{{ ts.activeLanguage === 'en' ? 'Profile' : 'Profil' }}</h4>
+              <p>{{ ts.activeLanguage === 'en' ? 'Settings' : 'Pengaturan' }}</p>
+            </ion-card-content>
+          </ion-card>
         </ion-col>
       </ion-row>
-    </ion-card-content>
-  </ion-card>
+    </ion-grid>
 
-  <div class="section-title">
-    <h3>Quick Actions</h3>
+    <!-- Hydration Radial Progress Ring -->
+    <div class="section-title justify-title">
+      <h3>{{ ts.translate('hydrationProgress') }}</h3>
+      <ion-button fill="clear" size="small" class="reset-btn" (click)="resetWater()">
+        {{ ts.activeLanguage === 'en' ? 'Reset' : 'Atur Ulang' }}
+      </ion-button>
+    </div>
+
+    <ion-card class="hydration-radial-card">
+      <ion-card-content>
+        <div class="radial-layout">
+          <!-- SVG Progress Ring -->
+          <div class="svg-ring-box">
+            <svg viewBox="0 0 80 80" class="hydration-ring-svg">
+              <circle cx="40" cy="40" r="35" class="bg-ring" />
+              <circle cx="40" cy="40" r="35" class="progress-ring" [attr.stroke-dashoffset]="strokeDashoffset" />
+            </svg>
+            <div class="ring-label-overlay">
+              <strong>{{ waterPercentage }}%</strong>
+              <span>{{ ts.activeLanguage === 'en' ? 'Done' : 'Selesai' }}</span>
+            </div>
+          </div>
+          
+          <div class="hydration-text-box">
+            <h4>{{ ts.translate('todayIntake') }}</h4>
+            <h2>{{ stats.waterIntake }} <small>/ {{ stats.waterGoal }} ml</small></h2>
+            <ion-button size="small" class="quick-log-btn" (click)="addWater()">
+              <ion-icon name="water-outline" slot="start"></ion-icon>
+              {{ ts.translate('logWater') }} (+250ml)
+            </ion-button>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Daily Checklist -->
+    <div class="section-title">
+      <h3>{{ ts.translate('dailyChecklist') }}</h3>
+    </div>
+
+    <ion-list class="reminder-list ion-no-padding">
+      <ion-item lines="full" class="checklist-item">
+        <div class="icon-wrap primary" slot="start">
+          <ion-icon name="water-outline"></ion-icon>
+        </div>
+        <ion-label>{{ ts.translate('checklistWater') }}</ion-label>
+        <ion-checkbox slot="end" [checked]="stats.checklist.water" (ionChange)="updateChecklist('water', $event)"></ion-checkbox>
+      </ion-item>
+      <ion-item lines="full" class="checklist-item">
+        <div class="icon-wrap success" slot="start">
+          <ion-icon name="walk-outline"></ion-icon>
+        </div>
+        <ion-label>{{ ts.translate('checklistWalk') }}</ion-label>
+        <ion-checkbox slot="end" [checked]="stats.checklist.walk" (ionChange)="updateChecklist('walk', $event)"></ion-checkbox>
+      </ion-item>
+      <ion-item lines="none" class="checklist-item">
+        <div class="icon-wrap warning" slot="start">
+          <ion-icon name="nutrition-outline"></ion-icon>
+        </div>
+        <ion-label>{{ ts.translate('checklistSalt') }}</ion-label>
+        <ion-checkbox slot="end" [checked]="stats.checklist.salt" (ionChange)="updateChecklist('salt', $event)"></ion-checkbox>
+      </ion-item>
+    </ion-list>
+
+    <!-- Insights Articles -->
+    <div class="section-title justify-title">
+      <h3>{{ ts.translate('kidneyInsights') }}</h3>
+      <ion-button fill="clear" size="small" routerLink="/education" class="view-all-btn">
+        {{ ts.activeLanguage === 'en' ? 'View All' : 'Semua' }}
+      </ion-button>
+    </div>
+
+    <div class="insights-grid">
+      <ion-card button class="article-card ion-no-margin" [routerLink]="['/education-detail']" [queryParams]="{ id: 'ckd-symptoms' }">
+        <ion-card-content>
+          <ion-badge color="primary" mode="ios">HEALTH</ion-badge>
+          <h4>Early Symptoms of Chronic Kidney Disease</h4>
+          <p>Learn the early signs before CKD becomes severe.</p>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card button class="article-card ion-no-margin" style="margin-top: 0.75rem;" [routerLink]="['/education-detail']" [queryParams]="{ id: 'kidney-foods' }">
+        <ion-card-content>
+          <ion-badge color="success" mode="ios">LIFESTYLE</ion-badge>
+          <h4>Foods That Help Protect Your Kidneys</h4>
+          <p>Discover healthy foods to maintain kidney function.</p>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <div style="height: 2rem;"></div>
   </div>
-
-  <ion-grid class="ion-no-padding" style="margin: 0 0.75rem;">
-    <ion-row>
-      <ion-col size="6">
-        <ion-card button routerLink="/screening" class="action-card ion-no-margin">
-          <ion-card-content>
-            <ion-icon name="pulse-outline"></ion-icon>
-            <h4>Screening</h4>
-            <p>Risk assessment</p>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-      <ion-col size="6">
-        <ion-card button class="action-card ion-no-margin">
-          <ion-card-content>
-            <ion-icon name="water-outline"></ion-icon>
-            <h4>Tracker</h4>
-            <p>Hydration logs</p>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-      <ion-col size="6" style="margin-top: 0.5rem;">
-        <ion-card button routerLink="/education" class="action-card ion-no-margin">
-          <ion-card-content>
-            <ion-icon name="book-outline"></ion-icon>
-            <h4>Education</h4>
-            <p>Kidney health</p>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-      <ion-col size="6" style="margin-top: 0.5rem;">
-        <ion-card button routerLink="/profile" class="action-card ion-no-margin">
-          <ion-card-content>
-            <ion-icon name="person-circle-outline"></ion-icon>
-            <h4>Profile</h4>
-            <p>Your records</p>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-
-  <div class="section-title">
-    <h3>Hydration Progress</h3>
-  </div>
-
-  <ion-card class="progress-card">
-    <ion-card-content>
-      <div class="progress-header">
-        <ion-label>Today's Intake</ion-label>
-        <strong>1500 / 2000 ml</strong>
-      </div>
-      <ion-progress-bar value="0.75"></ion-progress-bar>
-    </ion-card-content>
-  </ion-card>
-
-  <div class="section-title">
-    <h3>Daily Checklist</h3>
-  </div>
-
-  <ion-list class="reminder-list ion-no-padding">
-    <ion-item lines="full">
-      <ion-icon slot="start" color="primary" name="water-outline"></ion-icon>
-      <ion-label>Drink 2L Water</ion-label>
-      <ion-checkbox slot="end"></ion-checkbox>
-    </ion-item>
-    <ion-item lines="full">
-      <ion-icon slot="start" color="success" name="walk-outline"></ion-icon>
-      <ion-label>Walk 30 Minutes</ion-label>
-      <ion-checkbox slot="end"></ion-checkbox>
-    </ion-item>
-    <ion-item lines="none">
-      <ion-icon slot="start" color="warning" name="nutrition-outline"></ion-icon>
-      <ion-label>Check Salt Intake</ion-label>
-      <ion-checkbox slot="end"></ion-checkbox>
-    </ion-item>
-  </ion-list>
-
-  <div class="section-title">
-    <h3>Kidney Insights</h3>
-  </div>
-
-  <ion-card button class="article-card">
-    <ion-card-content>
-      <ion-badge color="primary">HEALTH</ion-badge>
-      <h3>Early Symptoms of Chronic Kidney Disease</h3>
-      <p>Learn the early signs before CKD becomes severe.</p>
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card button class="article-card">
-    <ion-card-content>
-      <ion-badge color="success">LIFESTYLE</ion-badge>
-      <h3>Foods That Help Protect Your Kidneys</h3>
-      <p>Discover healthy foods to maintain kidney function.</p>
-    </ion-card-content>
-  </ion-card>
-
-  <div style="height: 2rem;"></div>
 </ion-content>

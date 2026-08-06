@@ -1,0 +1,72 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>{{ ts.translate('resultTitle') }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="result-wrapper">
+    
+    <!-- Dynamic Risk Circle -->
+    <div class="result-circle-box">
+      <svg viewBox="0 0 100 100" class="radial-svg">
+        <circle cx="50" cy="50" r="45" class="bg-circle" />
+        <circle cx="50" cy="50" r="45" [attr.stroke-dashoffset]="strokeDashoffset" [attr.class]="'progress-circle ' + riskColor" />
+      </svg>
+      <div class="score-overlay">
+        <h2>{{ score }}%</h2>
+        <span class="status-badge" [attr.class]="'status-badge ' + riskColor">
+          {{ ts.translate(score < 30 ? 'riskLow' : score < 60 ? 'riskMed' : 'riskHigh') }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Friendly Explanation Card -->
+    <ion-card class="info-card">
+      <ion-card-content>
+        <div class="intro-box">
+          <p class="greeting-lbl">{{ ts.activeLanguage === 'en' ? 'Hello' : 'Halo' }}, {{ userName }}</p>
+          <p class="desc-text">{{ explanation }}</p>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Guest Action Banner -->
+    <ion-card class="guest-banner" *ngIf="isGuest">
+      <ion-card-content>
+        <div class="banner-body">
+          <ion-icon name="alert-circle-outline" color="warning"></ion-icon>
+          <div class="banner-text">
+            <h4>{{ ts.activeLanguage === 'en' ? 'Screening History' : 'Riwayat Skrining' }}</h4>
+            <p>{{ ts.translate('guestWarning') }}</p>
+          </div>
+        </div>
+        <ion-button expand="block" class="auth-promo-btn" (click)="saveToAccount()">
+          <ion-icon name="log-in-outline" slot="start"></ion-icon>
+          {{ ts.translate('saveHistoryBtn') }}
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Action Recommendations List -->
+    <div class="recommendations-box">
+      <h3>{{ ts.translate('recommendations') }}</h3>
+      <ion-card class="tips-card">
+        <ion-card-content class="ion-no-padding">
+          <div *ngFor="let tip of tipsList; let i = index" class="tip-item">
+            <div class="tip-number">{{ i + 1 }}</div>
+            <p class="tip-text">{{ tip }}</p>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <!-- Done Action Button -->
+    <div class="footer-btn-box">
+      <ion-button expand="block" class="dashboard-btn" (click)="goToDashboard()">
+        {{ ts.translate('doneBtn') }}
+      </ion-button>
+    </div>
+
+  </div>
+</ion-content>

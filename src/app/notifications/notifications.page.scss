@@ -1,0 +1,182 @@
+.notifications-wrapper {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.notifications-list {
+  background: transparent;
+
+  .notification-item {
+    --background: #ffffff;
+    --inner-padding-end: 0.5rem;
+    --padding-start: 0.5rem;
+    --border-color: #edf2f7;
+    margin-bottom: 0.75rem;
+    border: 1px solid rgba(30, 92, 255, 0.04);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(30, 92, 255, 0.02);
+
+    .icon-badge {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 0.75rem;
+      flex-shrink: 0;
+
+      ion-icon {
+        font-size: 1.25rem;
+      }
+
+      &.primary {
+        background: rgba(30, 92, 255, 0.08);
+        color: #1e5cff;
+      }
+      &.success {
+        background: rgba(45, 211, 111, 0.08);
+        color: #2dd36f;
+      }
+      &.secondary {
+        background: rgba(61, 194, 255, 0.08);
+        color: #3dc2ff;
+      }
+      &.warning {
+        background: rgba(255, 196, 9, 0.1);
+        color: #ffc409;
+      }
+    }
+
+    .notif-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.25rem;
+
+      h3 {
+        font-weight: 700;
+        font-size: 0.95rem;
+        color: #1a202c;
+        margin: 0;
+      }
+
+      .time-lbl {
+        font-size: 0.75rem;
+        color: #a0aec0;
+      }
+    }
+
+    .body-text {
+      margin: 0;
+      font-size: 0.85rem;
+      color: #4a5568;
+      line-height: 1.4;
+    }
+
+    .unread-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #1e5cff;
+      margin-left: 0.5rem;
+    }
+  }
+}
+
+// Empty state styling
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 5rem 2rem;
+
+  .empty-icon-box {
+    width: 70px;
+    height: 70px;
+    background: #edf2f7;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+    color: #a0aec0;
+
+    ion-icon {
+      font-size: 2.2rem;
+    }
+  }
+
+  h4 {
+    font-weight: 700;
+    color: #2d3748;
+    margin: 0 0 0.5rem;
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #718096;
+    line-height: 1.4;
+    max-width: 250px;
+  }
+}
+
+// Dark Mode Support
+body.dark {
+  .notifications-list {
+    .notification-item {
+      --background: #1e1e1e;
+      --border-color: #2d2d2d;
+      border-color: rgba(255, 255, 255, 0.05);
+
+      .icon-badge {
+        &.primary {
+          background: rgba(61, 194, 255, 0.15);
+          color: #3dc2ff;
+        }
+        &.success {
+          background: rgba(45, 211, 111, 0.15);
+          color: #2dd36f;
+        }
+        &.secondary {
+          background: rgba(61, 194, 255, 0.12);
+          color: #3dc2ff;
+        }
+      }
+
+      .notif-header {
+        h3 {
+          color: #ffffff;
+        }
+        .time-lbl {
+          color: #718096;
+        }
+      }
+
+      .body-text {
+        color: #cbd5e0;
+      }
+
+      .unread-dot {
+        background: #3dc2ff;
+      }
+    }
+  }
+
+  .empty-state {
+    .empty-icon-box {
+      background: #2d2d2d;
+      color: #718096;
+    }
+    h4 {
+      color: #ffffff;
+    }
+    p {
+      color: #cbd5e0;
+    }
+  }
+}

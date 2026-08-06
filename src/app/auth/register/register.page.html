@@ -1,0 +1,99 @@
+<ion-content [fullscreen]="true" class="auth-content">
+  <div class="auth-wrapper">
+    <!-- Header Logo & Greeting -->
+    <div class="auth-header ion-text-center">
+      <div class="logo-box">
+        <ion-icon name="medical-outline" color="primary"></ion-icon>
+      </div>
+      <h2>{{ ts.translate('appName') }}</h2>
+      <p>{{ ts.translate('homeSubtitle') }}</p>
+    </div>
+
+    <!-- Card Container -->
+    <ion-card class="auth-card ion-no-margin">
+      <ion-card-content>
+        <h3 class="card-title">{{ ts.translate('register') }}</h3>
+
+        <form (ngSubmit)="onSubmit()">
+          <!-- Name Input -->
+          <div class="input-group">
+            <ion-label class="input-label">{{ ts.translate('fullName') }}</ion-label>
+            <ion-item lines="none" class="custom-input-item">
+              <ion-input
+                type="text"
+                [placeholder]="ts.translate('fullnamePlaceholder')"
+                [(ngModel)]="fullName"
+                name="fullName"
+                required>
+              </ion-input>
+            </ion-item>
+          </div>
+
+          <!-- Email Input -->
+          <div class="input-group" style="margin-top: 1rem;">
+            <ion-label class="input-label">{{ ts.translate('email') }}</ion-label>
+            <ion-item lines="none" class="custom-input-item">
+              <ion-input
+                type="email"
+                placeholder="email@example.com"
+                [(ngModel)]="email"
+                name="email"
+                required>
+              </ion-input>
+            </ion-item>
+          </div>
+
+          <!-- Password Input -->
+          <div class="input-group" style="margin-top: 1rem;">
+            <ion-label class="input-label">{{ ts.translate('password') }}</ion-label>
+            <ion-item lines="none" class="custom-input-item">
+              <ion-input
+                [type]="showPassword ? 'text' : 'password'"
+                placeholder="••••••••"
+                [(ngModel)]="password"
+                name="password"
+                required>
+              </ion-input>
+              <ion-button slot="end" fill="clear" color="medium" class="eye-btn" (click)="togglePassword()">
+                <ion-icon [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+              </ion-button>
+            </ion-item>
+          </div>
+
+          <!-- Confirm Password Input -->
+          <div class="input-group" style="margin-top: 1rem;">
+            <ion-label class="input-label">{{ ts.translate('confirmPassword') }}</ion-label>
+            <ion-item lines="none" class="custom-input-item">
+              <ion-input
+                [type]="showPassword ? 'text' : 'password'"
+                placeholder="••••••••"
+                [(ngModel)]="confirmPassword"
+                name="confirmPassword"
+                required>
+              </ion-input>
+            </ion-item>
+          </div>
+
+          <!-- Error Alert -->
+          <p *ngIf="errorMessage" class="error-msg">
+            <ion-icon name="alert-circle-outline" style="margin-right: 0.25rem;"></ion-icon>
+            {{ errorMessage }}
+          </p>
+
+          <!-- Submit Button -->
+          <ion-button expand="block" type="submit" class="submit-btn">
+            {{ ts.translate('register') }}
+          </ion-button>
+        </form>
+
+        <!-- Divider / Footer Links -->
+        <div class="auth-footer ion-text-center">
+          <p>
+            {{ ts.translate('hasAccount') }}
+            <a routerLink="/auth/login">{{ ts.translate('login') }}</a>
+          </p>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

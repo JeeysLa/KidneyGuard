@@ -1,1 +1,619 @@
-:host{display:block}.header-section{padding:1.25rem}.greeting{margin:0;color:var(--ion-color-primary);font-weight:700}.header-section h2{margin:.35rem 0 .25rem;font-size:1.5rem;font-weight:700}.header-section p{margin:0;color:var(--ion-color-medium)}.risk-card,.progress-card,.article-card,.reminder-list,.action-card{margin:1rem 1.25rem;border-radius:20px;background:#fff;box-shadow:0 8px 20px rgba(15,23,42,.06)}.risk-card{background:linear-gradient(135deg,#1e5cff 0%,#3c8cff 100%);color:#fff}.risk-card ion-card-content{padding:1.25rem}.risk-card h1{margin:.5rem 0;font-size:2.5rem;font-weight:700}.risk-card p{margin:0;opacity:.9}.risk-card ion-row{margin-top:.75rem;padding-top:.75rem;border-top:1px solid rgba(255,255,255,.15)}.section-title{padding:1rem 1.25rem .25rem}.section-title h3{margin:0;font-size:1rem;font-weight:700}.action-card ion-card-content{padding:1rem;display:flex;flex-direction:column;align-items:center;gap:.35rem}.action-card ion-icon{font-size:1.8rem;color:var(--ion-color-primary)}.action-card h4,.action-card p{margin:0;text-align:center}.action-card h4{font-weight:700}.action-card p{font-size:.75rem;color:var(--ion-color-medium)}.progress-card ion-card-content{padding:1rem}.progress-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem}.progress-header strong{color:var(--ion-color-primary)}ion-progress-bar{height:10px;border-radius:8px;--background:#f0f4f9;--progress-background:var(--ion-color-primary)}.reminder-list{overflow:hidden}.reminder-list ion-item{--padding-start:1rem;--padding-end:1rem;--background:transparent}.article-card ion-card-content{padding:1rem}.article-card h3{margin:.25rem 0;font-size:1rem;font-weight:700}.article-card p{margin:0;color:var(--ion-color-medium);font-size:.9rem}
+.home-header {
+  --background: #f4f7fe;
+  
+  .notif-btn {
+    position: relative;
+    --padding-end: 0.5rem;
+
+    .badge-dot {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      font-size: 0.65rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #f4f7fe;
+    }
+  }
+}
+
+.welcome-banner {
+  padding: 1.5rem 1.25rem 2rem;
+  background: #f4f7fe;
+
+  .greeting-lbl {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #1e5cff;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #1a202c;
+    margin: 0.35rem 0;
+  }
+
+  .summary-lbl {
+    margin: 0;
+    color: #718096;
+    font-size: 0.95rem;
+  }
+}
+
+.dashboard-body {
+  padding: 1rem;
+  background: #ffffff;
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
+  margin-top: -1.25rem;
+  position: relative;
+  z-index: 10;
+  min-height: 500px;
+}
+
+.summary-card {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(30, 92, 255, 0.05);
+  border: 1px solid rgba(30, 92, 255, 0.08);
+  margin: -2.5rem 0.25rem 1.5rem;
+  position: relative;
+  z-index: 12;
+
+  ion-card-content {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .summary-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .chip-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #718096;
+    }
+
+    .risk-indicator-chip {
+      height: 26px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin: 0;
+    }
+  }
+
+  .risk-score-box {
+    margin: 1.25rem 0;
+
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: #1a202c;
+      margin: 0;
+      line-height: 1;
+    }
+
+    p {
+      margin: 0.25rem 0 0;
+      color: #718096;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+  }
+
+  .stats-small-grid {
+    border-top: 1px solid #edf2f7;
+    padding-top: 1rem;
+
+    .lbl {
+      display: block;
+      font-size: 0.75rem;
+      color: #a0aec0;
+      font-weight: 600;
+      margin-bottom: 0.15rem;
+    }
+
+    .val {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #2d3748;
+    }
+  }
+}
+
+// Empty screening box
+.empty-screening-box {
+  padding: 1rem 0.5rem;
+
+  .screening-pulse-logo {
+    width: 50px;
+    height: 50px;
+    background: rgba(30, 92, 255, 0.08);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.75rem;
+    color: #1e5cff;
+
+    ion-icon {
+      font-size: 1.75rem;
+    }
+  }
+
+  h4 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1a202c;
+    margin: 0 0 0.35rem;
+  }
+
+  p {
+    margin: 0 0 1.25rem;
+    color: #718096;
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+
+  .start-btn {
+    --border-radius: 10px;
+    --background: #1e5cff;
+    font-weight: 700;
+    margin: 0;
+    height: 42px;
+  }
+}
+
+.section-title {
+  margin: 1rem 0.25rem 0.75rem;
+
+  h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #2d3748;
+    margin: 0;
+  }
+
+  &.justify-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .reset-btn, .view-all-btn {
+      margin: 0;
+      --padding-end: 0;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+  }
+}
+
+.grid-actions-box {
+  margin: 0 0.25rem;
+
+  .action-card {
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid rgba(30, 92, 255, 0.05);
+    box-shadow: 0 4px 15px rgba(30, 92, 255, 0.02);
+    transition: all 0.3s ease;
+
+    &:active {
+      transform: scale(0.97);
+    }
+
+    ion-card-content {
+      padding: 1.25rem 1rem;
+    }
+
+    .action-icon-wrap {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.75rem;
+
+      ion-icon {
+        font-size: 1.25rem;
+      }
+
+      &.primary {
+        background: rgba(30, 92, 255, 0.08);
+        color: #1e5cff;
+      }
+      &.success {
+        background: rgba(45, 211, 111, 0.08);
+        color: #2dd36f;
+      }
+      &.secondary {
+        background: rgba(61, 194, 255, 0.08);
+        color: #3dc2ff;
+      }
+      &.warning {
+        background: rgba(255, 196, 9, 0.1);
+        color: #ffc409;
+      }
+    }
+
+    h4 {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #1a202c;
+      margin: 0 0 0.15rem;
+    }
+
+    p {
+      margin: 0;
+      font-size: 0.75rem;
+      color: #718096;
+    }
+  }
+}
+
+// Hydration card styles
+.hydration-radial-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid rgba(30, 92, 255, 0.05);
+  box-shadow: 0 4px 15px rgba(30, 92, 255, 0.02);
+  margin: 0 0.25rem 1.5rem;
+
+  ion-card-content {
+    padding: 1.25rem;
+  }
+
+  .radial-layout {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+
+    .svg-ring-box {
+      width: 90px;
+      height: 90px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      .hydration-ring-svg {
+        transform: rotate(-90deg);
+        width: 100%;
+        height: 100%;
+
+        circle {
+          fill: none;
+          stroke-width: 6;
+        }
+
+        .bg-ring {
+          stroke: #edf2f7;
+        }
+
+        .progress-ring {
+          stroke: #1e5cff;
+          stroke-linecap: round;
+          stroke-dasharray: 220; // 2 * PI * 35
+          transition: stroke-dashoffset 0.8s ease-in-out;
+        }
+      }
+
+      .ring-label-overlay {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        strong {
+          font-size: 1.15rem;
+          font-weight: 800;
+          color: #1a202c;
+        }
+
+        span {
+          font-size: 0.65rem;
+          font-weight: 700;
+          color: #718096;
+          text-transform: uppercase;
+        }
+      }
+    }
+
+    .hydration-text-box {
+      h4 {
+        margin: 0 0 0.15rem;
+        font-weight: 700;
+        font-size: 0.85rem;
+        color: #718096;
+      }
+
+      h2 {
+        margin: 0 0 0.5rem;
+        font-weight: 800;
+        font-size: 1.4rem;
+        color: #1a202c;
+
+        small {
+          font-size: 0.85rem;
+          color: #a0aec0;
+          font-weight: 600;
+        }
+      }
+
+      .quick-log-btn {
+        --border-radius: 8px;
+        --background: #1e5cff;
+        font-weight: 700;
+        margin: 0;
+        height: 32px;
+        font-size: 0.8rem;
+      }
+    }
+  }
+}
+
+// Checklist items
+.reminder-list {
+  background: transparent;
+  margin: 0 0.25rem 1.5rem;
+
+  .checklist-item {
+    --background: #ffffff;
+    --inner-padding-end: 0.5rem;
+    --padding-start: 0.5rem;
+    --border-color: #edf2f7;
+    margin-bottom: 0.5rem;
+    border: 1px solid rgba(30, 92, 255, 0.03);
+    border-radius: 12px;
+
+    .icon-wrap {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 0.75rem;
+
+      ion-icon {
+        font-size: 1.1rem;
+      }
+
+      &.primary {
+        background: rgba(30, 92, 255, 0.08);
+        color: #1e5cff;
+      }
+      &.success {
+        background: rgba(45, 211, 111, 0.08);
+        color: #2dd36f;
+      }
+      &.warning {
+        background: rgba(255, 196, 9, 0.1);
+        color: #ffc409;
+      }
+    }
+
+    ion-label {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #2d3748;
+    }
+
+    ion-checkbox {
+      --size: 18px;
+      --border-radius: 4px;
+      --background-checked: #1e5cff;
+      --border-color-checked: #1e5cff;
+    }
+  }
+}
+
+// Articles Insights
+.insights-grid {
+  margin: 0 0.25rem;
+
+  .article-card {
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid rgba(30, 92, 255, 0.05);
+    box-shadow: 0 4px 15px rgba(30, 92, 255, 0.02);
+
+    ion-card-content {
+      padding: 1.25rem;
+    }
+
+    ion-badge {
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 0.25rem 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    h4 {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #1a202c;
+      margin: 0 0 0.25rem;
+      line-height: 1.4;
+    }
+
+    p {
+      margin: 0;
+      font-size: 0.8rem;
+      color: #718096;
+      line-height: 1.4;
+    }
+  }
+}
+
+// Dark Mode Support
+body.dark {
+  .home-header {
+    --background: #121212;
+    .notif-btn .badge-dot {
+      border-color: #121212;
+    }
+  }
+
+  .welcome-banner {
+    background: #121212;
+    h2 {
+      color: #ffffff;
+    }
+    .summary-lbl {
+      color: #cbd5e0;
+    }
+  }
+
+  .dashboard-body {
+    background: #1e1e1e;
+  }
+
+  .summary-card {
+    background: #252525;
+    border-color: rgba(255, 255, 255, 0.06);
+    box-shadow: none;
+
+    .summary-top .chip-label {
+      color: #a0aec0;
+    }
+
+    .risk-score-box {
+      h1 {
+        color: #ffffff;
+      }
+      p {
+        color: #a0aec0;
+      }
+    }
+
+    .stats-small-grid {
+      border-color: #323232;
+      .val {
+        color: #e2e8f0;
+      }
+    }
+  }
+
+  .empty-screening-box {
+    .screening-pulse-logo {
+      background: rgba(61, 194, 255, 0.15);
+      color: #3dc2ff;
+    }
+    h4 {
+      color: #ffffff;
+    }
+    p {
+      color: #cbd5e0;
+    }
+  }
+
+  .section-title {
+    h3 {
+      color: #cbd5e0;
+    }
+  }
+
+  .grid-actions-box .action-card {
+    background: #252525;
+    border-color: rgba(255, 255, 255, 0.05);
+
+    .action-icon-wrap {
+      &.primary {
+        background: rgba(61, 194, 255, 0.15);
+        color: #3dc2ff;
+      }
+      &.success {
+        background: rgba(45, 211, 111, 0.15);
+        color: #2dd36f;
+      }
+      &.secondary {
+        background: rgba(61, 194, 255, 0.12);
+        color: #3dc2ff;
+      }
+    }
+
+    h4 {
+      color: #ffffff;
+    }
+    p {
+      color: #a0aec0;
+    }
+  }
+
+  .hydration-radial-card {
+    background: #252525;
+    border-color: rgba(255, 255, 255, 0.05);
+
+    .radial-layout {
+      .svg-ring-box {
+        .hydration-ring-svg {
+          .bg-ring {
+            stroke: #323232;
+          }
+          .progress-ring {
+            stroke: #3dc2ff;
+          }
+        }
+        .ring-label-overlay {
+          strong {
+            color: #ffffff;
+          }
+          span {
+            color: #cbd5e0;
+          }
+        }
+      }
+
+      .hydration-text-box {
+        h2 {
+          color: #ffffff;
+        }
+      }
+    }
+  }
+
+  .reminder-list .checklist-item {
+    --background: #252525;
+    border-color: rgba(255, 255, 255, 0.04);
+
+    .icon-wrap {
+      &.primary {
+        background: rgba(61, 194, 255, 0.15);
+        color: #3dc2ff;
+      }
+      &.success {
+        background: rgba(45, 211, 111, 0.15);
+        color: #2dd36f;
+      }
+    }
+
+    ion-label {
+      color: #e2e8f0;
+    }
+  }
+
+  .insights-grid .article-card {
+    background: #252525;
+    border-color: rgba(255, 255, 255, 0.05);
+    h4 {
+      color: #ffffff;
+    }
+    p {
+      color: #cbd5e0;
+    }
+  }
+}

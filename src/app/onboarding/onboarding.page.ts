@@ -1,6 +1,7 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { AuthService } from '../core/auth.service';
 
 import {
   IonContent,
@@ -24,16 +25,14 @@ import {
 export class OnboardingPage {
 
   constructor(
-    private router: Router
+    private router: Router,
+    private auth: AuthService
   ) {}
 
   startApp() {
-    localStorage.setItem('onboardingCompleted', 'true');
-
-    this.router.navigateByUrl('/home', {
+    this.auth.setGuestSession();
+    this.router.navigateByUrl('/screening', {
       replaceUrl: true
     });
-
   }
-
 }

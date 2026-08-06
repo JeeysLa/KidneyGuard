@@ -1,0 +1,53 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button fill="clear" routerLink="/home">
+        <ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ ts.translate('notificationsTitle') }}</ion-title>
+    <ion-buttons slot="end" *ngIf="(notifications$ | async)?.length">
+      <ion-button fill="clear" color="danger" (click)="clearAll()" style="font-size: 0.9rem; font-weight: 700;">
+        {{ ts.activeLanguage === 'en' ? 'Clear' : 'Bersihkan' }}
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="notifications-wrapper">
+    <ng-container *ngIf="notifications$ | async as list">
+      
+      <!-- List View -->
+      <ion-list class="notifications-list ion-no-padding" *ngIf="list.length > 0">
+        <ion-item *ngFor="let item of list" lines="full" class="notification-item">
+          <!-- Notification Icon Badge -->
+          <div class="icon-badge" [attr.class]="'icon-badge ' + item.color" slot="start">
+            <ion-icon [name]="item.icon"></ion-icon>
+          </div>
+          
+          <ion-label>
+            <div class="notif-header">
+              <h3>{{ ts.translate(item.titleKey) }}</h3>
+              <span class="time-lbl">{{ item.timestamp | date:'shortTime' }}</span>
+            </div>
+            <p class="body-text">{{ ts.translate(item.bodyKey) }}</p>
+          </ion-label>
+          
+          <!-- Unread Dot -->
+          <div class="unread-dot" *ngIf="!item.read" slot="end"></div>
+        </ion-item>
+      </ion-list>
+
+      <!-- Empty State -->
+      <div class="empty-state" *ngIf="list.length === 0">
+        <div class="empty-icon-box">
+          <ion-icon name="notifications-outline"></ion-icon>
+        </div>
+        <h4>{{ ts.translate('noNotifications') }}</h4>
+        <p>{{ ts.activeLanguage === 'en' ? 'Check back later for reminders or tips!' : 'Periksa kembali nanti untuk pengingat atau tips harian!' }}</p>
+      </div>
+
+    </ng-container>
+  </div>
+</ion-content>

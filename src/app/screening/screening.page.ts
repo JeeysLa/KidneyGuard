@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
+import { Router } from '@angular/router';
+import { HealthDataService } from '../core/health-data.service';
+import { TranslationService } from '../core/translation.service';
 import {
   IonHeader,
   IonToolbar,
@@ -16,7 +18,11 @@ import {
   IonInput,
   IonToggle,
   IonButton,
-  IonChip
+  IonChip,
+  IonIcon,
+  IonSegment,
+  IonSegmentButton,
+  IonProgressBar
 } from '@ionic/angular/standalone';
 
 @Component({
@@ -27,88 +33,196 @@ import {
   imports: [
     CommonModule,
     FormsModule,
-
     IonHeader,
     IonToolbar,
     IonTitle,
     IonContent,
-
     IonCard,
     IonCardHeader,
     IonCardTitle,
     IonCardContent,
-
     IonItem,
     IonLabel,
     IonInput,
     IonToggle,
-
     IonButton,
-    IonChip
+    IonChip,
+    IonIcon,
+    IonSegment,
+    IonSegmentButton,
+    IonProgressBar
   ]
 })
 export class ScreeningPage {
-
-  age: number | null = null;
-  weight: number | null = null;
-  height: number | null = null;
-
-  diabetes = false;
-  hypertension = false;
-  familyHistory = false;
-  smoking = false;
-
-  waterIntake: number | null = null;
-  exercise: number | null = null;
-
-  risk = 18;
-  riskStatus = 'Low Risk';
+  currentStep = 1;
+  isCalculating = false;
   validationMessage = '';
 
-  constructor() {}
+  // Step 1: Personal Info
+  fullName = '';
+  age: number | null = null;
+  gender = 'male';
+  height: number | null = null;
+  weight: number | null = null;
 
-  private isValidPositiveNumber(value: number | null | undefined): boolean {
-    return typeof value === 'number' && Number.isFinite(value) && value > 0;
+  // Step 2: Lifestyle
+  smoke = false;
+  alcohol = false;
+  activityLevel = 'medium';
+  dietQuality = 'average';
+  sleepQuality = 'average';
+
+  // Step 3: Medical History
+  familyKidney = false;
+  familyHypertension = false;
+  familyDiabetes = false;
+  prevAki = false;
+  prevUti = false;
+
+  // Step 4: Labs (Optional)
+  systolic: number | null = null;
+  diastolic: number | null = null;
+  fastingSugar: number | null = null;
+  hba1c: number | null = null;
+
+  constructor(
+    public ts: TranslationService,
+    private healthData: HealthDataService,
+    private router: Router
+  ) {}
+
+  get bmi(): number {
+    if (this.height && this.weight && this.height > 0) {
+      const heightInMeters = this.height / 100;
+      return parseFloat((this.weight / (heightInMeters * heightInMeters)).toFixed(1));
+    }
+    return 0;
+  }
+
+  get stepProgress(): number {
+    return this.currentStep / 4;
+  }
+
+  prevStep() {
+    if (this.currentStep > 1) {
+      this.currentStep--;
+      this.validationMessage = '';
+    }
+  }
+
+  nextStep() {
+    this.validationMessage = '';
+    
+    if (this.currentStep === 1) {
+      if (!this.fullName || !this.age || !this.gender || !this.height || !this.weight) {
+        this.validationMessage = this.ts.translate('validationError');
+        return;
+      }
+      this.currentStep = 2;
+    } else if (this.currentStep === 2) {
+      this.currentStep = 3;
+    } else if (this.currentStep === 3) {
+      this.currentStep = 4;
+    }
+  }
+
+  skipLabs() {
+    this.systolic = null;
+    this.diastolic = null;
+    this.fastingSugar = null;
+    this.hba1c = null;
+    this.predictRisk();
   }
 
   predictRisk() {
     this.validationMessage = '';
+    this.isCalculating = true;
 
-    if (!this.isValidPositiveNumber(this.age)) {
-      this.validationMessage = 'Please enter a valid age.';
-      this.risk = 18;
-      this.riskStatus = 'Low Risk';
-      return;
-    }
+    // Simulate AI Screening Model Processing on backend
+    setTimeout(() => {
+      this.isCalculating = false;
+      
+      let score = 15; // Baseline risk
+      
+      if (this.age && this.age > 50) score += 12;
+      if (this.age && this.age > 65) score += 10;
+      if (this.gender === 'male') score += 4;
+      
+      const currentBmi = this.bmi;
+      if (currentBmi > 25) score += 8;
+      if (currentBmi > 30) score += 15;
+      
+      if (this.smoke) score += 10;
+      if (this.alcohol) score += 6;
+      if (this.activityLevel === 'low') score += 10;
+      if (this.activityLevel === 'high') score -= 5;
+      if (this.dietQuality === 'poor') score += 14;
+      if (this.dietQuality === 'healthy') score -= 5;
+      if (this.sleepQuality === 'poor') score += 8;
+      
+      if (this.familyKidney) score += 20;
+      if (this.familyHypertension) score += 15;
+      if (this.familyDiabetes) score += 15;
+      
+      if (this.prevAki) score += 18;
+      if (this.prevUti) score += 8;
 
-    if (!this.isValidPositiveNumber(this.weight) || !this.isValidPositiveNumber(this.height)) {
-      this.validationMessage = 'Please enter valid weight and height.';
-      this.risk = 18;
-      this.riskStatus = 'Low Risk';
-      return;
-    }
+      if (this.systolic && this.systolic > 140) score += 12;
+      if (this.diastolic && this.diastolic > 90) score += 12;
+      if (this.fastingSugar && this.fastingSugar > 126) score += 18;
+      if (this.hba1c && this.hba1c > 6.5) score += 18;
 
-    // Dummy Prediction
-    // Nanti diganti AI / Machine Learning
+      const riskScore = Math.max(8, Math.min(98, score));
+      let riskStatus = 'Low Risk';
+      
+      if (riskScore >= 60) {
+        riskStatus = 'High Risk';
+      } else if (riskScore >= 30) {
+        riskStatus = 'Medium Risk';
+      }
 
-    let score = 0;
+      this.healthData.saveScreening({
+        riskScore,
+        riskStatus,
+        age: this.age!,
+        gender: this.gender,
+        height: this.height!,
+        weight: this.weight!,
+        bmi: currentBmi,
+        smoke: this.smoke,
+        alcohol: this.alcohol,
+        activityLevel: this.activityLevel,
+        dietQuality: this.dietQuality,
+        sleepQuality: this.sleepQuality,
+        familyHistory: {
+          kidney: this.familyKidney,
+          hypertension: this.familyHypertension,
+          diabetes: this.familyDiabetes
+        },
+        prevAki: this.prevAki,
+        prevUti: this.prevUti,
+        labs: {
+          systolic: this.systolic || undefined,
+          diastolic: this.diastolic || undefined,
+          fastingSugar: this.fastingSugar || undefined,
+          hba1c: this.hba1c || undefined
+        }
+      });
 
-    if (this.diabetes) score += 30;
-    if (this.hypertension) score += 25;
-    if (this.familyHistory) score += 20;
-    if (this.smoking) score += 15;
-
-    if ((this.waterIntake ?? 0) < 1500) score += 5;
-
-    this.risk = score;
-
-    if (score < 30) {
-      this.riskStatus = 'Low Risk';
-    } else if (score < 60) {
-      this.riskStatus = 'Medium Risk';
-    } else {
-      this.riskStatus = 'High Risk';
-    }
+      this.router.navigate(['/screening-result'], {
+        queryParams: {
+          score: riskScore,
+          status: riskStatus,
+          name: this.fullName
+        }
+      });
+      
+      // Reset step
+      this.currentStep = 1;
+      this.fullName = '';
+      this.age = null;
+      this.height = null;
+      this.weight = null;
+    }, 1800);
   }
-
 }

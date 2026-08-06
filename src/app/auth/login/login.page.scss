@@ -1,0 +1,227 @@
+.auth-content {
+  --background: #f4f7fe;
+  
+  .auth-wrapper {
+    max-width: 450px;
+    margin: 3rem auto;
+    padding: 1.5rem;
+  }
+
+  .auth-header {
+    margin-bottom: 2rem;
+
+    .logo-box {
+      width: 60px;
+      height: 60px;
+      background: rgba(30, 92, 255, 0.1);
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.75rem;
+
+      ion-icon {
+        font-size: 2rem;
+      }
+    }
+
+    h2 {
+      font-weight: 700;
+      color: #1a202c;
+      margin: 0;
+      font-size: 1.6rem;
+    }
+
+    p {
+      margin: 0.25rem 0 0;
+      color: #718096;
+      font-size: 0.95rem;
+    }
+  }
+
+  .auth-card {
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(30, 92, 255, 0.05);
+    border: 1px solid rgba(30, 92, 255, 0.08);
+
+    ion-card-content {
+      padding: 2rem 1.5rem;
+    }
+
+    .card-title {
+      font-weight: 700;
+      font-size: 1.4rem;
+      color: #1a202c;
+      margin: 0 0 1.5rem;
+    }
+  }
+
+  .input-group {
+    display: flex;
+    flex-direction: column;
+
+    .input-label {
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: #4a5568;
+      margin-bottom: 0.5rem;
+    }
+
+    .custom-input-item {
+      --background: #f7fafc;
+      --border-radius: 12px;
+      --padding-start: 1rem;
+      --padding-end: 0.5rem;
+      --inner-padding-end: 0;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+
+      &.item-has-focus {
+        border-color: #1e5cff;
+        box-shadow: 0 0 0 3px rgba(30, 92, 255, 0.1);
+      }
+
+      ion-input {
+        --padding-top: 12px;
+        --padding-bottom: 12px;
+        font-size: 0.95rem;
+        color: #1a202c;
+      }
+
+      .eye-btn {
+        margin: 0;
+        height: 36px;
+        font-size: 1.1rem;
+      }
+    }
+  }
+
+  .auth-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.25rem;
+
+    .custom-checkbox {
+      --size: 18px;
+      --border-radius: 4px;
+      --border-width: 1px;
+      --border-color: #cbd5e0;
+      --background-checked: #1e5cff;
+      --border-color-checked: #1e5cff;
+    }
+
+    .forgot-link {
+      font-size: 0.85rem;
+      color: #1e5cff;
+      text-decoration: none;
+      font-weight: 600;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .error-msg {
+    margin: 1rem 0 0;
+    color: #eb445a;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+  }
+
+  .submit-btn {
+    --border-radius: 12px;
+    --background: #1e5cff;
+    --box-shadow: 0 4px 12px rgba(30, 92, 255, 0.2);
+    font-weight: 700;
+    margin-top: 1.5rem;
+    margin-bottom: 0;
+    height: 48px;
+  }
+
+  .auth-footer {
+    margin-top: 1.5rem;
+    border-top: 1px solid #edf2f7;
+    padding-top: 1rem;
+
+    p {
+      margin: 0;
+      color: #718096;
+      font-size: 0.9rem;
+
+      a {
+        color: #1e5cff;
+        text-decoration: none;
+        font-weight: 700;
+        margin-left: 0.25rem;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+// Dark Mode Support
+body.dark {
+  .auth-content {
+    --background: #121212;
+
+    .auth-header {
+      .logo-box {
+        background: rgba(30, 92, 255, 0.2);
+      }
+      h2 {
+        color: #ffffff;
+      }
+      p {
+        color: #a0aec0;
+      }
+    }
+
+    .auth-card {
+      background: #1e1e1e;
+      border-color: rgba(255, 255, 255, 0.08);
+      box-shadow: none;
+
+      .card-title {
+        color: #ffffff;
+      }
+    }
+
+    .input-group {
+      .input-label {
+        color: #cbd5e0;
+      }
+      .custom-input-item {
+        --background: #2d2d2d;
+        border-color: #3d3d3d;
+        ion-input {
+          color: #ffffff;
+        }
+      }
+    }
+
+    .auth-options {
+      .forgot-link {
+        color: #3dc2ff;
+      }
+    }
+
+    .auth-footer {
+      border-color: #2d2d2d;
+      p {
+        color: #a0aec0;
+        a {
+          color: #3dc2ff;
+        }
+      }
+    }
+  }
+}
