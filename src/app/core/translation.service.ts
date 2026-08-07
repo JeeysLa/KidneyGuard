@@ -53,7 +53,6 @@ export const EN_TRANS = {
   checklistUrine: 'Check Urine Color',
   kidneyInsights: 'Kidney Insights',
   viewAll: 'View All',
-  quickActions: 'Quick Actions',
   logHydration: 'Log Hydration',
   reset: 'Reset',
   // Screening
@@ -229,7 +228,6 @@ export const ID_TRANS = {
   checklistUrine: 'Cek Warna Urin',
   kidneyInsights: 'Wawasan Ginjal',
   viewAll: 'Lihat Semua',
-  quickActions: 'Tindakan Cepat',
   logHydration: 'Catat Hidrasi',
   reset: 'Reset',
   // Screening
