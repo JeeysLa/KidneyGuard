@@ -7,6 +7,12 @@ export interface UserProfile {
   isGuest: boolean;
 }
 
+interface StoredUser {
+  fullName: string;
+  email: string;
+  passwordHash: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -41,9 +47,19 @@ export class AuthService {
     return user !== null && !user.isGuest;
   }
 
+  private hashPassword(password: string): string {
+    let hash = 0;
+    for (let i = 0; i < password.length; i++) {
+      hash = (hash << 5) - hash + password.charCodeAt(i);
+      hash |= 0;
+    }
+    return `kg_${Math.abs(hash).toString(16)}`;
+  }
+
   login(email: string, password: string, rememberMe: boolean): boolean {
     const savedUsers = this.getSavedUsers();
-    const matched = savedUsers.find(u => u.email === email && u.password === password);
+    const passwordHash = this.hashPassword(password);
+    const matched = savedUsers.find(u => u.email === email && u.passwordHash === passwordHash);
     
     if (matched) {
       const profile = { fullName: matched.fullName, email: matched.email, isGuest: false };
@@ -67,8 +83,8 @@ export class AuthService {
     if (savedUsers.find(u => u.email === email)) {
       return false;
     }
-    
-    savedUsers.push({ fullName, email, password });
+
+    savedUsers.push({ fullName, email, passwordHash: this.hashPassword(password) });
     localStorage.setItem('kidney_guard_registered_users', JSON.stringify(savedUsers));
     
     const profile = { fullName, email, isGuest: false };
@@ -84,14 +100,20 @@ export class AuthService {
   changePassword(oldPassword: string, newPassword: string): boolean {
     const user = this.currentUser;
     if (!user || user.isGuest) return false;
-    
+
     const savedUsers = this.getSavedUsers();
     const idx = savedUsers.findIndex(u => u.email === user.email);
-    if (idx !== -1) {
-      savedUsers[idx].password = newPassword;
-      localStorage.setItem('kidney_guard_registered_users', JSON.stringify(savedUsers));
-      return true;
+    if (idx === -1) {
+      return false;
     }
+
+    const oldPasswordHash = this.hashPassword(oldPassword);
+    if (savedUsers[idx].passwordHash !== oldPasswordHash) {
+      return false;
+    }
+
+    savedUsers[idx].passwordHash = this.hashPassword(newPassword);
+    localStorage.setItem('kidney_guard_registered_users', JSON.stringify(savedUsers));
     return true;
   }
 
@@ -124,9 +146,27 @@ export class AuthService {
     this.currentUserSubject.next(profile);
   }
 
-  private getSavedUsers(): any[] {
+  private getSavedUsers(): StoredUser[] {
     const raw = localStorage.getItem('kidney_guard_registered_users');
-    return raw ? JSON.parse(raw) : [];
+    const parsed = raw ? JSON.parse(raw) : [];
+    if (!Array.isArray(parsed)) {
+      return [];
+    }
+
+    return parsed
+      .filter((u) => u && typeof u.email === 'string' && typeof u.fullName === 'string')
+      .map((u) => {
+        if (typeof u.passwordHash === 'string') {
+          return u as StoredUser;
+        }
+
+        // Backward compatibility for older plaintext records.
+        return {
+          fullName: u.fullName,
+          email: u.email,
+          passwordHash: this.hashPassword(String(u.password ?? '')),
+        };
+      });
   }
 
   private mergeGuestHistory(email: string) {

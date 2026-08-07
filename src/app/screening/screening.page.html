@@ -274,7 +274,7 @@
       </ion-button>
 
       <ion-button expand="block" class="submit-btn" (click)="nextStep()" *ngIf="currentStep < 4">
-        {{ ts.translate('appName') ? 'Continue' : 'Lanjutkan' }}
+        {{ ts.activeLanguage === 'en' ? 'Continue' : 'Lanjutkan' }}
         <ion-icon name="arrow-forward" slot="end"></ion-icon>
       </ion-button>
 
