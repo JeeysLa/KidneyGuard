@@ -43,7 +43,7 @@
       <ng-template #emptyHeroScreening>
         <ion-button expand="block" routerLink="/screening" class="empty-state-btn">
           <ion-icon name="pulse-outline" slot="start"></ion-icon>
-          Check Risk Now
+          {{ ts.translate('startScreening') }}
         </ion-button>
       </ng-template>
     </div>
@@ -60,8 +60,8 @@
           <ion-card button routerLink="/screening" class="action-card ion-no-margin" style="margin-right: 0.4rem;">
             <ion-card-content>
               <div class="action-icon-wrap primary"><ion-icon name="pulse-outline"></ion-icon></div>
-              <h4>Health Index</h4>
-              <p>Re-Screening</p>
+              <h4>{{ ts.translate('startScreening') }}</h4>
+              <p>{{ ts.translate('screeningSubtitle') }}</p>
             </ion-card-content>
           </ion-card>
         </ion-col>
@@ -69,8 +69,8 @@
           <ion-card button routerLink="/education" class="action-card ion-no-margin" style="margin-left: 0.4rem;">
             <ion-card-content>
               <div class="action-icon-wrap secondary"><ion-icon name="book-outline"></ion-icon></div>
-              <h4>Knowledge</h4>
-              <p>Kidney Guide</p>
+              <h4>{{ ts.translate('educationTitle') }}</h4>
+              <p>{{ ts.translate('readNow') }}</p>
             </ion-card-content>
           </ion-card>
         </ion-col>

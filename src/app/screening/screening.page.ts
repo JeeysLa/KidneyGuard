@@ -7,23 +7,19 @@ import { TranslationService } from '../core/translation.service';
 import {
   IonHeader,
   IonToolbar,
-  IonTitle,
   IonContent,
   IonCard,
-  IonCardHeader,
-  IonCardTitle,
   IonCardContent,
   IonItem,
   IonLabel,
   IonInput,
-  IonToggle,
   IonButton,
+  IonButtons,
   IonIcon,
   IonSegment,
   IonSegmentButton,
   IonProgressBar,
-  IonCheckbox,
-  IonButtons
+  IonCheckbox
 } from '@ionic/angular/standalone';
 
 @Component({
@@ -36,23 +32,19 @@ import {
     FormsModule,
     IonHeader,
     IonToolbar,
-    IonTitle,
     IonContent,
     IonCard,
-    IonCardHeader,
-    IonCardTitle,
     IonCardContent,
     IonItem,
     IonLabel,
     IonInput,
-    IonToggle,
     IonButton,
+    IonButtons,
     IonIcon,
     IonSegment,
     IonSegmentButton,
     IonProgressBar,
-    IonCheckbox,
-    IonButtons
+    IonCheckbox
   ]
 })
 export class ScreeningPage {
@@ -103,6 +95,47 @@ export class ScreeningPage {
 
   get stepProgress(): number {
     return this.currentStep / 4;
+  }
+
+  get activityLabel(): string {
+    switch (this.activityLevel) {
+      case 'low':
+        return this.ts.translate('activityLow');
+      case 'medium':
+        return this.ts.translate('activityMed');
+      default:
+        return this.ts.translate('activityHigh');
+    }
+  }
+
+  get dietLabel(): string {
+    switch (this.dietQuality) {
+      case 'poor':
+        return this.ts.translate('dietPoor');
+      case 'average':
+        return this.ts.translate('dietAvg');
+      default:
+        return this.ts.translate('dietHealthy');
+    }
+  }
+
+  get sleepLabel(): string {
+    switch (this.sleepQuality) {
+      case 'poor':
+        return this.ts.translate('sleepPoor');
+      case 'average':
+        return this.ts.translate('sleepAvg');
+      default:
+        return this.ts.translate('sleepGood');
+    }
+  }
+
+  get genderLabel(): string {
+    return this.ts.translate(this.gender === 'male' ? 'male' : 'female');
+  }
+
+  formatBoolean(value: boolean): string {
+    return this.ts.translate(value ? 'yes' : 'no');
   }
 
   private isBetween(value: number | null, min: number, max: number): boolean {

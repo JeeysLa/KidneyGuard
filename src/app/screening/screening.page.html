@@ -1,31 +1,45 @@
-<ion-header class="ion-no-border">
+<ion-header class="ion-no-border screening-header">
   <ion-toolbar>
-    <ion-title>{{ ts.translate('screeningTitle') }}</ion-title>
-    <ion-button fill="clear" slot="start" (click)="prevStep()" *ngIf="currentStep > 1">
-      <ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
-    </ion-button>
+    <ion-buttons slot="start" *ngIf="currentStep > 1">
+      <ion-button fill="clear" (click)="prevStep()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <!-- Top Progress Bar -->
-  <div class="progress-container">
-    <ion-progress-bar [value]="stepProgress" color="primary"></ion-progress-bar>
-    <div class="step-indicators">
-      <span [class.active]="currentStep >= 1">1</span>
-      <span [class.active]="currentStep >= 2">2</span>
-      <span [class.active]="currentStep >= 3">3</span>
-      <span [class.active]="currentStep >= 4">4</span>
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="hero-content">
+      <div class="brand-wrap">
+        <div class="brand-logo"><ion-icon name="shield-checkmark"></ion-icon></div>
+        <h1>KidneyGuard AI</h1>
+      </div>
+      <div class="title-container">
+        <h2>{{ ts.translate('screeningTitle') }}</h2>
+        <p>{{ ts.translate('screeningDesc') }}</p>
+      </div>
     </div>
   </div>
 
-  <div class="form-wrapper">
+  <!-- Progress Indicator -->
+  <div class="dashboard-body">
+    <div class="progress-container">
+      <ion-progress-bar [value]="stepProgress" color="primary"></ion-progress-bar>
+      <div class="step-indicators">
+        <span [class.active]="currentStep >= 1">1</span>
+        <span [class.active]="currentStep >= 2">2</span>
+        <span [class.active]="currentStep >= 3">3</span>
+        <span [class.active]="currentStep >= 4">4</span>
+      </div>
+    </div>
     <!-- STEP 1: Personal Info -->
     <div class="step-box" *ngIf="currentStep === 1">
+      <div class="section-title">
+        <h3>{{ ts.translate('step1') }}</h3>
+      </div>
       <ion-card class="form-card">
-        <ion-card-header>
-          <ion-card-title>{{ ts.translate('step1') }}</ion-card-title>
-        </ion-card-header>
         <ion-card-content>
           <div class="input-group">
             <ion-label class="input-label">{{ ts.translate('fullName') }}</ion-label>
@@ -73,10 +87,10 @@
 
     <!-- STEP 2: Lifestyle -->
     <div class="step-box" *ngIf="currentStep === 2">
+      <div class="section-title">
+        <h3>{{ ts.translate('step2') }}</h3>
+      </div>
       <ion-card class="form-card">
-        <ion-card-header>
-          <ion-card-title>{{ ts.translate('step2') }}</ion-card-title>
-        </ion-card-header>
         <ion-card-content>
 
           <ion-item lines="full" class="toggle-item ion-no-padding">
@@ -94,9 +108,27 @@
           <div class="input-group" style="margin-top: 1.25rem;">
             <ion-label class="input-label">{{ ts.translate('activityLevel') }}</ion-label>
             <ion-segment [(ngModel)]="activityLevel" class="custom-segment">
-              <ion-segment-button value="low"><ion-label>Low</ion-label></ion-segment-button>
-              <ion-segment-button value="medium"><ion-label>Med</ion-label></ion-segment-button>
-              <ion-segment-button value="high"><ion-label>High</ion-label></ion-segment-button>
+              <ion-segment-button value="low"><ion-label>{{ ts.translate('activityLow') }}</ion-label></ion-segment-button>
+              <ion-segment-button value="medium"><ion-label>{{ ts.translate('activityMed') }}</ion-label></ion-segment-button>
+              <ion-segment-button value="high"><ion-label>{{ ts.translate('activityHigh') }}</ion-label></ion-segment-button>
+            </ion-segment>
+          </div>
+
+          <div class="input-group" style="margin-top: 1.25rem;">
+            <ion-label class="input-label">{{ ts.translate('dietQuality') }}</ion-label>
+            <ion-segment [(ngModel)]="dietQuality" class="custom-segment">
+              <ion-segment-button value="poor"><ion-label>{{ ts.translate('dietPoor') }}</ion-label></ion-segment-button>
+              <ion-segment-button value="average"><ion-label>{{ ts.translate('dietAvg') }}</ion-label></ion-segment-button>
+              <ion-segment-button value="healthy"><ion-label>{{ ts.translate('dietHealthy') }}</ion-label></ion-segment-button>
+            </ion-segment>
+          </div>
+
+          <div class="input-group" style="margin-top: 1.25rem;">
+            <ion-label class="input-label">{{ ts.translate('sleepQuality') }}</ion-label>
+            <ion-segment [(ngModel)]="sleepQuality" class="custom-segment">
+              <ion-segment-button value="poor"><ion-label>{{ ts.translate('sleepPoor') }}</ion-label></ion-segment-button>
+              <ion-segment-button value="average"><ion-label>{{ ts.translate('sleepAvg') }}</ion-label></ion-segment-button>
+              <ion-segment-button value="good"><ion-label>{{ ts.translate('sleepGood') }}</ion-label></ion-segment-button>
             </ion-segment>
           </div>
         </ion-card-content>
@@ -105,10 +137,10 @@
 
     <!-- STEP 3: Medical History -->
     <div class="step-box" *ngIf="currentStep === 3">
+      <div class="section-title">
+        <h3>{{ ts.translate('step3') }}</h3>
+      </div>
       <ion-card class="form-card">
-        <ion-card-header>
-          <ion-card-title>{{ ts.translate('step3') }}</ion-card-title>
-        </ion-card-header>
         <ion-card-content>
 
           <ion-item lines="full" class="toggle-item ion-no-padding">
@@ -135,22 +167,41 @@
 
     <!-- STEP 4: Labs -->
     <div class="step-box" *ngIf="currentStep === 4">
+      <div class="section-title">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <h3>{{ ts.translate('labTitle') }}</h3>
+          <ion-button fill="clear" size="small" (click)="skipLabs()" style="--color: #1e5cff; text-transform: none; font-size: 0.85rem;">
+            {{ ts.translate('skipLab') }}
+          </ion-button>
+        </div>
+      </div>
       <ion-card class="form-card">
-        <ion-card-header>
-          <ion-card-title>{{ ts.translate('labTitle') }}</ion-card-title>
-        </ion-card-header>
         <ion-card-content>
-          <div style="display: flex; gap: 1rem;">
-            <div class="input-group" style="flex: 1;">
-              <ion-label class="input-label">Systolic</ion-label>
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <div class="input-group" style="flex: 1; min-width: 160px;">
+              <ion-label class="input-label">{{ ts.translate('systolic') }}</ion-label>
               <ion-item lines="none" class="custom-input-item">
                 <ion-input type="number" placeholder="120" [(ngModel)]="systolic"></ion-input>
               </ion-item>
             </div>
-            <div class="input-group" style="flex: 1;">
-              <ion-label class="input-label">Diastolic</ion-label>
+            <div class="input-group" style="flex: 1; min-width: 160px;">
+              <ion-label class="input-label">{{ ts.translate('diastolic') }}</ion-label>
               <ion-item lines="none" class="custom-input-item">
                 <ion-input type="number" placeholder="80" [(ngModel)]="diastolic"></ion-input>
+              </ion-item>
+            </div>
+          </div>
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;">
+            <div class="input-group" style="flex: 1; min-width: 160px;">
+              <ion-label class="input-label">{{ ts.translate('fastingSugar') }}</ion-label>
+              <ion-item lines="none" class="custom-input-item">
+                <ion-input type="number" placeholder="100" [(ngModel)]="fastingSugar"></ion-input>
+              </ion-item>
+            </div>
+            <div class="input-group" style="flex: 1; min-width: 160px;">
+              <ion-label class="input-label">{{ ts.translate('hba1c') }}</ion-label>
+              <ion-item lines="none" class="custom-input-item">
+                <ion-input type="number" placeholder="5.8" [(ngModel)]="hba1c"></ion-input>
               </ion-item>
             </div>
           </div>
@@ -159,12 +210,43 @@
     </div>
 
     <!-- Navigation -->
+    <div class="review-section" *ngIf="currentStep === 4">
+      <div class="section-title">
+        <h3>{{ ts.translate('reviewSummary') }}</h3>
+        <p style="font-size: 0.9rem; color: #475569; margin: 0.5rem 0 0; font-weight: 500;">{{ ts.translate('reviewSummaryDesc') }}</p>
+      </div>
+      <ion-card class="review-card">
+        <ion-card-content>
+          <div class="summary-row"><span>{{ ts.translate('fullName') }}</span><strong>{{ fullName || ts.translate('notProvided') }}</strong></div>
+          <div class="summary-row"><span>{{ ts.translate('age') }}</span><strong>{{ age || ts.translate('notProvided') }}</strong></div>
+          <div class="summary-row"><span>{{ ts.translate('gender') }}</span><strong>{{ genderLabel }}</strong></div>
+          <div class="summary-row"><span>{{ ts.translate('height') }}</span><strong>{{ height ? height + ' cm' : ts.translate('notProvided') }}</strong></div>
+          <div class="summary-row"><span>{{ ts.translate('weight') }}</span><strong>{{ weight ? weight + ' kg' : ts.translate('notProvided') }}</strong></div>
+          <div class="summary-row"><span>{{ ts.translate('bmi') }}</span><strong>{{ bmi || ts.translate('notProvided') }}</strong></div>
+          <div class="summary-row"><span>{{ ts.translate('doYouSmoke') }}</span><strong>{{ formatBoolean(smoke) }}</strong></div>
+          <div class="summary-row"><span>{{ ts.translate('doYouAlcohol') }}</span><strong>{{ formatBoolean(alcohol) }}</strong></div>
+          <div class="summary-row"><span>{{ ts.translate('activityLevel') }}</span><strong>{{ activityLabel }}</strong></div>
+          <div class="summary-row"><span>{{ ts.translate('dietQuality') }}</span><strong>{{ dietLabel }}</strong></div>
+          <div class="summary-row"><span>{{ ts.translate('sleepQuality') }}</span><strong>{{ sleepLabel }}</strong></div>
+          <div class="summary-row"><span>{{ ts.translate('familyKidney') }}</span><strong>{{ formatBoolean(familyKidney) }}</strong></div>
+          <div class="summary-row"><span>{{ ts.translate('familyHypertension') }}</span><strong>{{ formatBoolean(familyHypertension) }}</strong></div>
+          <div class="summary-row"><span>{{ ts.translate('familyDiabetes') }}</span><strong>{{ formatBoolean(familyDiabetes) }}</strong></div>
+          <div class="summary-row"><span>{{ ts.translate('prevAki') }}</span><strong>{{ formatBoolean(prevAki) }}</strong></div>
+          <div class="summary-row"><span>{{ ts.translate('prevUti') }}</span><strong>{{ formatBoolean(prevUti) }}</strong></div>
+          <div class="summary-row"><span>{{ ts.translate('systolic') }}</span><strong>{{ systolic || ts.translate('notProvided') }}</strong></div>
+          <div class="summary-row"><span>{{ ts.translate('diastolic') }}</span><strong>{{ diastolic || ts.translate('notProvided') }}</strong></div>
+          <div class="summary-row"><span>{{ ts.translate('fastingSugar') }}</span><strong>{{ fastingSugar || ts.translate('notProvided') }}</strong></div>
+          <div class="summary-row"><span>{{ ts.translate('hba1c') }}</span><strong>{{ hba1c || ts.translate('notProvided') }}</strong></div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
     <div class="action-buttons-box">
       <ion-button expand="block" class="submit-btn" (click)="predictRisk()" *ngIf="currentStep === 4">
         {{ ts.translate('predictRisk') }}
       </ion-button>
       <ion-button expand="block" class="submit-btn" (click)="nextStep()" *ngIf="currentStep < 4">
-        Continue <ion-icon name="arrow-forward" slot="end"></ion-icon>
+        {{ ts.translate('continueBtn') }} <ion-icon name="arrow-forward" slot="end"></ion-icon>
       </ion-button>
     </div>
   </div>
