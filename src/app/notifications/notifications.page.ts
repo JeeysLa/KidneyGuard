@@ -14,8 +14,7 @@ import {
   IonLabel,
   IonIcon,
   IonButton,
-  IonButtons,
-  IonBadge
+  IonButtons
 } from '@ionic/angular/standalone';
 
 @Component({
@@ -35,8 +34,7 @@ import {
     IonLabel,
     IonIcon,
     IonButton,
-    IonButtons,
-    IonBadge
+    IonButtons
   ]
 })
 export class NotificationsPage implements OnInit {

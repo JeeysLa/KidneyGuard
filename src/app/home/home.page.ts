@@ -23,7 +23,6 @@ import {
   IonCol,
   IonGrid,
   IonItem,
-  IonProgressBar,
   IonList,
   IonBadge,
   IonCheckbox
@@ -52,7 +51,6 @@ import {
     IonCol,
     IonGrid,
     IonItem,
-    IonProgressBar,
     IonList,
     IonBadge,
     IonCheckbox
