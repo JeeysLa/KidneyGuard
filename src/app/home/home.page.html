@@ -125,10 +125,10 @@
     </ion-card>
 
     <div class="section-title">
-      <h3>Daily Focus</h3>
+      <h3>{{ ts.translate('dailyChecklist') }}</h3>
     </div>
 
-    <div class="checklist-container">
+    <div class="compact-checklist">
       <div class="task-pill" [class.completed]="stats.checklist.water" (click)="updateChecklist('water', {detail: {checked: !stats.checklist.water}})">
         <div class="task-left">
           <div class="icon-circle blue"><ion-icon name="water-outline"></ion-icon></div>

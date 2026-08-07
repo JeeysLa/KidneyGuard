@@ -21,7 +21,9 @@ import {
   IonIcon,
   IonSegment,
   IonSegmentButton,
-  IonProgressBar
+  IonProgressBar,
+  IonCheckbox,
+  IonButtons
 } from '@ionic/angular/standalone';
 
 @Component({
@@ -48,7 +50,9 @@ import {
     IonIcon,
     IonSegment,
     IonSegmentButton,
-    IonProgressBar
+    IonProgressBar,
+    IonCheckbox,
+    IonButtons
   ]
 })
 export class ScreeningPage {
@@ -207,17 +211,17 @@ export class ScreeningPage {
     // Simulate AI Screening Model Processing on backend
     setTimeout(() => {
       this.isCalculating = false;
-      
+
       let score = 15; // Baseline risk
-      
+
       if (this.age && this.age > 50) score += 12;
       if (this.age && this.age > 65) score += 10;
       if (this.gender === 'male') score += 4;
-      
+
       const currentBmi = this.bmi;
       if (currentBmi > 25) score += 8;
       if (currentBmi > 30) score += 15;
-      
+
       if (this.smoke) score += 10;
       if (this.alcohol) score += 6;
       if (this.activityLevel === 'low') score += 10;
@@ -225,11 +229,11 @@ export class ScreeningPage {
       if (this.dietQuality === 'poor') score += 14;
       if (this.dietQuality === 'healthy') score -= 5;
       if (this.sleepQuality === 'poor') score += 8;
-      
+
       if (this.familyKidney) score += 20;
       if (this.familyHypertension) score += 15;
       if (this.familyDiabetes) score += 15;
-      
+
       if (this.prevAki) score += 18;
       if (this.prevUti) score += 8;
 
@@ -240,7 +244,7 @@ export class ScreeningPage {
 
       const riskScore = Math.max(8, Math.min(98, score));
       let riskStatus = 'Low Risk';
-      
+
       if (riskScore >= 60) {
         riskStatus = 'High Risk';
       } else if (riskScore >= 30) {
@@ -282,7 +286,7 @@ export class ScreeningPage {
           name: this.fullName
         }
       });
-      
+
       this.resetForm();
     }, 1800);
   }
