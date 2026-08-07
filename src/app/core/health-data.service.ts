@@ -37,10 +37,11 @@ export interface HealthStats {
   riskStatus: string;
   waterIntake: number;
   waterGoal: number;
+  urineColor: 'clear' | 'yellow' | 'orange' | null;
   checklist: {
     water: boolean;
     walk: boolean;
-    salt: boolean;
+    urine: boolean;
   };
   userName: string;
   userAge: number;
@@ -55,6 +56,7 @@ export interface HealthStats {
   exercise: number;
   exerciseTarget: number;
   screeningHistory: ScreeningRecord[];
+  lastUpdateDate: string; // Used for daily reset
 }
 
 @Injectable({
@@ -62,16 +64,17 @@ export interface HealthStats {
 })
 export class HealthDataService {
   private activeUserEmail = 'guest@kidneyguard.ai';
-  
+
   private defaultStats: HealthStats = {
     riskScore: 0,
     riskStatus: 'No Screening',
-    waterIntake: 1200,
+    waterIntake: 0,
     waterGoal: 2000,
+    urineColor: null,
     checklist: {
       water: false,
       walk: false,
-      salt: false
+      urine: false
     },
     userName: 'Guest User',
     userAge: 29,
@@ -83,9 +86,10 @@ export class HealthDataService {
     diastolic: 80,
     sleep: 7.5,
     sleepTarget: 8,
-    exercise: 35,
+    exercise: 0,
     exerciseTarget: 30,
-    screeningHistory: []
+    screeningHistory: [],
+    lastUpdateDate: new Date().toDateString()
   };
 
   private statsSubject = new BehaviorSubject<HealthStats>(this.defaultStats);
@@ -96,13 +100,37 @@ export class HealthDataService {
       const auth = this.injector.get(AuthService);
       auth.currentUser$.subscribe(user => {
         this.activeUserEmail = user ? user.email : 'guest@kidneyguard.ai';
-        const loaded = this.loadStats();
+        let loaded = this.loadStats();
+
+        // Apply daily reset if date has changed
+        loaded = this.checkDailyReset(loaded);
+
         if (user && !user.isGuest) {
           loaded.userName = user.fullName;
         }
         this.statsSubject.next(loaded);
       });
     }, 0);
+  }
+
+  private checkDailyReset(stats: HealthStats): HealthStats {
+    const today = new Date().toDateString();
+    if (stats.lastUpdateDate !== today) {
+      // It's a new day! Reset daily metrics
+      return {
+        ...stats,
+        waterIntake: 0,
+        exercise: 0,
+        urineColor: null,
+        checklist: {
+          water: false,
+          walk: false,
+          urine: false
+        },
+        lastUpdateDate: today
+      };
+    }
+    return stats;
   }
 
   private get STORAGE_KEY(): string {
@@ -132,7 +160,23 @@ export class HealthDataService {
 
   updateWater(amount: number) {
     const current = this.statsSubject.value;
-    this.saveStats({ ...current, waterIntake: amount });
+    const newIntake = Math.max(0, current.waterIntake + amount);
+    const isGoalMet = newIntake >= current.waterGoal;
+
+    this.saveStats({
+      ...current,
+      waterIntake: newIntake,
+      checklist: { ...current.checklist, water: isGoalMet }
+    });
+  }
+
+  updateUrineColor(color: 'clear' | 'yellow' | 'orange') {
+    const current = this.statsSubject.value;
+    this.saveStats({
+      ...current,
+      urineColor: color,
+      checklist: { ...current.checklist, urine: true }
+    });
   }
 
   updateChecklist(key: keyof HealthStats['checklist'], value: boolean) {
@@ -153,7 +197,12 @@ export class HealthDataService {
 
   updateExercise(minutes: number) {
     const current = this.statsSubject.value;
-    this.saveStats({ ...current, exercise: minutes });
+    const isGoalMet = minutes >= current.exerciseTarget;
+    this.saveStats({
+      ...current,
+      exercise: minutes,
+      checklist: { ...current.checklist, walk: isGoalMet }
+    });
   }
 
   updateSleep(hours: number) {
@@ -179,7 +228,7 @@ export class HealthDataService {
       date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
     };
     const history = [newRecord, ...current.screeningHistory];
-    
+
     this.saveStats({
       ...current,
       riskScore: record.riskScore,

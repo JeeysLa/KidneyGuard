@@ -1,125 +1,88 @@
+:host {
+  display: block;
+}
+
 ion-content {
-  --background: #f4f7fe;
-  --padding-bottom: calc(84px + env(safe-area-inset-bottom));
+  --background: #ffffff;
 }
 
-.header-section {
-  padding: 24px 20px 10px;
+.tracker-header {
+  --background: transparent;
+  --border-style: none;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+  ion-toolbar { --background: transparent; --color: #ffffff; padding: 0.5rem 0.5rem 0; }
+}
 
-  h2 {
-    margin: 0;
-    font-size: 1.6rem;
-    font-weight: 800;
-    color: #1a202c;
+.hero-section {
+  padding: 5rem 1.5rem 4rem;
+  background: linear-gradient(135deg, #1e5cff 0%, #3b82f6 100%);
+  color: #ffffff;
+  position: relative;
+  overflow: hidden;
+  &::before { content: ''; position: absolute; width: 250px; height: 250px; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); top: -100px; right: -50px; }
+
+  .brand-wrap {
+    display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1.5rem;
+    .brand-logo { width: 34px; height: 34px; background: #ffffff; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #1e5cff; font-size: 1.3rem; }
+    h1 { margin: 0; font-size: 1.1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; }
   }
 
-  p {
-    margin-top: 6px;
-    color: #718096;
-    line-height: 1.5;
-    font-size: 0.95rem;
+  .title-container {
+    h2 { margin: 0; font-size: 1.8rem; font-weight: 800; line-height: 1.2; }
+    p { margin: 0.4rem 0 0; font-size: 1rem; opacity: 0.85; }
   }
 }
 
-.tracker-card {
-  margin: 16px;
+.dashboard-body {
+  margin-top: -2.5rem;
+  padding: 2.5rem 1.25rem 1rem;
   background: #ffffff;
-  border-radius: 16px;
-  border: 1px solid rgba(30, 92, 255, 0.05);
-  box-shadow: 0 4px 15px rgba(30, 92, 255, 0.02);
-  transition: .25s ease;
-
-  ion-card-content {
-    padding: 1.25rem;
-  }
-
-  .card-header-box {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    h3 {
-      font-size: 1rem;
-      font-weight: 700;
-      color: #2d3748;
-      margin: 0;
-    }
-
-    .target-lbl {
-      font-size: 0.75rem;
-      color: #718096;
-      font-weight: 700;
-    }
-  }
-
-  .metric-value {
-    font-size: 2.2rem;
-    font-weight: 800;
-    color: #1a202c;
-    margin: 1rem 0 0.5rem;
-    line-height: 1;
-
-    small {
-      font-size: 1.1rem;
-      color: #a0aec0;
-      font-weight: 600;
-    }
-  }
-
-  .progress-bar {
-    height: 8px;
-    border-radius: 4px;
-    margin: 0.75rem 0 1.25rem;
-  }
-
-  .bp-status-text {
-    margin: 0.25rem 0 0;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #718096;
-  }
-
-  .tracker-btn {
-    --border-radius: 10px;
-    font-weight: 700;
-    height: 42px;
-    margin: 0;
-  }
+  border-top-left-radius: 35px;
+  border-top-right-radius: 35px;
+  position: relative;
+  z-index: 10;
 }
 
-body.dark {
-  ion-content {
-    --background: #121212;
+.section-title {
+  margin: 1.25rem 0 0.75rem;
+  display: flex; justify-content: space-between; align-items: center;
+  h3 { font-size: 1.1rem; font-weight: 800; color: #1e293b; margin: 0; }
+}
+
+.metric-card {
+  background: #ffffff; border-radius: 28px; border: 1.5px solid #f1f5f9; margin-bottom: 1rem; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+  ion-card-content { padding: 1.5rem; }
+  .card-top {
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;
+    .icon-box {
+      width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
+      &.blue { background: #eff6ff; color: #1e5cff; } &.green { background: #f0fdf4; color: #22c55e; } &.red { background: #fef2f2; color: #ef4444; }
+    }
+    .badge { font-size: 0.75rem; font-weight: 800; padding: 0.4rem 0.8rem; border-radius: 10px; }
   }
+  .main-val { h1 { margin: 0; font-size: 2.2rem; font-weight: 800; color: #1e293b; small { font-size: 1rem; color: #94a3b8; font-weight: 600; } } p { margin: 0.2rem 0 0; font-size: 0.85rem; font-weight: 700; color: #64748b; } }
+  .progress-bar-wrap { margin-top: 1rem; ion-progress-bar { height: 10px; border-radius: 5px; } }
+  .action-row { margin-top: 1.25rem; display: flex; gap: 0.75rem; ion-button { flex: 1; --border-radius: 12px; font-weight: 800; margin: 0; height: 42px; } }
+}
 
-  .header-section {
-    h2 {
-      color: #ffffff;
+// BLOOD PRESSURE UI
+.bp-card {
+  .bp-display {
+    display: flex; align-items: center; gap: 1.5rem; margin: 1.25rem 0;
+    .bp-circle {
+      width: 85px; height: 85px; border-radius: 50%; border: 5px solid #f1f5f9; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: all 0.3s ease;
+      &.healthy { border-color: #22c55e; box-shadow: 0 0 15px rgba(34, 197, 94, 0.2); }
+      &.warning { border-color: #f59e0b; } &.danger { border-color: #ef4444; }
+      strong { font-size: 1rem; color: #1e293b; } small { font-size: 0.6rem; color: #94a3b8; text-transform: uppercase; font-weight: 800; }
     }
-    p {
-      color: #cbd5e0;
-    }
+    .bp-info { h2 { margin: 0; font-size: 1.5rem; font-weight: 800; } span { font-size: 0.8rem; font-weight: 700; color: #94a3b8; } }
   }
-
-  .tracker-card {
-    background: #1e1e1e;
-    border-color: rgba(255, 255, 255, 0.08);
-
-    .card-header-box {
-      h3 {
-        color: #ffffff;
-      }
-      .target-lbl {
-        color: #cbd5e0;
-      }
-    }
-
-    .metric-value {
-      color: #ffffff;
-    }
-
-    .bp-status-text {
-      color: #cbd5e0;
-    }
+  .bp-scale {
+    height: 8px; background: #f1f5f9; border-radius: 10px; display: flex; position: relative; margin: 1rem 0; overflow: visible;
+    .segment { flex: 1; } .seg-normal { background: #22c55e; border-top-left-radius: 10px; border-bottom-left-radius: 10px; } .seg-elevated { background: #f59e0b; } .seg-high { background: #ef4444; border-top-right-radius: 10px; border-bottom-right-radius: 10px; }
+    .indicator-dot { width: 14px; height: 14px; background: #1e293b; border: 2px solid #fff; border-radius: 50%; position: absolute; top: -3px; transform: translateX(-50%); transition: left 0.5s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
   }
 }

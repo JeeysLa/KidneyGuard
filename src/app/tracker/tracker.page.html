@@ -1,90 +1,116 @@
-<ion-header class="ion-no-border">
+<ion-header class="ion-no-border tracker-header">
   <ion-toolbar>
-    <ion-title>{{ ts.translate('trackerTitle') }}</ion-title>
+    <ion-buttons slot="start">
+      <ion-button fill="clear" routerLink="/home">
+        <ion-icon slot="icon-only" name="arrow-back" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <!-- Header Title -->
-  <div class="header-section">
-    <h2>{{ ts.translate('trackerTitle') }}</h2>
-    <p>
-      {{ ts.activeLanguage === 'en' ? 'Monitor your daily healthy habits to maintain optimal kidney health.' : 'Pantau kebiasaan sehat harian Anda untuk menjaga kesehatan ginjal secara optimal.' }}
-    </p>
+<ion-content [fullscreen]="true" *ngIf="stats$ | async as stats" [forceOverscroll]="false">
+
+  <!-- Seamless Hero Section (Same as Home) -->
+  <div class="hero-section">
+    <div class="hero-content">
+      <div class="brand-wrap">
+        <div class="brand-logo"><ion-icon name="shield-checkmark"></ion-icon></div>
+        <h1>KidneyGuard AI</h1>
+      </div>
+      <div class="title-container">
+        <h2>{{ ts.translate('trackerTitle') }}</h2>
+        <p>Monitor and improve your kidney health markers.</p>
+      </div>
+    </div>
   </div>
 
-  <!-- Water Intake -->
-  <ion-card class="tracker-card">
-    <ion-card-content>
-      <div class="card-header-box">
-        <h3>💧 {{ ts.translate('waterIntake') }}</h3>
-        <span class="target-lbl">{{ ts.translate('target') }}: {{ waterTarget }} ml</span>
-      </div>
-      <h1 class="metric-value">{{ water }} ml</h1>
-      <ion-progress-bar [value]="waterProgress" class="progress-bar"></ion-progress-bar>
-      <ion-button expand="block" class="tracker-btn" (click)="addWater()">
-        {{ ts.translate('logWater') }}
-      </ion-button>
-    </ion-card-content>
-  </ion-card>
+  <div class="dashboard-body">
 
-  <!-- Exercise -->
-  <ion-card class="tracker-card">
-    <ion-card-content>
-      <div class="card-header-box">
-        <h3>🚶 {{ ts.translate('exercise') }}</h3>
-        <span class="target-lbl">{{ ts.activeLanguage === 'en' ? 'Daily Target' : 'Target Harian' }}: {{ exerciseTarget }} min</span>
-      </div>
-      <h1 class="metric-value">{{ exercise }} min</h1>
-      <ion-progress-bar color="success" [value]="exerciseProgress" class="progress-bar"></ion-progress-bar>
-      <ion-button expand="block" color="success" class="tracker-btn" (click)="addExercise()">
-        {{ ts.activeLanguage === 'en' ? 'Add Exercise' : 'Catat Olahraga' }}
-      </ion-button>
-    </ion-card-content>
-  </ion-card>
+    <!-- 💧 WATER TRACKER -->
+    <div class="section-title">
+      <h3>Hydration Tracker</h3>
+    </div>
 
-  <!-- Sleep -->
-  <ion-card class="tracker-card">
-    <ion-card-content>
-      <div class="card-header-box">
-        <h3>😴 {{ ts.translate('sleep') }}</h3>
-        <span class="target-lbl">{{ ts.activeLanguage === 'en' ? 'Recommended' : 'Disarankan' }}: {{ sleepTarget }} Hours</span>
-      </div>
-      <h1 class="metric-value">{{ sleep }} Hours</h1>
-      <ion-progress-bar color="warning" [value]="sleepProgress" class="progress-bar"></ion-progress-bar>
-      <ion-button expand="block" color="warning" class="tracker-btn" (click)="updateSleep()">
-        {{ ts.activeLanguage === 'en' ? 'Update Sleep' : 'Catat Tidur' }}
-      </ion-button>
-    </ion-card-content>
-  </ion-card>
+    <ion-card class="metric-card ion-no-margin">
+      <ion-card-content>
+        <div class="card-top">
+          <div class="icon-box blue"><ion-icon name="water-outline"></ion-icon></div>
+          <ion-badge color="primary" class="badge">{{ stats.waterIntake / stats.waterGoal * 100 | number:'1.0-0' }}% Goal</ion-badge>
+        </div>
+        <div class="main-val">
+          <h1>{{ stats.waterIntake }} <small>ml</small></h1>
+          <p>Daily Goal: {{ stats.waterGoal }} ml</p>
+        </div>
+        <div class="progress-bar-wrap">
+          <ion-progress-bar [value]="stats.waterIntake / stats.waterGoal" color="primary"></ion-progress-bar>
+        </div>
+        <div class="action-row">
+          <ion-button (click)="addWater(250)" fill="outline">+250ml</ion-button>
+          <ion-button (click)="addWater(500)" fill="outline">+500ml</ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
 
-  <!-- Blood Pressure -->
-  <ion-card class="tracker-card">
-    <ion-card-content>
-      <div class="card-header-box">
-        <h3>❤️ {{ ts.translate('bloodPressure') }}</h3>
-        <ion-chip [color]="systolic < 130 && diastolic < 80 ? 'success' : 'danger'" class="bp-badge">
-          {{ bpStatusTranslated }}
-        </ion-chip>
-      </div>
-      <h1 class="metric-value">{{ systolic }} / {{ diastolic }} <small>mmHg</small></h1>
-      <p class="bp-status-text">{{ bpTextTranslated }}</p>
-    </ion-card-content>
-  </ion-card>
+    <!-- ❤️ BLOOD PRESSURE (Vital Signs) -->
+    <div class="section-title">
+      <h3>Vital Signs (BP)</h3>
+    </div>
 
-  <!-- Weight -->
-  <ion-card class="tracker-card">
-    <ion-card-content>
-      <div class="card-header-box">
-        <h3>⚖️ {{ ts.translate('bodyWeight') }}</h3>
-        <span class="target-lbl">BMI: {{ bmi }}</span>
-      </div>
-      <h1 class="metric-value">{{ weight }} kg</h1>
-      <ion-button expand="block" fill="outline" class="tracker-btn" (click)="updateWeight()">
-        {{ ts.activeLanguage === 'en' ? 'Update Weight' : 'Catat Berat' }}
-      </ion-button>
-    </ion-card-content>
-  </ion-card>
+    <ion-card class="metric-card bp-card ion-no-margin">
+      <ion-card-content>
+        <div class="card-top">
+          <div class="icon-box red"><ion-icon name="heart-outline"></ion-icon></div>
+          <ion-badge [color]="bpStatusColor" class="badge">{{ bpStatusLabel }}</ion-badge>
+        </div>
 
-  <div style="height: 2rem;"></div>
+        <div class="bp-display">
+          <div class="bp-circle" [class.healthy]="bpStatusColor === 'success'" [class.warning]="bpStatusColor === 'warning'" [class.danger]="bpStatusColor === 'danger'">
+            <small>BP</small>
+            <strong>{{ stats.systolic }}/{{ stats.diastolic }}</strong>
+          </div>
+          <div class="bp-info">
+            <h2 [style.color]="'var(--ion-color-' + bpStatusColor + ')'">{{ bpStatusLabel }}</h2>
+            <span>Blood Pressure Level</span>
+          </div>
+        </div>
+
+        <!-- BP Scale Visual -->
+        <div class="bp-scale">
+          <div class="segment seg-normal"></div>
+          <div class="segment seg-elevated"></div>
+          <div class="segment seg-high"></div>
+          <div class="indicator-dot" [style.left.%]="stats.systolic < 120 ? 15 : (stats.systolic < 140 ? 50 : 85)"></div>
+        </div>
+
+        <div class="action-row">
+          <ion-button fill="outline" color="success" size="small" (click)="updateBloodPressure(115, 75)">Normal</ion-button>
+          <ion-button fill="outline" color="warning" size="small" (click)="updateBloodPressure(125, 78)">Elevated</ion-button>
+          <ion-button fill="outline" color="danger" size="small" (click)="updateBloodPressure(145, 95)">High</ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- 🏃 EXERCISE TRACKER -->
+    <div class="section-title">
+      <h3>Activity Tracker</h3>
+    </div>
+
+    <ion-card class="metric-card ion-no-margin">
+      <ion-card-content>
+        <div class="card-top">
+          <div class="icon-box green"><ion-icon name="walk-outline"></ion-icon></div>
+          <ion-badge color="success" class="badge">{{ stats.exercise }} / {{ stats.exerciseTarget }} min</ion-badge>
+        </div>
+        <div class="main-val">
+          <h1>{{ stats.exercise }} <small>min</small></h1>
+          <p>Today's Physical Activity</p>
+        </div>
+        <div class="progress-bar-wrap">
+          <ion-progress-bar [value]="stats.exercise / stats.exerciseTarget" color="success"></ion-progress-bar>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <div style="height: 1.5rem;"></div>
+  </div>
 </ion-content>

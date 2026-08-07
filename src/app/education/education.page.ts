@@ -7,16 +7,15 @@ import { TranslationService } from '../core/translation.service';
 import {
   IonContent,
   IonHeader,
-  IonTitle,
   IonToolbar,
   IonCard,
   IonCardContent,
   IonButton,
   IonBadge,
   IonIcon,
-  IonSearchbar,
   IonChip,
-  IonLabel
+  IonLabel,
+  IonButtons
 } from '@ionic/angular/standalone';
 
 @Component({
@@ -30,16 +29,15 @@ import {
     FormsModule,
     IonContent,
     IonHeader,
-    IonTitle,
     IonToolbar,
     IonCard,
     IonCardContent,
     IonButton,
     IonBadge,
     IonIcon,
-    IonSearchbar,
     IonChip,
-    IonLabel
+    IonLabel,
+    IonButtons
   ]
 })
 export class EducationPage {
@@ -60,19 +58,19 @@ export class EducationPage {
 
   get articles(): Article[] {
     let list = this.educationService.getArticles();
-    
+
     if (this.selectedCategory !== 'all') {
       list = list.filter(a => a.category === this.selectedCategory);
     }
-    
+
     if (this.searchQuery && this.searchQuery.trim() !== '') {
       const q = this.searchQuery.toLowerCase();
-      list = list.filter(a => 
-        a.title.toLowerCase().includes(q) || 
+      list = list.filter(a =>
+        a.title.toLowerCase().includes(q) ||
         a.description.toLowerCase().includes(q)
       );
     }
-    
+
     return list;
   }
 

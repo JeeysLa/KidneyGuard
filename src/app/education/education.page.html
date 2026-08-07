@@ -1,51 +1,62 @@
 <ion-header class="ion-no-border education-header">
   <ion-toolbar>
-    <ion-title>{{ ts.translate('educationTitle') }}</ion-title>
+    <ion-buttons slot="start">
+      <ion-button fill="clear" routerLink="/home">
+        <ion-icon slot="icon-only" name="arrow-back" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <!-- Top Banner -->
-  <div class="education-banner">
-    <p class="eyebrow">{{ ts.activeLanguage === 'en' ? 'Knowledge Hub' : 'Pusat Pengetahuan' }}</p>
-    <h2>{{ ts.activeLanguage === 'en' ? 'Stay informed about kidney care.' : 'Tetap terinformasi tentang perawatan ginjal.' }}</h2>
+<ion-content [fullscreen]="true" [forceOverscroll]="false">
+  <!-- Seamless Hero Section -->
+  <div class="hero-section">
+    <div class="hero-content">
+      <div class="brand-wrap">
+        <div class="brand-logo"><ion-icon name="shield-checkmark"></ion-icon></div>
+        <h1>KidneyGuard AI</h1>
+      </div>
+      <div class="title-container">
+        <h2>{{ ts.translate('educationTitle') }}</h2>
+        <p>Your guide to better kidney health markers.</p>
+      </div>
+    </div>
   </div>
 
-  <div class="education-body">
-    <!-- Search Bar -->
-    <div class="search-box">
-      <ion-searchbar [placeholder]="ts.translate('searchArticle')" [(ngModel)]="searchQuery" show-clear-button="always" animated="true"></ion-searchbar>
-    </div>
-
-    <!-- Category Filters Scroll -->
+  <div class="dashboard-body">
+    <!-- Category Pills -->
     <div class="category-scroll-container">
-      <ion-chip *ngFor="let cat of categories" [color]="selectedCategory === cat.key ? 'primary' : 'light'" [class.active-chip]="selectedCategory === cat.key" (click)="selectCategory(cat.key)" mode="ios">
-        <ion-label>{{ ts.translate(cat.labelKey) }}</ion-label>
-      </ion-chip>
+      <div class="chips-flex">
+        <ion-chip *ngFor="let cat of categories" [class.active-chip]="selectedCategory === cat.key" (click)="selectCategory(cat.key)" mode="ios">
+          <ion-label>{{ ts.translate(cat.labelKey) }}</ion-label>
+        </ion-chip>
+      </div>
     </div>
 
-    <!-- Featured Banner Card (Only visible when no search query is active and category is 'all') -->
-    <ion-card class="featured-card" *ngIf="!searchQuery && selectedCategory === 'all'">
+    <!-- Featured Card -->
+    <ion-card class="featured-card" *ngIf="selectedCategory === 'all'">
       <ion-card-content>
-        <ion-badge color="light" class="badge-featured">{{ ts.translate('featured') }}</ion-badge>
-        <h3>{{ ts.translate('onboardingWelcome') }}</h3>
-        <p>{{ ts.translate('onboardingWelcomeDesc') }}</p>
-        <ion-button fill="clear" color="light" class="read-btn" [routerLink]="['/education-detail']" [queryParams]="{ id: 'hydration-habits' }">
-          {{ ts.translate('readNow') }} <ion-icon slot="end" name="arrow-forward"></ion-icon>
+        <ion-badge color="light" class="badge-featured">UNGGULAN</ion-badge>
+        <h3>Protect Your Kidneys: Basic Daily Guide</h3>
+        <p>Small habits like proper hydration and balanced meals make a huge difference.</p>
+        <ion-button fill="clear" color="light" class="read-btn" [routerLink]="['/education-detail']" [queryParams]="{ id: 'ckd-symptoms' }">
+          BACA SEKARANG <ion-icon slot="end" name="arrow-forward"></ion-icon>
         </ion-button>
       </ion-card-content>
     </ion-card>
 
-    <div class="section-title" *ngIf="articles.length > 0">
+    <div class="section-title">
       <h3>{{ ts.translate('recommendedReadings') }}</h3>
     </div>
 
-    <!-- Recommended Readings Dynamic List -->
-    <div class="article-list" *ngIf="articles.length > 0">
+    <!-- Article List -->
+    <div class="article-list">
       <ion-card button *ngFor="let article of articles" class="article-item ion-no-margin" [routerLink]="['/education-detail']" [queryParams]="{ id: article.id }">
         <ion-card-content>
           <div class="article-top">
-            <ion-icon [name]="article.icon" [color]="article.accent" style="font-size: 1.5rem;"></ion-icon>
+            <div class="icon-box" [ngClass]="article.accent">
+              <ion-icon [name]="article.icon"></ion-icon>
+            </div>
             <ion-badge [color]="article.accent" mode="ios">{{ article.category }}</ion-badge>
           </div>
           <h4>{{ article.title }}</h4>
@@ -54,13 +65,7 @@
       </ion-card>
     </div>
 
-    <!-- Empty State search results -->
-    <div class="empty-search ion-text-center" *ngIf="articles.length === 0">
-      <ion-icon name="search-outline"></ion-icon>
-      <h4>{{ ts.activeLanguage === 'en' ? 'No Articles Found' : 'Artikel Tidak Ditemukan' }}</h4>
-      <p>{{ ts.activeLanguage === 'en' ? 'Try adjusting your keywords or filters.' : 'Coba sesuaikan kata kunci atau filter Anda.' }}</p>
-    </div>
-
-    <div style="height: 2rem;"></div>
+    <!-- Minimal spacer to prevent sticking to bottom nav without large gap -->
+    <div class="bottom-spacer"></div>
   </div>
 </ion-content>

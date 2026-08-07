@@ -1,20 +1,21 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HealthDataService } from '../core/health-data.service';
+import { FormsModule } from '@angular/forms';
+import { HealthDataService, HealthStats } from '../core/health-data.service';
 import { TranslationService } from '../core/translation.service';
+import { Observable } from 'rxjs';
 
 import {
   IonHeader,
   IonToolbar,
-  IonTitle,
   IonContent,
-
   IonCard,
   IonCardContent,
-
   IonButton,
-  IonChip,
-  IonProgressBar
+  IonProgressBar,
+  IonIcon,
+  IonBadge,
+  IonButtons
 } from '@ionic/angular/standalone';
 
 @Component({
@@ -24,64 +25,30 @@ import {
   standalone: true,
   imports: [
     CommonModule,
-
+    FormsModule,
     IonHeader,
     IonToolbar,
-    IonTitle,
     IonContent,
-
     IonCard,
     IonCardContent,
-
     IonButton,
-    IonChip,
-    IonProgressBar
+    IonProgressBar,
+    IonIcon,
+    IonBadge,
+    IonButtons
   ]
 })
 export class TrackerPage {
+  stats$: Observable<HealthStats>;
 
   constructor(
     public ts: TranslationService,
     private healthData: HealthDataService
-  ) {}
-
-  get water(): number {
-    return this.healthData.currentStats.waterIntake;
+  ) {
+    this.stats$ = this.healthData.stats$;
   }
 
-  get waterTarget(): number {
-    return this.healthData.currentStats.waterGoal;
-  }
-
-  get exercise(): number {
-    return this.healthData.currentStats.exercise;
-  }
-
-  get exerciseTarget(): number {
-    return this.healthData.currentStats.exerciseTarget;
-  }
-
-  get sleep(): number {
-    return this.healthData.currentStats.sleep;
-  }
-
-  get sleepTarget(): number {
-    return this.healthData.currentStats.sleepTarget;
-  }
-
-  get systolic(): number {
-    return this.healthData.currentStats.systolic;
-  }
-
-  get diastolic(): number {
-    return this.healthData.currentStats.diastolic;
-  }
-
-  get weight(): number {
-    return this.healthData.currentStats.weight;
-  }
-
-  get bmi(): number {
+  get activeBmi(): number {
     const stats = this.healthData.currentStats;
     if (stats.height > 0) {
       const hMeters = stats.height / 100;
@@ -90,61 +57,40 @@ export class TrackerPage {
     return 0;
   }
 
-  get waterProgress(): number {
-    return Math.min(this.water / this.waterTarget, 1);
+  get bpStatusColor(): string {
+    const s = this.healthData.currentStats.systolic;
+    const d = this.healthData.currentStats.diastolic;
+    if (s < 120 && d < 80) return 'success';
+    if (s < 130 && d < 80) return 'warning';
+    return 'danger';
   }
 
-  get exerciseProgress(): number {
-    return Math.min(this.exercise / this.exerciseTarget, 1);
+  get bpStatusLabel(): string {
+    const s = this.healthData.currentStats.systolic;
+    const d = this.healthData.currentStats.diastolic;
+    const lang = this.ts.activeLanguage;
+
+    if (s < 120 && d < 80) return lang === 'en' ? 'Normal' : 'Normal';
+    if (s >= 120 && s <= 129 && d < 80) return lang === 'en' ? 'Elevated' : 'Meningkat';
+    if (s >= 130 && s <= 139 || (d >= 80 && d <= 89)) return lang === 'en' ? 'Hypertension S1' : 'Hipertensi T1';
+    return lang === 'en' ? 'Hypertension S2' : 'Hipertensi T2';
   }
 
-  get sleepProgress(): number {
-    return Math.min(this.sleep / this.sleepTarget, 1);
+  addWater(ml: number) {
+    this.healthData.updateWater(ml);
   }
 
-  get bloodPressureStatus(): string {
-    return this.systolic < 130 && this.diastolic < 80 ? 'Healthy' : 'Needs Attention';
+  addExercise(mins: number) {
+    const current = this.healthData.currentStats.exercise;
+    this.healthData.updateExercise(current + mins);
   }
 
-  get bpTextTranslated(): string {
-    const isHealthy = this.systolic < 130 && this.diastolic < 80;
-    if (this.ts.activeLanguage === 'en') {
-      return isHealthy ? 'Normal Blood Pressure' : 'Monitor Blood Pressure';
-    } else {
-      return isHealthy ? 'Tekanan Darah Normal' : 'Pantau Tekanan Darah';
-    }
+  updateBloodPressure(s: number, d: number) {
+    this.healthData.updateBloodPressure(s, d);
   }
 
-  get bpStatusTranslated(): string {
-    const isHealthy = this.systolic < 130 && this.diastolic < 80;
-    if (this.ts.activeLanguage === 'en') {
-      return isHealthy ? 'Healthy' : 'Needs Attention';
-    } else {
-      return isHealthy ? 'Sehat' : 'Butuh Perhatian';
-    }
+  updateWeight(kg: number) {
+    const current = this.healthData.currentStats.weight;
+    this.healthData.updateWeight(current + kg);
   }
-
-  addWater() {
-    const current = this.healthData.currentStats;
-    const newAmount = Math.min(current.waterGoal, current.waterIntake + 250);
-    this.healthData.updateWater(newAmount);
-  }
-
-  addExercise() {
-    const current = this.healthData.currentStats;
-    this.healthData.updateExercise(current.exercise + 10);
-  }
-
-  updateSleep() {
-    const current = this.healthData.currentStats;
-    const newSleep = current.sleep >= 12 ? 4 : current.sleep + 0.5;
-    this.healthData.updateSleep(newSleep);
-  }
-
-  updateWeight() {
-    const current = this.healthData.currentStats;
-    const newWeight = current.weight >= 150 ? 50 : current.weight + 0.5;
-    this.healthData.updateWeight(newWeight);
-  }
-
 }

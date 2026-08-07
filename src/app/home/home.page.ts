@@ -10,7 +10,6 @@ import { Observable } from 'rxjs';
 import {
   IonHeader,
   IonToolbar,
-  IonTitle,
   IonButtons,
   IonButton,
   IonIcon,
@@ -18,14 +17,10 @@ import {
   IonCard,
   IonCardContent,
   IonChip,
-  IonLabel,
   IonRow,
   IonCol,
   IonGrid,
-  IonItem,
-  IonList,
-  IonBadge,
-  IonCheckbox
+  IonBadge
 } from '@ionic/angular/standalone';
 
 @Component({
@@ -38,7 +33,6 @@ import {
     RouterLink,
     IonHeader,
     IonToolbar,
-    IonTitle,
     IonButtons,
     IonButton,
     IonIcon,
@@ -46,14 +40,10 @@ import {
     IonCard,
     IonCardContent,
     IonChip,
-    IonLabel,
     IonRow,
     IonCol,
     IonGrid,
-    IonItem,
-    IonList,
-    IonBadge,
-    IonCheckbox
+    IonBadge
   ]
 })
 export class HomePage {
@@ -127,17 +117,19 @@ export class HomePage {
     return c - percent * c;
   }
 
-  updateChecklist(key: 'water' | 'walk' | 'salt', event: any) {
+  updateChecklist(key: 'water' | 'walk' | 'urine', event: any) {
     this.healthData.updateChecklist(key, event.detail.checked);
   }
 
-  addWater() {
-    const current = this.healthData.currentStats;
-    const newAmount = Math.min(current.waterGoal, current.waterIntake + 250);
-    this.healthData.updateWater(newAmount);
+  addWaterAmount(ml: number) {
+    this.healthData.updateWater(ml);
+  }
+
+  setUrineColor(color: 'clear' | 'yellow' | 'orange') {
+    this.healthData.updateUrineColor(color);
   }
 
   resetWater() {
-    this.healthData.updateWater(0);
+    this.healthData.updateWater(-this.healthData.currentStats.waterIntake);
   }
 }

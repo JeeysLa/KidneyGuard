@@ -2,6 +2,7 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../core/auth.service';
+import { TranslationService } from '../core/translation.service';
 
 import {
   IonContent,
@@ -26,12 +27,13 @@ export class OnboardingPage {
 
   constructor(
     private router: Router,
-    private auth: AuthService
+    private auth: AuthService,
+    public ts: TranslationService
   ) {}
 
   startApp() {
     this.auth.setGuestSession();
-    this.router.navigateByUrl('/screening', {
+    this.router.navigateByUrl('/home', {
       replaceUrl: true
     });
   }
