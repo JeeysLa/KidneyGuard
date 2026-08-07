@@ -1,5 +1,6 @@
 import { addIcons } from 'ionicons';
 import {
+  arrowBack,
   arrowForward,
   bookOutline,
   fitnessOutline,
@@ -10,6 +11,7 @@ import {
   notificationsOutline,
   personCircleOutline,
   personOutline,
+  pintOutline,
   pulseOutline,
   searchOutline,
   settingsOutline,
@@ -17,6 +19,8 @@ import {
   shieldOutline,
   walkOutline,
   waterOutline,
+  wineOutline,
+  flaskOutline,
   eyeOutline,
   eyeOffOutline,
   moonOutline,
@@ -32,10 +36,13 @@ import {
   logOutOutline,
   heartOutline,
   bedOutline,
+  calendarOutline,
+  bandageOutline,
 } from 'ionicons/icons';
 
 export function registerIcons(): void {
   addIcons({
+    'arrow-back': arrowBack,
     'arrow-forward': arrowForward,
     'book-outline': bookOutline,
     'fitness-outline': fitnessOutline,
@@ -46,6 +53,7 @@ export function registerIcons(): void {
     'notifications-outline': notificationsOutline,
     'person-circle-outline': personCircleOutline,
     'person-outline': personOutline,
+    'pint-outline': pintOutline,
     'pulse-outline': pulseOutline,
     'search-outline': searchOutline,
     'settings-outline': settingsOutline,
@@ -53,6 +61,8 @@ export function registerIcons(): void {
     'shield-outline': shieldOutline,
     'walk-outline': walkOutline,
     'water-outline': waterOutline,
+    'wine-outline': wineOutline,
+    'flask-outline': flaskOutline,
     'eye-outline': eyeOutline,
     'eye-off-outline': eyeOffOutline,
     'moon-outline': moonOutline,
@@ -68,5 +78,7 @@ export function registerIcons(): void {
     'log-out-outline': logOutOutline,
     'heart-outline': heartOutline,
     'bed-outline': bedOutline,
+    'calendar-outline': calendarOutline,
+    'bandage-outline': bandageOutline,
   });
 }

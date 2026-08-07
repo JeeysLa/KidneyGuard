@@ -55,9 +55,9 @@
       <h3>Quick Actions</h3>
     </div>
     <ion-grid class="ion-no-padding">
-      <ion-row>
-        <ion-col size="6">
-          <ion-card button routerLink="/screening" class="action-card ion-no-margin" style="margin-right: 0.4rem;">
+      <ion-row class="ion-align-items-stretch">
+        <ion-col size="6" class="ion-padding-end">
+          <ion-card button routerLink="/screening" class="action-card ion-no-margin">
             <ion-card-content>
               <div class="action-icon-wrap primary"><ion-icon name="pulse-outline"></ion-icon></div>
               <h4>{{ ts.translate('startScreening') }}</h4>
@@ -65,8 +65,8 @@
             </ion-card-content>
           </ion-card>
         </ion-col>
-        <ion-col size="6">
-          <ion-card button routerLink="/education" class="action-card ion-no-margin" style="margin-left: 0.4rem;">
+        <ion-col size="6" class="ion-padding-start">
+          <ion-card button routerLink="/education" class="action-card ion-no-margin">
             <ion-card-content>
               <div class="action-icon-wrap secondary"><ion-icon name="book-outline"></ion-icon></div>
               <h4>{{ ts.translate('educationTitle') }}</h4>
@@ -83,17 +83,17 @@
 
     <div class="hydration-input-row">
       <div class="water-btn" (click)="addWaterAmount(200)">
-        <div class="btn-icon blue-soft"><ion-icon name="pint-outline"></ion-icon></div>
+        <div class="btn-icon blue-soft"><ion-icon name="wine-outline"></ion-icon></div>
         <span class="main-label">Small Glass</span>
         <span class="ml-label">200ml</span>
       </div>
       <div class="water-btn" (click)="addWaterAmount(250)">
-        <div class="btn-icon blue-mid"><ion-icon name="beer-outline"></ion-icon></div>
+        <div class="btn-icon blue-mid"><ion-icon name="pint-outline"></ion-icon></div>
         <span class="main-label">Large Glass</span>
         <span class="ml-label">250ml</span>
       </div>
       <div class="water-btn" (click)="addWaterAmount(500)">
-        <div class="btn-icon blue-deep"><ion-icon name="water"></ion-icon></div>
+        <div class="btn-icon blue-deep"><ion-icon name="flask-outline"></ion-icon></div>
         <span class="main-label">Bottle</span>
         <span class="ml-label">500ml</span>
       </div>

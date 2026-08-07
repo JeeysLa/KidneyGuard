@@ -20,7 +20,11 @@ import {
   IonSegment,
   IonSegmentButton,
   IonProgressBar,
-  IonCheckbox
+  IonCheckbox,
+  IonSpinner,
+  IonRadio,
+  IonRadioGroup,
+  IonList
 } from '@ionic/angular/standalone';
 
 @Component({
@@ -47,7 +51,11 @@ import {
     IonSegment,
     IonSegmentButton,
     IonProgressBar,
-    IonCheckbox
+    IonCheckbox,
+    IonSpinner,
+    IonRadio,
+    IonRadioGroup,
+    IonList
   ]
 })
 export class ScreeningPage {
@@ -97,7 +105,7 @@ export class ScreeningPage {
   }
 
   get stepProgress(): number {
-    return this.currentStep / 4;
+    return this.currentStep / 5;
   }
 
   get activityLabel(): string {
@@ -224,6 +232,11 @@ export class ScreeningPage {
       this.currentStep = 3;
     } else if (this.currentStep === 3) {
       this.currentStep = 4;
+    } else if (this.currentStep === 4) {
+      if (!this.validateLabs()) {
+        return;
+      }
+      this.currentStep = 5;
     }
   }
 
@@ -232,7 +245,7 @@ export class ScreeningPage {
     this.diastolic = null;
     this.fastingSugar = null;
     this.hba1c = null;
-    this.predictRisk();
+    this.currentStep = 5;
   }
 
   predictRisk() {

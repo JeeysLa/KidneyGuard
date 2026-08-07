@@ -26,7 +26,7 @@
 
   <div class="dashboard-body">
 
-    <!-- 💧 WATER TRACKER -->
+    <!-- 💧 WATER TRACKER REVISED -->
     <div class="section-title">
       <h3>{{ ts.translate('hydrationTracker') }}</h3>
     </div>
@@ -35,7 +35,7 @@
       <ion-card-content>
         <div class="card-top">
           <div class="icon-box blue"><ion-icon name="water-outline"></ion-icon></div>
-          <ion-badge color="primary" class="badge">{{ stats.waterIntake / stats.waterGoal * 100 | number:'1.0-0' }}% Goal</ion-badge>
+          <div class="badge blue">{{ stats.waterIntake / stats.waterGoal * 100 | number:'1.0-0' }}% Goal</div>
         </div>
         <div class="main-val">
           <h1>{{ stats.waterIntake }} <small>ml</small></h1>
@@ -45,13 +45,14 @@
           <ion-progress-bar [value]="stats.waterIntake / stats.waterGoal" color="primary"></ion-progress-bar>
         </div>
         <div class="action-row">
-          <ion-button (click)="addWater(250)" fill="outline">+250ml</ion-button>
-          <ion-button (click)="addWater(500)" fill="outline">+500ml</ion-button>
+          <ion-button (click)="addWater(200)" fill="outline" color="primary">+200ML</ion-button>
+          <ion-button (click)="addWater(250)" fill="outline" color="primary">+250ML</ion-button>
+          <ion-button (click)="addWater(500)" fill="outline" color="primary">+500ML</ion-button>
         </div>
       </ion-card-content>
     </ion-card>
 
-    <!-- ❤️ BLOOD PRESSURE (Vital Signs) -->
+    <!-- ❤️ BLOOD PRESSURE (Vital Signs) REVISED -->
     <div class="section-title">
       <h3>{{ ts.translate('vitalSigns') }}</h3>
     </div>
@@ -64,7 +65,7 @@
         </div>
 
         <div class="bp-display">
-          <div class="bp-circle" [class.healthy]="bpStatusColor === 'success'" [class.warning]="bpStatusColor === 'warning'" [class.danger]="bpStatusColor === 'danger'">
+          <div class="bp-circle" [class]="bpStatusColor">
             <small>BP</small>
             <strong>{{ stats.systolic }}/{{ stats.diastolic }}</strong>
           </div>
@@ -83,14 +84,14 @@
         </div>
 
         <div class="action-row">
-          <ion-button fill="outline" color="success" size="small" (click)="updateBloodPressure(115, 75)">Normal</ion-button>
-          <ion-button fill="outline" color="warning" size="small" (click)="updateBloodPressure(125, 78)">Elevated</ion-button>
-          <ion-button fill="outline" color="danger" size="small" (click)="updateBloodPressure(145, 95)">High</ion-button>
+          <ion-button fill="outline" color="success" (click)="updateBloodPressure(115, 75)">Normal</ion-button>
+          <ion-button fill="outline" color="warning" (click)="updateBloodPressure(125, 78)">Elevated</ion-button>
+          <ion-button fill="outline" color="danger" (click)="updateBloodPressure(145, 95)">High</ion-button>
         </div>
       </ion-card-content>
     </ion-card>
 
-    <!-- 🏃 EXERCISE TRACKER -->
+    <!-- 🏃 EXERCISE TRACKER REVISED -->
     <div class="section-title">
       <h3>{{ ts.translate('activityTracker') }}</h3>
     </div>
@@ -109,13 +110,13 @@
           <ion-progress-bar [value]="stats.exercise / stats.exerciseTarget" color="success"></ion-progress-bar>
         </div>
         <div class="action-row">
-          <ion-button (click)="addExercise(10)" fill="outline">+10m</ion-button>
-          <ion-button (click)="addExercise(30)" fill="outline">+30m</ion-button>
-          <ion-button (click)="addExercise(60)" fill="outline">+60m</ion-button>
+          <ion-button (click)="addExercise(10)" fill="outline" color="success">+10M</ion-button>
+          <ion-button (click)="addExercise(30)" fill="outline" color="success">+30M</ion-button>
+          <ion-button (click)="addExercise(60)" fill="outline" color="success">+60M</ion-button>
         </div>
       </ion-card-content>
     </ion-card>
 
-    <div style="height: 1.5rem;"></div>
+    <div style="height: 2rem;"></div>
   </div>
 </ion-content>

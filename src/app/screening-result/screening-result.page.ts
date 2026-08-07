@@ -14,6 +14,12 @@ import {
   IonIcon
 } from '@ionic/angular/standalone';
 
+export interface Recommendation {
+  icon: string;
+  color: string;
+  text: string;
+}
+
 @Component({
   selector: 'app-screening-result',
   templateUrl: './screening-result.page.html',
@@ -66,49 +72,49 @@ export class ScreeningResultPage implements OnInit {
     return c - (this.score / 100) * c;
   }
 
-  get tipsList(): string[] {
+  get recommendations(): Recommendation[] {
     const lang = this.ts.activeLanguage;
     if (this.score >= 60) {
-      return lang === 'en' 
+      return lang === 'en'
         ? [
-            'Schedule a kidney check with a Nephrologist immediately.',
-            'Maintain strict control over Blood Pressure (target < 130/80 mmHg).',
-            'Reduce dietary sodium intake to under 1500mg daily.',
-            'Regularly screen for proteinuria/albuminuria.'
+            { icon: 'medical-outline', color: 'danger', text: 'Schedule a kidney check with a Nephrologist immediately.' },
+            { icon: 'pulse-outline', color: 'primary', text: 'Maintain strict control over Blood Pressure (target < 130/80 mmHg).' },
+            { icon: 'nutrition-outline', color: 'warning', text: 'Reduce dietary sodium intake to under 1500mg daily.' },
+            { icon: 'flask-outline', color: 'secondary', text: 'Regularly screen for proteinuria/albuminuria.' }
           ]
         : [
-            'Segera jadwalkan konsultasi ginjal dengan dokter spesialis Nefrologi.',
-            'Jaga kontrol ketat terhadap tekanan darah (target < 130/80 mmHg).',
-            'Kurangi asupan natrium/garam hingga di bawah 1500mg per hari.',
-            'Lakukan skrining proteinuria/albuminuria secara berkala.'
+            { icon: 'medical-outline', color: 'danger', text: 'Segera jadwalkan konsultasi ginjal dengan dokter spesialis Nefrologi.' },
+            { icon: 'pulse-outline', color: 'primary', text: 'Jaga kontrol ketat terhadap tekanan darah (target < 130/80 mmHg).' },
+            { icon: 'nutrition-outline', color: 'warning', text: 'Kurangi asupan natrium/garam hingga di bawah 1500mg per hari.' },
+            { icon: 'flask-outline', color: 'secondary', text: 'Lakukan skrining proteinuria/albuminuria secara berkala.' }
           ];
     } else if (this.score >= 30) {
       return lang === 'en'
         ? [
-            'Check blood sugar and HbA1c levels to rule out early diabetes.',
-            'Increase daily water intake to 2.0 - 2.5 liters.',
-            'Engage in moderate exercises (walking/cycling) for 150 minutes/week.',
-            'Limit NSAID pain relievers (like Ibuprofen) which strain kidneys.'
+            { icon: 'flask-outline', color: 'primary', text: 'Check blood sugar and HbA1c levels to rule out early diabetes.' },
+            { icon: 'water-outline', color: 'secondary', text: 'Increase daily water intake to 2.0 - 2.5 liters.' },
+            { icon: 'walk-outline', color: 'success', text: 'Engage in moderate exercises (walking/cycling) for 150 minutes/week.' },
+            { icon: 'bandage-outline', color: 'danger', text: 'Limit NSAID pain relievers (like Ibuprofen) which strain kidneys.' }
           ]
         : [
-            'Periksa kadar gula darah dan HbA1c untuk mencegah diabetes dini.',
-            'Tingkatkan konsumsi air putih harian menjadi 2.0 - 2.5 liter.',
-            'Lakukan olahraga ringan (jalan kaki/bersepeda) selama 150 menit/minggu.',
-            'Batasi obat pereda nyeri NSAID (seperti Ibuprofen) karena membebani ginjal.'
+            { icon: 'flask-outline', color: 'primary', text: 'Periksa kadar gula darah dan HbA1c untuk mencegah diabetes dini.' },
+            { icon: 'water-outline', color: 'secondary', text: 'Tingkatkan konsumsi air putih harian menjadi 2.0 - 2.5 liter.' },
+            { icon: 'walk-outline', color: 'success', text: 'Lakukan olahraga ringan (jalan kaki/bersepeda) selama 150 menit/minggu.' },
+            { icon: 'bandage-outline', color: 'danger', text: 'Batasi obat pereda nyeri NSAID (seperti Ibuprofen) karena membebani ginjal.' }
           ];
     } else {
       return lang === 'en'
         ? [
-            'Maintain standard healthy hydration habits (2L/day).',
-            'Eat a balanced diet rich in leafy greens and low in processed foods.',
-            'Keep an active lifestyle and maintain normal BMI levels.',
-            'Screen for risk trends once every year.'
+            { icon: 'water-outline', color: 'primary', text: 'Maintain standard healthy hydration habits (2L/day).' },
+            { icon: 'nutrition-outline', color: 'success', text: 'Eat a balanced diet rich in leafy greens and low in processed foods.' },
+            { icon: 'fitness-outline', color: 'secondary', text: 'Keep an active lifestyle and maintain normal BMI levels.' },
+            { icon: 'calendar-outline', color: 'warning', text: 'Screen for risk trends once every year.' }
           ]
         : [
-            'Pertahankan kebiasaan hidrasi sehat harian (minum 2L air/hari).',
-            'Konsumsi makanan bergizi seimbang tinggi sayuran dan rendah makanan olahan.',
-            'Jaga gaya hidup aktif untuk mempertahankan berat badan ideal (BMI normal).',
-            'Lakukan skrining berkala satu tahun sekali.'
+            { icon: 'water-outline', color: 'primary', text: 'Pertahankan kebiasaan hidrasi sehat harian (minum 2L air/hari).' },
+            { icon: 'nutrition-outline', color: 'success', text: 'Konsumsi makanan bergizi seimbang tinggi sayuran dan rendah makanan olahan.' },
+            { icon: 'fitness-outline', color: 'secondary', text: 'Jaga gaya hidup aktif untuk mempertahankan berat badan ideal (BMI normal).' },
+            { icon: 'calendar-outline', color: 'warning', text: 'Lakukan skrining berkala satu tahun sekali.' }
           ];
     }
   }

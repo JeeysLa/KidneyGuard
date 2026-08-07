@@ -161,50 +161,70 @@
 .recommendations-box {
   margin-bottom: 2rem;
 
-  h3 {
-    font-weight: 700;
-    font-size: 1.05rem;
-    color: #2d3748;
-    margin: 0 0.5rem 0.75rem;
+  .box-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0 0.5rem 1rem;
+
+    ion-icon {
+      font-size: 1.4rem;
+    }
+
+    h3 {
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: #0f172a;
+      margin: 0;
+    }
   }
 
-  .tips-card {
-    background: #ffffff;
-    border-radius: 16px;
-    box-shadow: 0 8px 20px rgba(30, 92, 255, 0.04);
-    border: 1px solid rgba(30, 92, 255, 0.05);
-    margin: 0;
+  .reco-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
 
-    .tip-item {
+    .reco-card-item {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 1rem 1.25rem;
       display: flex;
-      gap: 1rem;
       align-items: center;
-      padding: 1rem;
-      border-bottom: 1px solid #edf2f7;
+      gap: 1rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+      border: 1.5px solid #f1f5f9;
+      transition: transform 0.2s ease;
 
-      &:last-child {
-        border-bottom: none;
+      &:active {
+        transform: scale(0.98);
       }
 
-      .tip-number {
-        width: 28px;
-        height: 28px;
-        border-radius: 50%;
-        background: rgba(30, 92, 255, 0.08);
-        color: #1e5cff;
-        font-weight: 700;
-        font-size: 0.85rem;
+      .reco-icon-box {
+        width: 44px;
+        height: 44px;
+        border-radius: 14px;
         display: flex;
         align-items: center;
         justify-content: center;
         flex-shrink: 0;
+        font-size: 1.3rem;
+
+        &.primary { background: #eff6ff; color: #1e5cff; }
+        &.secondary { background: #f0fdfa; color: #0d9488; }
+        &.success { background: #f0fdf4; color: #22c55e; }
+        &.warning { background: #fffbeb; color: #f59e0b; }
+        &.danger { background: #fef2f2; color: #ef4444; }
       }
 
-      .tip-text {
-        margin: 0;
-        font-size: 0.9rem;
-        color: #4a5568;
-        line-height: 1.4;
+      .reco-content {
+        flex: 1;
+        p {
+          margin: 0;
+          font-size: 0.95rem;
+          font-weight: 700;
+          color: #334155;
+          line-height: 1.4;
+        }
       }
     }
   }

@@ -6,7 +6,7 @@
 
 <ion-content [fullscreen]="true">
   <div class="result-wrapper">
-    
+
     <!-- Dynamic Risk Circle -->
     <div class="result-circle-box">
       <svg viewBox="0 0 100 100" class="radial-svg">
@@ -50,15 +50,21 @@
 
     <!-- Action Recommendations List -->
     <div class="recommendations-box">
-      <h3>{{ ts.translate('recommendations') }}</h3>
-      <ion-card class="tips-card">
-        <ion-card-content class="ion-no-padding">
-          <div *ngFor="let tip of tipsList; let i = index" class="tip-item">
-            <div class="tip-number">{{ i + 1 }}</div>
-            <p class="tip-text">{{ tip }}</p>
+      <div class="box-header">
+        <ion-icon name="shield-checkmark-outline" color="primary"></ion-icon>
+        <h3>{{ ts.translate('recommendations') }}</h3>
+      </div>
+
+      <div class="reco-list">
+        <div *ngFor="let reco of recommendations" class="reco-card-item">
+          <div class="reco-icon-box" [class]="reco.color">
+            <ion-icon [name]="reco.icon"></ion-icon>
           </div>
-        </ion-card-content>
-      </ion-card>
+          <div class="reco-content">
+            <p>{{ reco.text }}</p>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Done Action Button -->

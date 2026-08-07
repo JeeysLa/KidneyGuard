@@ -140,22 +140,29 @@ ion-content {
   }
 
   .goal-desc {
-    margin: 0 0 1rem;
-    color: #475569;
-    font-size: 0.95rem;
-    font-weight: 600;
-    line-height: 1.5;
+    margin: 0 0 0.75rem;
+    color: #1e293b;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.4;
   }
 
-  .chip-container {
+  .focus-status {
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
     gap: 0.5rem;
+    background: #eff6ff;
+    padding: 0.6rem 1rem;
+    border-radius: 12px;
 
-    ion-chip {
-      margin: 0;
+    ion-icon {
+      font-size: 1.2rem;
+    }
+
+    span {
+      font-size: 0.85rem;
       font-weight: 700;
-      font-size: 0.75rem;
+      color: #1e5cff;
     }
   }
 }

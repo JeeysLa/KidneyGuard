@@ -22,7 +22,8 @@ import {
   IonButtons,
   IonBadge,
   IonSelect,
-  IonSelectOption
+  IonSelectOption,
+  IonToggle
 } from '@ionic/angular/standalone';
 
 @Component({
@@ -48,7 +49,8 @@ import {
     IonButtons,
     IonBadge,
     IonSelect,
-    IonSelectOption
+    IonSelectOption,
+    IonToggle
   ]
 })
 export class ProfilePage {
