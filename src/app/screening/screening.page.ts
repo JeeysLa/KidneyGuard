@@ -103,6 +103,70 @@ export class ScreeningPage {
     return this.currentStep / 4;
   }
 
+  private isBetween(value: number | null, min: number, max: number): boolean {
+    return value !== null && Number.isFinite(value) && value >= min && value <= max;
+  }
+
+  private validateStep1(): boolean {
+    if (!this.fullName.trim()) {
+      this.validationMessage = this.ts.translate('validationError');
+      return false;
+    }
+
+    const validAge = this.isBetween(this.age, 1, 120);
+    const validHeight = this.isBetween(this.height, 80, 250);
+    const validWeight = this.isBetween(this.weight, 20, 300);
+
+    if (!validAge || !validHeight || !validWeight) {
+      this.validationMessage = this.ts.translate('validationError');
+      return false;
+    }
+
+    return true;
+  }
+
+  private validateLabs(): boolean {
+    const validSystolic = this.systolic === null || this.isBetween(this.systolic, 70, 260);
+    const validDiastolic = this.diastolic === null || this.isBetween(this.diastolic, 40, 160);
+    const validFastingSugar = this.fastingSugar === null || this.isBetween(this.fastingSugar, 40, 400);
+    const validHba1c = this.hba1c === null || this.isBetween(this.hba1c, 3, 20);
+
+    if (!validSystolic || !validDiastolic || !validFastingSugar || !validHba1c) {
+      this.validationMessage = this.ts.translate('validationError');
+      return false;
+    }
+
+    return true;
+  }
+
+  private resetForm(): void {
+    this.currentStep = 1;
+    this.validationMessage = '';
+
+    this.fullName = '';
+    this.age = null;
+    this.gender = 'male';
+    this.height = null;
+    this.weight = null;
+
+    this.smoke = false;
+    this.alcohol = false;
+    this.activityLevel = 'medium';
+    this.dietQuality = 'average';
+    this.sleepQuality = 'average';
+
+    this.familyKidney = false;
+    this.familyHypertension = false;
+    this.familyDiabetes = false;
+    this.prevAki = false;
+    this.prevUti = false;
+
+    this.systolic = null;
+    this.diastolic = null;
+    this.fastingSugar = null;
+    this.hba1c = null;
+  }
+
   prevStep() {
     if (this.currentStep > 1) {
       this.currentStep--;
@@ -112,10 +176,9 @@ export class ScreeningPage {
 
   nextStep() {
     this.validationMessage = '';
-    
+
     if (this.currentStep === 1) {
-      if (!this.fullName || !this.age || !this.gender || !this.height || !this.weight) {
-        this.validationMessage = this.ts.translate('validationError');
+      if (!this.validateStep1()) {
         return;
       }
       this.currentStep = 2;
@@ -136,6 +199,11 @@ export class ScreeningPage {
 
   predictRisk() {
     this.validationMessage = '';
+
+    if (!this.validateStep1() || !this.validateLabs()) {
+      return;
+    }
+
     this.isCalculating = true;
 
     // Simulate AI Screening Model Processing on backend
@@ -217,12 +285,7 @@ export class ScreeningPage {
         }
       });
       
-      // Reset step
-      this.currentStep = 1;
-      this.fullName = '';
-      this.age = null;
-      this.height = null;
-      this.weight = null;
+      this.resetForm();
     }, 1800);
   }
 }

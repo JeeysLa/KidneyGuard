@@ -26,11 +26,10 @@ export class AppComponent implements OnInit {
     this.showBottomNav = this.shouldShowBottomNav(this.router.url);
   }
 
-  private hasCompletedOnboarding(): boolean {
-    return localStorage.getItem('onboardingCompleted') === 'true';
-  }
-
   private shouldShowBottomNav(url: string): boolean {
-    return !url.includes('/onboarding') && ['/home', '/tracker', '/education', '/profile'].includes(url);
+    const normalized = url.split('?')[0].replace(/\/$/, '');
+    const rootPath = normalized || '/';
+    const visibleOn = ['/home', '/tracker', '/education', '/profile'];
+    return !rootPath.includes('/onboarding') && visibleOn.includes(rootPath);
   }
 }
