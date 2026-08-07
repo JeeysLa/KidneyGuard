@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { HealthDataService, HealthStats } from '../core/health-data.service';
 import { TranslationService } from '../core/translation.service';
+import { ThemeService, ThemeMode } from '../core/theme.service';
 import { AuthService } from '../core/auth.service';
 import { Observable } from 'rxjs';
 
@@ -58,6 +59,7 @@ export class ProfilePage {
 
   constructor(
     public ts: TranslationService,
+    public themeService: ThemeService,
     private healthData: HealthDataService,
     private auth: AuthService,
     private router: Router
@@ -68,5 +70,9 @@ export class ProfilePage {
   logout() {
     this.auth.logout();
     this.router.navigateByUrl('/onboarding', { replaceUrl: true });
+  }
+
+  changeTheme(event: any) {
+    this.themeService.setTheme(event.detail.value as ThemeMode);
   }
 }

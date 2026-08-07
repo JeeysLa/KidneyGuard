@@ -53,6 +53,9 @@ export const EN_TRANS = {
   checklistUrine: 'Check Urine Color',
   kidneyInsights: 'Kidney Insights',
   viewAll: 'View All',
+  quickActions: 'Quick Actions',
+  logHydration: 'Log Hydration',
+  reset: 'Reset',
   // Screening
   screeningTitle: 'Kidney Screening',
   screeningSubtitle: 'Kidney Health Screening',
@@ -129,6 +132,7 @@ export const EN_TRANS = {
   bloodPressure: 'Blood Pressure',
   dailyGoal: 'Daily Goal',
   todayActivity: "Today's Physical Activity",
+  dailyFocus: 'Daily Focus',
   // Education
   educationTitle: 'Education',
   searchArticle: 'Search articles...',
@@ -153,6 +157,11 @@ export const EN_TRANS = {
   aboutApp: 'About Application',
   deleteAccount: 'Delete Account',
   confirmDelete: 'Are you sure you want to delete your account? This action is irreversible.',
+  // Theme
+  appearance: 'Appearance',
+  light: 'Light',
+  dark: 'Dark',
+  system: 'System',
   // Notifications
   notificationsTitle: 'Notifications',
   noNotifications: 'No notifications available',
@@ -220,6 +229,9 @@ export const ID_TRANS = {
   checklistUrine: 'Cek Warna Urin',
   kidneyInsights: 'Wawasan Ginjal',
   viewAll: 'Lihat Semua',
+  quickActions: 'Tindakan Cepat',
+  logHydration: 'Catat Hidrasi',
+  reset: 'Reset',
   // Screening
   screeningTitle: 'Skrining Ginjal',
   screeningSubtitle: 'Skrining Kesehatan Ginjal',
@@ -296,6 +308,7 @@ export const ID_TRANS = {
   bloodPressure: 'Tekanan Darah',
   dailyGoal: 'Target Harian',
   todayActivity: 'Aktivitas Fisik Hari Ini',
+  dailyFocus: 'Fokus Harian',
   // Education
   educationTitle: 'Edukasi',
   searchArticle: 'Cari artikel...',
@@ -320,6 +333,11 @@ export const ID_TRANS = {
   aboutApp: 'Tentang Aplikasi',
   deleteAccount: 'Hapus Akun',
   confirmDelete: 'Yakin ingin menghapus akun? Tindakan ini permanen.',
+  // Theme
+  appearance: 'Tampilan',
+  light: 'Terang',
+  dark: 'Gelap',
+  system: 'Sistem',
   // Notifications
   notificationsTitle: 'Notifikasi',
   noNotifications: 'Tidak ada notifikasi',

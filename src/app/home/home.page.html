@@ -52,7 +52,7 @@
   <div class="dashboard-body">
 
     <div class="section-title">
-      <h3>Quick Actions</h3>
+      <h3>{{ ts.translate('quickActions') }}</h3>
     </div>
     <ion-grid class="ion-no-padding">
       <ion-row class="ion-align-items-stretch">
@@ -78,30 +78,30 @@
     </ion-grid>
 
     <div class="section-title">
-      <h3>Log Hydration</h3>
+      <h3>{{ ts.translate('logHydration') }}</h3>
     </div>
 
     <div class="hydration-input-row">
       <div class="water-btn" (click)="addWaterAmount(200)">
         <div class="btn-icon blue-soft"><ion-icon name="wine-outline"></ion-icon></div>
-        <span class="main-label">Small Glass</span>
+        <span class="main-label">{{ ts.activeLanguage === 'en' ? 'Small Glass' : 'Gelas Kecil' }}</span>
         <span class="ml-label">200ml</span>
       </div>
       <div class="water-btn" (click)="addWaterAmount(250)">
         <div class="btn-icon blue-mid"><ion-icon name="pint-outline"></ion-icon></div>
-        <span class="main-label">Large Glass</span>
+        <span class="main-label">{{ ts.activeLanguage === 'en' ? 'Large Glass' : 'Gelas Besar' }}</span>
         <span class="ml-label">250ml</span>
       </div>
       <div class="water-btn" (click)="addWaterAmount(500)">
         <div class="btn-icon blue-deep"><ion-icon name="flask-outline"></ion-icon></div>
-        <span class="main-label">Bottle</span>
+        <span class="main-label">{{ ts.activeLanguage === 'en' ? 'Bottle' : 'Botol' }}</span>
         <span class="ml-label">500ml</span>
       </div>
     </div>
 
     <div class="section-title justify-title">
       <h3>{{ ts.translate('hydrationProgress') }}</h3>
-      <ion-button fill="clear" size="small" (click)="resetWater()">Reset</ion-button>
+      <ion-button fill="clear" size="small" (click)="resetWater()">{{ ts.translate('reset') }}</ion-button>
     </div>
 
     <ion-card class="hydration-card ion-no-margin">
@@ -125,14 +125,14 @@
     </ion-card>
 
     <div class="section-title">
-      <h3>{{ ts.translate('dailyChecklist') }}</h3>
+      <h3>{{ ts.translate('dailyFocus') }}</h3>
     </div>
 
     <div class="compact-checklist">
       <div class="task-pill" [class.completed]="stats.checklist.water" (click)="updateChecklist('water', {detail: {checked: !stats.checklist.water}})">
         <div class="task-left">
           <div class="icon-circle blue"><ion-icon name="water-outline"></ion-icon></div>
-          <span class="task-text">Minum 2L Air</span>
+          <span class="task-text">{{ ts.translate('checklistWater') }}</span>
         </div>
         <div class="custom-check" [class.checked]="stats.checklist.water"><ion-icon name="checkmark"></ion-icon></div>
       </div>
@@ -140,7 +140,7 @@
       <div class="task-pill" [class.completed]="stats.checklist.walk" (click)="updateChecklist('walk', {detail: {checked: !stats.checklist.walk}})">
         <div class="task-left">
           <div class="icon-circle green"><ion-icon name="walk-outline"></ion-icon></div>
-          <span class="task-text">Olahraga Ringan</span>
+          <span class="task-text">{{ ts.translate('checklistWalk') }}</span>
         </div>
         <div class="custom-check" [class.checked]="stats.checklist.walk"><ion-icon name="checkmark"></ion-icon></div>
       </div>
@@ -148,7 +148,7 @@
       <div class="task-pill" [class.completed]="stats.checklist.urine" (click)="updateChecklist('urine', {detail: {checked: !stats.checklist.urine}})">
         <div class="task-left">
           <div class="icon-circle orange"><ion-icon name="color-filter-outline"></ion-icon></div>
-          <span class="task-text">Cek Warna Urin</span>
+          <span class="task-text">{{ ts.translate('checklistUrine') }}</span>
         </div>
         <div class="custom-check" [class.checked]="stats.checklist.urine"><ion-icon name="checkmark"></ion-icon></div>
       </div>
@@ -156,14 +156,14 @@
 
     <div class="section-title justify-title">
       <h3>{{ ts.translate('kidneyInsights') }}</h3>
-      <ion-button fill="clear" size="small" routerLink="/education">View All</ion-button>
+      <ion-button fill="clear" size="small" routerLink="/education">{{ ts.translate('viewAll') }}</ion-button>
     </div>
 
     <ion-card button class="article-card ion-no-margin" [routerLink]="['/education-detail']" [queryParams]="{ id: 'ckd-symptoms' }">
       <ion-card-content>
-        <ion-badge color="primary">HEALTH</ion-badge>
-        <h4>Early Symptoms of Chronic Kidney Disease</h4>
-        <p>Learn the early signs before CKD becomes severe.</p>
+        <ion-badge color="primary">{{ ts.activeLanguage === 'en' ? 'HEALTH' : 'KESEHATAN' }}</ion-badge>
+        <h4>{{ ts.activeLanguage === 'en' ? 'Early Symptoms of Chronic Kidney Disease' : 'Gejala Awal Penyakit Ginjal Kronis' }}</h4>
+        <p>{{ ts.activeLanguage === 'en' ? 'Learn the early signs before CKD becomes severe.' : 'Pelajari tanda-tanda awal sebelum PGK menjadi parah.' }}</p>
       </ion-card-content>
     </ion-card>
 

@@ -80,11 +80,11 @@
         <!-- Appearance Selector -->
         <ion-item class="selector-item">
           <div class="icon-wrap warning" slot="start"><ion-icon name="moon-outline"></ion-icon></div>
-          <ion-label>Appearance</ion-label>
-          <ion-select value="system" slot="end" class="custom-select" interface="popover">
-            <ion-select-option value="light">Light</ion-select-option>
-            <ion-select-option value="dark">Dark</ion-select-option>
-            <ion-select-option value="system">System</ion-select-option>
+          <ion-label>{{ ts.translate('appearance') }}</ion-label>
+          <ion-select [value]="themeService.activeTheme" slot="end" (ionChange)="changeTheme($event)" class="custom-select" interface="popover">
+            <ion-select-option value="light">{{ ts.translate('light') }}</ion-select-option>
+            <ion-select-option value="dark">{{ ts.translate('dark') }}</ion-select-option>
+            <ion-select-option value="system">{{ ts.translate('system') }}</ion-select-option>
           </ion-select>
         </ion-item>
 
