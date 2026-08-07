@@ -25,18 +25,22 @@
 }
 
 .education-body {
-  padding: 1rem;
+  padding: 1.25rem 1rem 1rem;
   background: #ffffff;
   border-top-left-radius: 24px;
   border-top-right-radius: 24px;
-  margin-top: -1.25rem;
+  margin-top: -0.85rem;
   position: relative;
   z-index: 10;
   min-height: 500px;
 }
 
+ion-content {
+  --padding-bottom: calc(84px + env(safe-area-inset-bottom));
+}
+
 .search-box {
-  margin: -2.25rem 0.25rem 1rem;
+  margin: -1.25rem 0.25rem 1rem;
   position: relative;
   z-index: 12;
 
