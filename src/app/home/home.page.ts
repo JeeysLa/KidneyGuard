@@ -73,7 +73,7 @@ export class HomePage {
   get greetingText(): string {
     const lang = this.ts.activeLanguage;
     const hour = new Date().getHours();
-    
+
     let timeGreeting = 'Good Morning';
     if (hour >= 18) {
       timeGreeting = lang === 'en' ? 'Good Evening' : 'Selamat Malam';
@@ -84,7 +84,8 @@ export class HomePage {
     }
 
     const user = this.auth.currentUser;
-    const name = user ? user.fullName.split(' ')[0] : 'Guest';
+    const rawName = user?.fullName?.trim();
+    const name = rawName ? rawName.split(' ')[0] : 'Guest';
     return `${timeGreeting}, ${name}`;
   }
 

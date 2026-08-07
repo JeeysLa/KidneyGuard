@@ -13,7 +13,7 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" *ngIf="stats$ | async as stats">
-  
+
   <!-- Welcome Greeting Banner -->
   <div class="welcome-banner">
     <p class="greeting-lbl">{{ greetingText }}</p>
@@ -22,12 +22,12 @@
   </div>
 
   <div class="dashboard-body">
-    
+
     <!-- Health Status / Screening Card -->
     <ion-card class="summary-card">
       <ion-card-content>
-        <!-- Case 1: Screening History Exists -->
-        <ng-container *ngIf="latestScreening; else emptyScreening">
+        <!-- Case 1: Risk Score Exists -->
+        <ng-container *ngIf="stats.riskScore > 0; else emptyScreening">
           <div class="summary-top">
             <span class="chip-label">{{ ts.translate('latestScreening') }}</span>
             <ion-chip [color]="riskColor" class="risk-indicator-chip">
@@ -76,10 +76,10 @@
     <div class="section-title">
       <h3>{{ ts.translate('quickActions') }}</h3>
     </div>
-    
+
     <ion-grid class="ion-no-padding grid-actions-box">
       <ion-row>
-        <ion-col size="6">
+        <ion-col size="6" class="action-col">
           <ion-card button routerLink="/screening" class="action-card ion-no-margin">
             <ion-card-content>
               <div class="action-icon-wrap primary">
@@ -90,7 +90,7 @@
             </ion-card-content>
           </ion-card>
         </ion-col>
-        <ion-col size="6">
+        <ion-col size="6" class="action-col">
           <ion-card button class="action-card ion-no-margin" (click)="addWater()">
             <ion-card-content>
               <div class="action-icon-wrap success">
@@ -101,7 +101,7 @@
             </ion-card-content>
           </ion-card>
         </ion-col>
-        <ion-col size="6" style="margin-top: 0.75rem;">
+        <ion-col size="6" class="action-col">
           <ion-card button routerLink="/education" class="action-card ion-no-margin">
             <ion-card-content>
               <div class="action-icon-wrap secondary">
@@ -112,7 +112,7 @@
             </ion-card-content>
           </ion-card>
         </ion-col>
-        <ion-col size="6" style="margin-top: 0.75rem;">
+        <ion-col size="6" class="action-col">
           <ion-card button routerLink="/profile" class="action-card ion-no-margin">
             <ion-card-content>
               <div class="action-icon-wrap warning">
@@ -148,7 +148,7 @@
               <span>{{ ts.activeLanguage === 'en' ? 'Done' : 'Selesai' }}</span>
             </div>
           </div>
-          
+
           <div class="hydration-text-box">
             <h4>{{ ts.translate('todayIntake') }}</h4>
             <h2>{{ stats.waterIntake }} <small>/ {{ stats.waterGoal }} ml</small></h2>
