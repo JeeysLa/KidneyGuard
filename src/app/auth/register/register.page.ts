@@ -6,17 +6,13 @@ import { AuthService } from '../../core/auth.service';
 import { TranslationService } from '../../core/translation.service';
 import {
   IonContent,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
   IonCard,
   IonCardContent,
   IonItem,
   IonLabel,
   IonInput,
   IonButton,
-  IonIcon,
-  IonText
+  IonIcon
 } from '@ionic/angular/standalone';
 
 @Component({
@@ -29,17 +25,13 @@ import {
     FormsModule,
     RouterLink,
     IonContent,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
     IonCard,
     IonCardContent,
     IonItem,
     IonLabel,
     IonInput,
     IonButton,
-    IonIcon,
-    IonText
+    IonIcon
   ]
 })
 export class RegisterPage {

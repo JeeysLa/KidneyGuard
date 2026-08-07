@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslationService } from '../core/translation.service';
 import { AuthService } from '../core/auth.service';
 import {
@@ -11,9 +11,7 @@ import {
   IonCard,
   IonCardContent,
   IonButton,
-  IonChip,
-  IonIcon,
-  IonBadge
+  IonIcon
 } from '@ionic/angular/standalone';
 
 @Component({
@@ -23,7 +21,6 @@ import {
   standalone: true,
   imports: [
     CommonModule,
-    RouterLink,
     IonContent,
     IonHeader,
     IonToolbar,
@@ -31,9 +28,7 @@ import {
     IonCard,
     IonCardContent,
     IonButton,
-    IonChip,
-    IonIcon,
-    IonBadge
+    IonIcon
   ]
 })
 export class ScreeningResultPage implements OnInit {
