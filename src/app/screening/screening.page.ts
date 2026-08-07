@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { HealthDataService } from '../core/health-data.service';
 import { TranslationService } from '../core/translation.service';
+import { PredictionService, PredictionRequest } from '../core/prediction.service';
 import {
   IonHeader,
   IonToolbar,
@@ -93,7 +94,8 @@ export class ScreeningPage {
   constructor(
     public ts: TranslationService,
     private healthData: HealthDataService,
-    private router: Router
+    private router: Router,
+    private predictionService: PredictionService
   ) {}
 
   get bmi(): number {
@@ -257,86 +259,87 @@ export class ScreeningPage {
 
     this.isCalculating = true;
 
-    // Simulate AI Screening Model Processing on backend
-    setTimeout(() => {
-      this.isCalculating = false;
+    const currentBmi = this.bmi;
 
-      let score = 15; // Baseline risk
+    // Map UI values to Backend API schema
+    const requestData: PredictionRequest = {
+      Age: this.age!,
+      Gender: this.gender === 'male' ? 1 : 0,
+      BMI: currentBmi,
+      Smoking: this.smoke ? 1 : 0,
+      AlcoholConsumption: this.alcohol ? 1.0 : 0.0,
+      PhysicalActivity: this.activityLevel === 'low' ? 1.0 : this.activityLevel === 'medium' ? 3.0 : 5.0,
+      DietQuality: this.dietQuality === 'poor' ? 2.0 : this.dietQuality === 'average' ? 5.0 : 8.0,
+      SleepQuality: this.sleepQuality === 'poor' ? 4.0 : this.sleepQuality === 'average' ? 6.5 : 8.0,
+      FamilyHistoryKidneyDisease: this.familyKidney ? 1 : 0,
+      FamilyHistoryHypertension: this.familyHypertension ? 1 : 0,
+      FamilyHistoryDiabetes: this.familyDiabetes ? 1 : 0,
+      PreviousAcuteKidneyInjury: this.prevAki ? 1 : 0,
+      UrinaryTractInfections: this.prevUti ? 1 : 0,
+      SystolicBP: this.systolic || 120.0,
+      DiastolicBP: this.diastolic || 80.0,
+      FastingBloodSugar: this.fastingSugar || 90.0,
+      HbA1c: this.hba1c || 5.4,
+      // Default values for fields not yet in UI
+      HeavyMetalsExposure: 0,
+      OccupationalExposureChemicals: 0,
+      WaterQuality: 1,
+      MedicalCheckupsFrequency: 1.0,
+      MedicationAdherence: 1.0,
+      HealthLiteracy: 0.8
+    };
 
-      if (this.age && this.age > 50) score += 12;
-      if (this.age && this.age > 65) score += 10;
-      if (this.gender === 'male') score += 4;
+    this.predictionService.predict(requestData).subscribe({
+      next: (res) => {
+        this.isCalculating = false;
 
-      const currentBmi = this.bmi;
-      if (currentBmi > 25) score += 8;
-      if (currentBmi > 30) score += 15;
+        // Use backend result
+        const riskScore = res.risk_percentage !== undefined ? Math.round(res.risk_percentage) : 15;
+        const riskStatus = res.prediction || 'Calculated';
 
-      if (this.smoke) score += 10;
-      if (this.alcohol) score += 6;
-      if (this.activityLevel === 'low') score += 10;
-      if (this.activityLevel === 'high') score -= 5;
-      if (this.dietQuality === 'poor') score += 14;
-      if (this.dietQuality === 'healthy') score -= 5;
-      if (this.sleepQuality === 'poor') score += 8;
+        this.healthData.saveScreening({
+          riskScore,
+          riskStatus,
+          age: this.age!,
+          gender: this.gender,
+          height: this.height!,
+          weight: this.weight!,
+          bmi: currentBmi,
+          smoke: this.smoke,
+          alcohol: this.alcohol,
+          activityLevel: this.activityLevel,
+          dietQuality: this.dietQuality,
+          sleepQuality: this.sleepQuality,
+          familyHistory: {
+            kidney: this.familyKidney,
+            hypertension: this.familyHypertension,
+            diabetes: this.familyDiabetes
+          },
+          prevAki: this.prevAki,
+          prevUti: this.prevUti,
+          labs: {
+            systolic: this.systolic || undefined,
+            diastolic: this.diastolic || undefined,
+            fastingSugar: this.fastingSugar || undefined,
+            hba1c: this.hba1c || undefined
+          }
+        });
 
-      if (this.familyKidney) score += 20;
-      if (this.familyHypertension) score += 15;
-      if (this.familyDiabetes) score += 15;
+        this.router.navigate(['/screening-result'], {
+          queryParams: {
+            score: riskScore,
+            status: riskStatus,
+            name: this.fullName
+          }
+        });
 
-      if (this.prevAki) score += 18;
-      if (this.prevUti) score += 8;
-
-      if (this.systolic && this.systolic > 140) score += 12;
-      if (this.diastolic && this.diastolic > 90) score += 12;
-      if (this.fastingSugar && this.fastingSugar > 126) score += 18;
-      if (this.hba1c && this.hba1c > 6.5) score += 18;
-
-      const riskScore = Math.max(8, Math.min(98, score));
-      let riskStatus = 'Low Risk';
-
-      if (riskScore >= 60) {
-        riskStatus = 'High Risk';
-      } else if (riskScore >= 30) {
-        riskStatus = 'Medium Risk';
+        this.resetForm();
+      },
+      error: (err) => {
+        console.error('API Error:', err);
+        this.isCalculating = false;
+        this.validationMessage = 'Error connecting to backend API. Please try again later.';
       }
-
-      this.healthData.saveScreening({
-        riskScore,
-        riskStatus,
-        age: this.age!,
-        gender: this.gender,
-        height: this.height!,
-        weight: this.weight!,
-        bmi: currentBmi,
-        smoke: this.smoke,
-        alcohol: this.alcohol,
-        activityLevel: this.activityLevel,
-        dietQuality: this.dietQuality,
-        sleepQuality: this.sleepQuality,
-        familyHistory: {
-          kidney: this.familyKidney,
-          hypertension: this.familyHypertension,
-          diabetes: this.familyDiabetes
-        },
-        prevAki: this.prevAki,
-        prevUti: this.prevUti,
-        labs: {
-          systolic: this.systolic || undefined,
-          diastolic: this.diastolic || undefined,
-          fastingSugar: this.fastingSugar || undefined,
-          hba1c: this.hba1c || undefined
-        }
-      });
-
-      this.router.navigate(['/screening-result'], {
-        queryParams: {
-          score: riskScore,
-          status: riskStatus,
-          name: this.fullName
-        }
-      });
-
-      this.resetForm();
-    }, 1800);
+    });
   }
 }
