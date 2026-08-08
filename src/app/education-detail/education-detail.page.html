@@ -1,28 +1,39 @@
-<ion-header class="ion-no-border">
+<ion-header class="ion-no-border article-header">
   <ion-toolbar>
-    <ion-title>Article Detail</ion-title>
+    <ion-buttons slot="start">
+      <ion-button fill="clear" routerLink="/education">
+        <ion-icon slot="icon-only" name="arrow-back" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div class="header-section">
-    <ion-badge color="primary">{{ article.category }}</ion-badge>
-    <h2>{{ article.title }}</h2>
-    <p>{{ article.summary }}</p>
+  <div class="hero-header">
+    <div class="header-content">
+      <ion-badge class="category-badge" mode="ios">{{ article.category }}</ion-badge>
+      <h2>{{ article.title }}</h2>
+      <p class="summary-text">{{ article.summary }}</p>
+    </div>
   </div>
 
-  <ion-card class="detail-card">
-    <ion-card-content>
-      <div class="icon-wrap">
-        <ion-icon name="water-outline"></ion-icon>
-      </div>
-      <h3>Helpful Tips</h3>
-      <ul>
-        <li *ngFor="let tip of article.tips">{{ tip }}</li>
-      </ul>
-      <ion-button expand="block" routerLink="/education">
-        Back to Education
-      </ion-button>
-    </ion-card-content>
-  </ion-card>
+  <div class="content-body">
+    <ion-card class="detail-card">
+      <ion-card-content>
+        <div class="icon-wrap">
+          <ion-icon name="water"></ion-icon>
+        </div>
+
+        <h3 class="tips-title">Helpful Tips</h3>
+
+        <ul class="tips-list">
+          <li *ngFor="let tip of article.tips">{{ tip }}</li>
+        </ul>
+
+        <ion-button expand="block" class="back-btn" routerLink="/education">
+          Back to Education
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>
