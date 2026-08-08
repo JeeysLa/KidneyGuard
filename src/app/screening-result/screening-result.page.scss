@@ -25,7 +25,7 @@
     }
 
     .bg-circle {
-      stroke: #edf2f7;
+      stroke: var(--ion-color-step-100, #edf2f7);
     }
 
     .progress-circle {
@@ -34,13 +34,13 @@
       transition: stroke-dashoffset 0.8s ease-in-out;
 
       &.success {
-        stroke: #2dd36f;
+        stroke: var(--ion-color-success);
       }
       &.warning {
-        stroke: #ffc409;
+        stroke: var(--ion-color-warning);
       }
       &.danger {
-        stroke: #eb445a;
+        stroke: var(--ion-color-danger);
       }
     }
   }
@@ -55,7 +55,7 @@
     h2 {
       font-size: 2.5rem;
       font-weight: 800;
-      color: #1a202c;
+      color: var(--ion-text-color);
       margin: 0;
     }
 
@@ -68,26 +68,26 @@
       text-transform: uppercase;
 
       &.success {
-        background: rgba(45, 211, 111, 0.1);
-        color: #278a47;
+        background: rgba(var(--ion-color-success-rgb), 0.1);
+        color: var(--ion-color-success);
       }
       &.warning {
-        background: rgba(255, 196, 9, 0.12);
-        color: #b28904;
+        background: rgba(var(--ion-color-warning-rgb), 0.12);
+        color: var(--ion-color-warning);
       }
       &.danger {
-        background: rgba(235, 68, 90, 0.1);
-        color: #c82333;
+        background: rgba(var(--ion-color-danger-rgb), 0.1);
+        color: var(--ion-color-danger);
       }
     }
   }
 }
 
 .info-card {
-  background: #ffffff;
+  background: var(--ion-card-background);
   border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(30, 92, 255, 0.04);
-  border: 1px solid rgba(30, 92, 255, 0.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--ion-color-step-100, rgba(30, 92, 255, 0.05));
   margin: 0 0 1rem;
 
   ion-card-content {
@@ -97,21 +97,21 @@
   .greeting-lbl {
     font-weight: 700;
     font-size: 1.1rem;
-    color: #1a202c;
+    color: var(--ion-text-color);
     margin: 0 0 0.5rem;
   }
 
   .desc-text {
     margin: 0;
-    color: #4a5568;
+    color: var(--ion-color-step-600, #4a5568);
     font-size: 0.95rem;
     line-height: 1.5;
   }
 }
 
 .guest-banner {
-  background: linear-gradient(135deg, rgba(30, 92, 255, 0.05) 0%, rgba(30, 92, 255, 0.01) 100%);
-  border: 1px dashed rgba(30, 92, 255, 0.25);
+  background: linear-gradient(135deg, rgba(var(--ion-color-primary-rgb), 0.05) 0%, rgba(var(--ion-color-primary-rgb), 0.01) 100%);
+  border: 1px dashed rgba(var(--ion-color-primary-rgb), 0.25);
   border-radius: 16px;
   margin: 0 0 1.5rem;
   box-shadow: none;
@@ -127,7 +127,7 @@
 
     ion-icon {
       font-size: 1.5rem;
-      color: #1e5cff;
+      color: var(--ion-color-primary);
       flex-shrink: 0;
       margin-top: 2px;
     }
@@ -137,12 +137,12 @@
         margin: 0 0 0.25rem;
         font-weight: 700;
         font-size: 0.95rem;
-        color: #1a202c;
+        color: var(--ion-text-color);
       }
       p {
         margin: 0;
         font-size: 0.85rem;
-        color: #4a5568;
+        color: var(--ion-color-step-600, #4a5568);
         line-height: 1.4;
       }
     }
@@ -150,7 +150,7 @@
 
   .auth-promo-btn {
     --border-radius: 10px;
-    --background: #1e5cff;
+    --background: var(--ion-color-primary);
     font-weight: 700;
     margin: 0;
     height: 42px;
@@ -174,7 +174,7 @@
     h3 {
       font-weight: 800;
       font-size: 1.15rem;
-      color: #0f172a;
+      color: var(--ion-text-color);
       margin: 0;
     }
   }
@@ -185,14 +185,14 @@
     gap: 0.75rem;
 
     .reco-card-item {
-      background: #ffffff;
+      background: var(--ion-card-background);
       border-radius: 20px;
       padding: 1rem 1.25rem;
       display: flex;
       align-items: center;
       gap: 1rem;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
-      border: 1.5px solid #f1f5f9;
+      border: 1.5px solid var(--ion-color-step-100, #f1f5f9);
       transition: transform 0.2s ease;
 
       &:active {
@@ -209,11 +209,11 @@
         flex-shrink: 0;
         font-size: 1.3rem;
 
-        &.primary { background: #eff6ff; color: #1e5cff; }
-        &.secondary { background: #f0fdfa; color: #0d9488; }
-        &.success { background: #f0fdf4; color: #22c55e; }
-        &.warning { background: #fffbeb; color: #f59e0b; }
-        &.danger { background: #fef2f2; color: #ef4444; }
+        &.primary { background: rgba(var(--ion-color-primary-rgb), 0.1); color: var(--ion-color-primary); }
+        &.secondary { background: rgba(var(--ion-color-secondary-rgb), 0.1); color: var(--ion-color-secondary); }
+        &.success { background: rgba(var(--ion-color-success-rgb), 0.1); color: var(--ion-color-success); }
+        &.warning { background: rgba(var(--ion-color-warning-rgb), 0.1); color: var(--ion-color-warning); }
+        &.danger { background: rgba(var(--ion-color-danger-rgb), 0.1); color: var(--ion-color-danger); }
       }
 
       .reco-content {
@@ -222,7 +222,7 @@
           margin: 0;
           font-size: 0.95rem;
           font-weight: 700;
-          color: #334155;
+          color: var(--ion-color-step-800, #334155);
           line-height: 1.4;
         }
       }
@@ -235,86 +235,19 @@
 
   .dashboard-btn {
     --border-radius: 12px;
-    --background: #edf2f7;
-    --color: #2d3748;
+    --background: var(--ion-color-step-150, #edf2f7);
+    --color: var(--ion-text-color);
     font-weight: 700;
     height: 48px;
     margin: 0;
   }
 }
 
-// Dark Mode Support
 body.dark {
-  .result-circle-box {
-    .radial-svg {
-      .bg-circle {
-        stroke: #2d2d2d;
-      }
-    }
-    .score-overlay h2 {
-      color: #ffffff;
-    }
+  .info-card, .reco-card-item {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
   }
-
-  .info-card {
-    background: #1e1e1e;
-    border-color: rgba(255, 255, 255, 0.08);
-
-    .greeting-lbl {
-      color: #ffffff;
-    }
-    .desc-text {
-      color: #cbd5e0;
-    }
-  }
-
-  .guest-banner {
-    background: linear-gradient(135deg, rgba(30, 92, 255, 0.1) 0%, rgba(30, 92, 255, 0.02) 100%);
-    border-color: rgba(61, 194, 255, 0.25);
-
-    .banner-body {
-      ion-icon {
-        color: #3dc2ff;
-      }
-      .banner-text {
-        h4 {
-          color: #ffffff;
-        }
-        p {
-          color: #cbd5e0;
-        }
-      }
-    }
-  }
-
-  .recommendations-box {
-    h3 {
-      color: #cbd5e0;
-    }
-
-    .tips-card {
-      background: #1e1e1e;
-      border-color: rgba(255, 255, 255, 0.08);
-
-      .tip-item {
-        border-color: #2d2d2d;
-
-        .tip-number {
-          background: rgba(61, 194, 255, 0.12);
-          color: #3dc2ff;
-        }
-
-        .tip-text {
-          color: #cbd5e0;
-        }
-      }
-    }
-  }
-
-  .footer-btn-box {
-    .dashboard-btn {
-      --background: #2d2d2d;
-      --color: #ffffff;
-    }
+  .status-badge {
+    border: 1px solid rgba(255,255,255,0.1);
   }
 }

@@ -10,8 +10,17 @@ export class ThemeService {
   private themeSubject = new BehaviorSubject<ThemeMode>(this.loadTheme());
   theme$ = this.themeSubject.asObservable();
 
+  private mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
   constructor() {
     this.applyTheme(this.themeSubject.value);
+
+    // Listen for system theme changes
+    this.mediaQuery.addEventListener('change', () => {
+      if (this.themeSubject.value === 'system') {
+        this.applyTheme('system');
+      }
+    });
   }
 
   private loadTheme(): ThemeMode {
@@ -30,18 +39,25 @@ export class ThemeService {
   }
 
   private applyTheme(theme: ThemeMode) {
+    let isDark = false;
+
     if (theme === 'dark') {
-      document.body.classList.add('dark');
+      isDark = true;
     } else if (theme === 'light') {
-      document.body.classList.remove('dark');
+      isDark = false;
     } else {
       // System
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      if (prefersDark) {
-        document.body.classList.add('dark');
-      } else {
-        document.body.classList.remove('dark');
-      }
+      isDark = this.mediaQuery.matches;
+    }
+
+    // Ionic 8 uses .ion-palette-dark
+    document.documentElement.classList.toggle('ion-palette-dark', isDark);
+
+    // Backward compatibility for custom .dark styles
+    if (isDark) {
+      document.body.classList.add('dark');
+    } else {
+      document.body.classList.remove('dark');
     }
   }
 }

@@ -3,7 +3,7 @@
 }
 
 ion-content {
-  --background: #ffffff;
+  --background: var(--ion-background-color);
 }
 
 .profile-header {
@@ -18,7 +18,7 @@ ion-content {
 
 .hero-section {
   padding: 5.5rem 1.5rem 4rem;
-  background: linear-gradient(135deg, #1e5cff 0%, #3b82f6 100%);
+  background: linear-gradient(135deg, var(--ion-color-primary) 0%, var(--ion-color-primary-tint) 100%);
   color: #ffffff;
   position: relative;
   overflow: hidden;
@@ -43,7 +43,7 @@ ion-content {
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #1e5cff;
+      color: var(--ion-color-primary);
       font-size: 3rem;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     }
@@ -67,7 +67,7 @@ ion-content {
 .dashboard-body {
   margin-top: -2.5rem;
   padding: 2.5rem 1.25rem 2rem;
-  background: #ffffff;
+  background: var(--ion-background-color);
   border-top-left-radius: 35px;
   border-top-right-radius: 35px;
   position: relative;
@@ -75,13 +75,13 @@ ion-content {
 }
 
 .stats-card {
-  background: #ffffff;
+  background: var(--ion-card-background);
   border-radius: 28px;
-  border: 1.5px solid #f1f5f9;
+  border: none;
   margin: -1.5rem 0 1.5rem;
   position: relative;
   z-index: 12;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 
   ion-card-content {
     padding: 1.5rem 0.5rem;
@@ -96,7 +96,7 @@ ion-content {
       flex-direction: column;
       align-items: center;
       flex: 1;
-      border-right: 1.5px solid #f1f5f9;
+      border-right: 1px solid var(--ion-color-step-100);
 
       &:last-child {
         border-right: none;
@@ -105,12 +105,12 @@ ion-content {
       strong {
         font-size: 1.3rem;
         font-weight: 800;
-        color: #1e5cff;
+        color: var(--ion-color-primary);
       }
 
       span {
         font-size: 0.7rem;
-        color: #94a3b8;
+        color: var(--ion-color-step-400, #94a3b8);
         font-weight: 700;
         text-transform: uppercase;
         margin-top: 0.2rem;
@@ -124,16 +124,17 @@ ion-content {
   h3 {
     font-size: 1.15rem;
     font-weight: 800;
-    color: #1e293b;
+    color: var(--ion-text-color);
     margin: 0;
   }
 }
 
 .info-card {
-  background: #f8fafc;
+  background: var(--ion-card-background);
   border-radius: 24px;
-  border: 1.5px solid #f1f5f9;
+  border: none;
   margin-bottom: 1.5rem;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.05);
 
   ion-card-content {
     padding: 1.5rem;
@@ -141,7 +142,7 @@ ion-content {
 
   .goal-desc {
     margin: 0 0 0.75rem;
-    color: #1e293b;
+    color: var(--ion-text-color);
     font-size: 1rem;
     font-weight: 700;
     line-height: 1.4;
@@ -151,7 +152,7 @@ ion-content {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    background: #eff6ff;
+    background: rgba(var(--ion-color-primary-rgb), 0.05);
     padding: 0.6rem 1rem;
     border-radius: 12px;
 
@@ -162,28 +163,25 @@ ion-content {
     span {
       font-size: 0.85rem;
       font-weight: 700;
-      color: #1e5cff;
+      color: var(--ion-color-primary);
     }
   }
 }
 
 .settings-list-wrapper {
-  background: #ffffff;
+  background: var(--ion-card-background);
   border-radius: 28px;
-  border: 1.5px solid #f1f5f9;
+  border: none;
   overflow: hidden;
   margin-bottom: 2rem;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.05);
 
   ion-item {
-    --background: #ffffff;
+    --background: var(--ion-card-background);
     --padding-start: 1rem;
     --inner-padding-end: 1rem;
     --min-height: 64px;
-    border-bottom: 1.5px solid #f8fafc;
-
-    &:last-child {
-      border-bottom: none;
-    }
+    --border-color: var(--ion-color-step-50, #f8fafc);
 
     ion-icon {
       font-size: 1.25rem;
@@ -192,13 +190,13 @@ ion-content {
 
     ion-label {
       font-weight: 700;
-      color: #334155;
+      color: var(--ion-text-color);
       font-size: 0.95rem;
     }
 
     .custom-select {
       font-size: 0.85rem;
-      color: #1e5cff;
+      color: var(--ion-color-primary);
       font-weight: 800;
     }
   }
@@ -208,9 +206,22 @@ ion-content {
   padding: 0 0 3rem;
 
   ion-button {
-    --color: #ef4444;
+    --color: var(--ion-color-danger);
     font-weight: 800;
     --padding-start: 0;
     --padding-end: 0;
+  }
+}
+
+body.dark {
+  .dashboard-body {
+    background: var(--ion-background-color);
+  }
+  .stats-card, .info-card, .settings-list-wrapper {
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  .avatar-inner {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
   }
 }

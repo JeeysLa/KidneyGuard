@@ -19,7 +19,7 @@
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
-@import '@ionic/angular/css/palettes/dark.system.css';
+@import '@ionic/angular/css/palettes/dark.class.css';
 
 /* Standard Ionic Reset */
 html, body, ion-app {
@@ -35,11 +35,10 @@ ion-app > ion-router-outlet {
 
 /* Give page content room so the fixed bottom nav does not cover the last items */
 ion-content {
-  --padding-bottom: calc(84px + env(safe-area-inset-bottom));
+  --padding-bottom: calc(90px + env(safe-area-inset-bottom));
 }
 
 .ion-page {
-  padding-bottom: calc(72px + env(safe-area-inset-bottom));
   box-sizing: border-box;
 }
 

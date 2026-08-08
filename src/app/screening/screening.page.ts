@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef, inject } from '@angular/core';
+import { Component, ChangeDetectorRef, inject, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -65,6 +65,7 @@ export class ScreeningPage {
   private router = inject(Router);
   private predictionService = inject(PredictionService);
   private cdr = inject(ChangeDetectorRef);
+  private zone = inject(NgZone);
   public ts = inject(TranslationService);
 
   currentStep = 1;
@@ -334,15 +335,17 @@ export class ScreeningPage {
             }
           });
 
-          this.router.navigate(['/screening-result'], {
-            queryParams: {
-              score: riskScore,
-              status: riskStatus,
-              name: this.fullName
-            }
+          this.zone.run(() => {
+            this.router.navigate(['/screening-result'], {
+              queryParams: {
+                score: riskScore,
+                status: riskStatus,
+                name: this.fullName
+              }
+            }).then(() => {
+              this.resetForm();
+            });
           });
-
-          this.resetForm();
         },
         error: (err) => {
           console.error('API Error Details:', err);

@@ -17,10 +17,10 @@ ion-router-outlet {
 }
 
 ion-tab-bar {
-  --background: #ffffff;
+  --background: var(--ion-card-background);
   --color: var(--ion-color-medium);
   --color-selected: var(--ion-color-primary);
-  border-top: 1px solid rgba(15, 23, 42, 0.08);
+  border-top: 1px solid var(--ion-color-step-100, rgba(15, 23, 42, 0.08));
   flex-shrink: 0;
 }
 

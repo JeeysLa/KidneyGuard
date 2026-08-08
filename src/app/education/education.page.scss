@@ -3,7 +3,7 @@
 }
 
 ion-content {
-  --background: #ffffff;
+  --background: var(--ion-color-light);
 }
 
 .education-header {
@@ -18,7 +18,7 @@ ion-content {
 
 .hero-section {
   padding: 5rem 1.5rem 4.5rem;
-  background: linear-gradient(135deg, #1e5cff 0%, #3b82f6 100%);
+  background: linear-gradient(135deg, var(--ion-color-primary) 0%, var(--ion-color-primary-tint) 100%);
   color: #ffffff;
   position: relative;
   overflow: hidden;
@@ -26,7 +26,7 @@ ion-content {
 
   .brand-wrap {
     display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1.5rem;
-    .brand-logo { width: 34px; height: 34px; background: #ffffff; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #1e5cff; font-size: 1.3rem; }
+    .brand-logo { width: 34px; height: 34px; background: #ffffff; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--ion-color-primary); font-size: 1.3rem; }
     h1 { margin: 0; font-size: 1.1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; }
   }
 
@@ -38,8 +38,8 @@ ion-content {
 
 .dashboard-body {
   margin-top: -2.5rem;
-  padding: 1.5rem 1.25rem 0; // Removed bottom padding to fix the gap
-  background: #ffffff;
+  padding: 1.5rem 1.25rem 0;
+  background: var(--ion-color-light);
   border-top-left-radius: 35px;
   border-top-right-radius: 35px;
   position: relative;
@@ -65,14 +65,14 @@ ion-content {
     font-weight: 700;
     font-size: 0.85rem;
     border-radius: 12px;
-    --background: #f1f5f9;
-    --color: #64748b;
+    --background: var(--ion-color-step-100, #f1f5f9);
+    --color: var(--ion-color-step-500, #64748b);
     border: none;
 
     &.active-chip {
-      --background: #1e5cff;
-      --color: #ffffff;
-      box-shadow: 0 4px 12px rgba(30, 92, 255, 0.2);
+      --background: var(--ion-color-primary);
+      --color: var(--ion-color-primary-contrast);
+      box-shadow: 0 4px 12px rgba(var(--ion-color-primary-rgb), 0.2);
     }
   }
 }
@@ -93,7 +93,7 @@ ion-content {
 
 .section-title {
   margin: 0 0 1rem;
-  h3 { font-size: 1.15rem; font-weight: 800; color: #1e293b; margin: 0; }
+  h3 { font-size: 1.15rem; font-weight: 800; color: var(--ion-text-color); margin: 0; }
 }
 
 .article-list {
@@ -103,11 +103,11 @@ ion-content {
 }
 
 .article-item {
-  background: #ffffff;
+  background: var(--ion-card-background);
   border-radius: 26px;
-  border: 1.5px solid #f1f5f9;
+  border: none;
   margin-bottom: 0.5rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.03);
 
   ion-card-content { padding: 1.25rem; }
 
@@ -119,17 +119,27 @@ ion-content {
 
     .icon-box {
       width: 44px; height: 44px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
-      &.primary { background: #eff6ff; color: #1e5cff; }
-      &.success { background: #f0fdf4; color: #22c55e; }
-      &.secondary { background: #f0f9ff; color: #0ea5e9; }
+      &.primary { background: rgba(var(--ion-color-primary-rgb), 0.1); color: var(--ion-color-primary); }
+      &.success { background: rgba(var(--ion-color-success-rgb), 0.1); color: var(--ion-color-success); }
+      &.secondary { background: rgba(var(--ion-color-secondary-rgb), 0.1); color: var(--ion-color-secondary); }
     }
     ion-badge { border-radius: 10px; padding: 0.4rem 0.8rem; font-weight: 800; font-size: 0.65rem; }
   }
 
-  h4 { margin: 0 0 0.3rem; font-size: 1.1rem; font-weight: 800; color: #1e293b; line-height: 1.4; }
-  p { margin: 0; font-size: 0.85rem; color: #64748b; line-height: 1.5; }
+  h4 { margin: 0 0 0.3rem; font-size: 1.1rem; font-weight: 800; color: var(--ion-text-color); line-height: 1.4; }
+  p { margin: 0; font-size: 0.85rem; color: var(--ion-color-step-500, #64748b); line-height: 1.5; }
 }
 
 .bottom-spacer {
-  height: 1.5rem; // Subtle spacer to ensure last card doesn't hit the nav bar too hard
+  height: 1.5rem;
+}
+
+body.dark {
+  .dashboard-body {
+    background: var(--ion-background-color);
+  }
+  .article-item {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
 }
