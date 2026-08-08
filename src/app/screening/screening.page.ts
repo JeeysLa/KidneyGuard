@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { HealthDataService } from '../core/health-data.service';
 import { TranslationService } from '../core/translation.service';
 import { PredictionService, PredictionRequest } from '../core/prediction.service';
+import { finalize } from 'rxjs/operators';
 import {
   IonHeader,
   IonToolbar,
@@ -60,6 +61,12 @@ import {
   ]
 })
 export class ScreeningPage {
+  private healthData = inject(HealthDataService);
+  private router = inject(Router);
+  private predictionService = inject(PredictionService);
+  private cdr = inject(ChangeDetectorRef);
+  public ts = inject(TranslationService);
+
   currentStep = 1;
   isCalculating = false;
   validationMessage = '';
@@ -91,12 +98,7 @@ export class ScreeningPage {
   fastingSugar: number | null = null;
   hba1c: number | null = null;
 
-  constructor(
-    public ts: TranslationService,
-    private healthData: HealthDataService,
-    private router: Router,
-    private predictionService: PredictionService
-  ) {}
+  constructor() {}
 
   get bmi(): number {
     if (this.height && this.weight && this.height > 0) {
@@ -289,57 +291,65 @@ export class ScreeningPage {
       HealthLiteracy: 0.8
     };
 
-    this.predictionService.predict(requestData).subscribe({
-      next: (res) => {
-        this.isCalculating = false;
+    this.predictionService.predict(requestData)
+      .pipe(
+        finalize(() => {
+          this.isCalculating = false;
+          this.cdr.detectChanges(); // Force UI update
+        })
+      )
+      .subscribe({
+        next: (res) => {
+          console.log('Backend Response:', res);
 
-        // Use backend result
-        const riskScore = res.risk_percentage !== undefined ? Math.round(res.risk_percentage) : 15;
-        const riskStatus = res.prediction || 'Calculated';
+          // Use backend result
+          const riskScore = res.risk_percentage !== undefined ? Math.round(res.risk_percentage) : 15;
+          const riskStatus = res.prediction || 'Calculated';
 
-        this.healthData.saveScreening({
-          riskScore,
-          riskStatus,
-          age: this.age!,
-          gender: this.gender,
-          height: this.height!,
-          weight: this.weight!,
-          bmi: currentBmi,
-          smoke: this.smoke,
-          alcohol: this.alcohol,
-          activityLevel: this.activityLevel,
-          dietQuality: this.dietQuality,
-          sleepQuality: this.sleepQuality,
-          familyHistory: {
-            kidney: this.familyKidney,
-            hypertension: this.familyHypertension,
-            diabetes: this.familyDiabetes
-          },
-          prevAki: this.prevAki,
-          prevUti: this.prevUti,
-          labs: {
-            systolic: this.systolic || undefined,
-            diastolic: this.diastolic || undefined,
-            fastingSugar: this.fastingSugar || undefined,
-            hba1c: this.hba1c || undefined
-          }
-        });
+          this.healthData.saveScreening({
+            riskScore,
+            riskStatus,
+            age: this.age!,
+            gender: this.gender,
+            height: this.height!,
+            weight: this.weight!,
+            bmi: currentBmi,
+            smoke: this.smoke,
+            alcohol: this.alcohol,
+            activityLevel: this.activityLevel,
+            dietQuality: this.dietQuality,
+            sleepQuality: this.sleepQuality,
+            familyHistory: {
+              kidney: this.familyKidney,
+              hypertension: this.familyHypertension,
+              diabetes: this.familyDiabetes
+            },
+            prevAki: this.prevAki,
+            prevUti: this.prevUti,
+            labs: {
+              systolic: this.systolic || undefined,
+              diastolic: this.diastolic || undefined,
+              fastingSugar: this.fastingSugar || undefined,
+              hba1c: this.hba1c || undefined
+            }
+          });
 
-        this.router.navigate(['/screening-result'], {
-          queryParams: {
-            score: riskScore,
-            status: riskStatus,
-            name: this.fullName
-          }
-        });
+          this.router.navigate(['/screening-result'], {
+            queryParams: {
+              score: riskScore,
+              status: riskStatus,
+              name: this.fullName
+            }
+          });
 
-        this.resetForm();
-      },
-      error: (err) => {
-        console.error('API Error:', err);
-        this.isCalculating = false;
-        this.validationMessage = 'Error connecting to backend API. Please try again later.';
-      }
-    });
+          this.resetForm();
+        },
+        error: (err) => {
+          console.error('API Error Details:', err);
+          this.validationMessage = this.ts.activeLanguage === 'en'
+            ? 'Connection failed. Please ensure the server is online (HTTPS required).'
+            : 'Koneksi gagal. Pastikan server online (harus HTTPS).';
+        }
+      });
   }
 }

@@ -57,7 +57,7 @@
 
       <div class="reco-list">
         <div *ngFor="let reco of recommendations" class="reco-card-item">
-          <div class="reco-icon-box" [class]="reco.color">
+          <div [ngClass]="'reco-icon-box ' + reco.color">
             <ion-icon [name]="reco.icon"></ion-icon>
           </div>
           <div class="reco-content">
